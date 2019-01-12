@@ -5,6 +5,7 @@ import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Trajectory.FitMethod;
 
 public class _AutoConstants {
+	
 	//Trajectory Generation
 	public static final double _maxVelocity = 5.1; 			  //(Feet) [Tune] in ft/s
 	public static final double _maxAcceleration = 5.5; 		  //(Feet) [Tune] in ft/s/s

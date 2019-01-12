@@ -30,26 +30,4 @@ public class Devices {
 		
 		public static DoubleSolenoid shift = new DoubleSolenoid(0, 1);
 	}
-	
-	//Squeezy
-	public static class Squeezy {
-		public static TalonSRX squeeze = TalonFactory.getTalon(21);
-		
-		public static TalonSRX leftSpin = 	TalonFactory.getTalon(22);
-		public static TalonSRX rightSpin = 	TalonFactory.getTalon(23);
-		
-		public static DoubleSolenoid fold = new DoubleSolenoid(0, 1);
-	}
-	
-	//Elevator
-	public static class Elevator {
-		public static TalonSRX a = TalonFactory.getTalon(31);
-		public static TalonSRX b = TalonFactory.getTalonFollower(32, 31);
-	}
-	
-	//Climbing
-	public static class Climbing {
-		public static Solenoid ptoSol = 	new Solenoid(4);
-		//public static Servo hookHolder = 	new Servo(0);
-	}
 }
