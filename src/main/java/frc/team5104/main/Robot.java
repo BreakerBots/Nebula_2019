@@ -12,6 +12,7 @@ import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.teleop.BreakerTeleopController;
 import frc.team5104.util.console;
+import frc.team5104.util.controller.Control;
 
 /* Breakerbots Robotics Team 2018
  *  ____                 _             _           _       
@@ -53,7 +54,6 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	public void mainLoop() {
 		if (enabled) {
 			BreakerSubsystemManager.update();
-			console.log(DriveSystems.encoders.getString(), DriveSystems.gyro.getRawAngle());
 		}
 		//console.log(Odometry.getPosition().toString(), "A: " + DriveSystems.gyro.getAngle());
 	}

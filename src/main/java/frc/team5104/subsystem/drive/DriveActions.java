@@ -13,7 +13,6 @@ public class DriveActions extends BreakerSubsystem.Actions {
 	 * @param signal
 	 */
 	public static void set(RobotDriveSignal signal) {
-		
 		switch (signal.unit) {
 			case percentOutput: {
 				DriveSystems.motors.set(
@@ -49,12 +48,13 @@ public class DriveActions extends BreakerSubsystem.Actions {
 	}
 	
 	public static RobotDriveSignal applyMotorMinSpeed(RobotDriveSignal signal) {
-		double minSpeed = -_DriveConstants._minSpeedLowGear;
+		double minSpeed = _DriveConstants._minSpeedLowGear;
 		if (DriveSystems.shifters.inHighGear())
-			minSpeed = -_DriveConstants._minSpeedHighGear;
+			minSpeed = _DriveConstants._minSpeedHighGear;
 		
-		signal.leftSpeed = Deadband.get(signal.leftSpeed, minSpeed);
+		signal.leftSpeed  = Deadband.get(signal.leftSpeed,  minSpeed);
 		signal.rightSpeed = Deadband.get(signal.rightSpeed, minSpeed);
+
 		return signal;
 	}
 	

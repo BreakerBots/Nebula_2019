@@ -136,8 +136,8 @@ public class DriveSystems extends BreakerSubsystem.Systems {
         
         // Right Talons Config
         R2.set(ControlMode.Follower, R1.getDeviceID());
-		R1.setInverted(true);
-		R2.setInverted(true);
+		R1.setInverted(false);
+		R2.setInverted(false);
 	
 		R1.setNeutralMode(NeutralMode.Brake);
 		R2.setNeutralMode(NeutralMode.Brake);
