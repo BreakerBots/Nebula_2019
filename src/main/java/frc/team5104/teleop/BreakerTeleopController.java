@@ -31,7 +31,6 @@ public class BreakerTeleopController {
 		turn = -Deadband.get(turn,  0.1);
 		forward = Deadband.get(forward, 0.01);
 		
-		
 		//Apply bezier curve
 		double x1 = (1 - Math.abs(forward)) * (1 - 0.3) + 0.3;
 		turn = Curve.getBezierCurve(turn, x1, 0.4, 1, 0.2);
@@ -51,10 +50,8 @@ public class BreakerTeleopController {
 		signal = DriveActions.applyDriveStraight(signal);
 		signal = DriveActions.applyMotorMinSpeed(signal);
 		
-		console.log(signal);
-		
 		//Set talon speeds
-		//DriveActions.set(signal);
+		DriveActions.set(signal);
 		
 		//Shifting
 		if (HMI.Drive._shift.getPressed())

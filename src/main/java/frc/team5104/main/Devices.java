@@ -1,3 +1,4 @@
+/*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -8,7 +9,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.team5104.util.TalonFactory;
 
-/*Breakerbots Robotics Team 2018*/
 /**
  * All Devices used in Athena's Code
  */

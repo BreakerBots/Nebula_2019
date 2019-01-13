@@ -1,3 +1,4 @@
+/*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -14,13 +15,6 @@ import frc.team5104.teleop.BreakerTeleopController;
 import frc.team5104.util.console;
 import frc.team5104.util.controller.Control;
 
-/* Breakerbots Robotics Team 2018
- *  ____                 _             _           _       
- * | __ ) _ __ ___  __ _| | _____ _ __| |__   ___ | |_ ___ 
- * |  _ \| '__/ _ \/ _` | |/ / _ \ '__| '_ \ / _ \| __/ __|
- * | |_) | | |  __/ (_| |   <  __/ |  | |_) | (_) | |_\__ \
- * |____/|_|  \___|\__,_|_|\_\___|_|  |_.__/ \___/ \__|___/ 
- */
 /**
  * Fallthrough from <strong>Breaker Robot Controller</strong>
  */

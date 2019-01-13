@@ -1,11 +1,11 @@
+/*BreakerBots Robotics Team 2019*/
 package frc.team5104.teleop;
 
 import frc.team5104.util.Curve;
 import frc.team5104.util.controller.Control;
 
-/*Breakerbots Robotics Team 2018*/
 /**
- * All Controls used in Athena's Code
+ * The controls for the robot.
  */
 public class HMI {
 	//Drive
