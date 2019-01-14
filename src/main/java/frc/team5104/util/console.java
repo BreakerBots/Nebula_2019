@@ -23,8 +23,6 @@ public class console {
 		TELEOP, 
 		AUTO, 
 		MAIN, 
-		SQUEEZY, 
-		ELEV, 
 		DRIVE, 
 		OTHER
 	};
