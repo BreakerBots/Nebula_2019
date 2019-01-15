@@ -53,8 +53,8 @@ public class DriveActions extends BreakerSubsystem.Actions {
 		if (DriveSystems.shifters.inHighGear())
 			minSpeed = _DriveConstants._minSpeedHighGear;
 		
-		signal.leftSpeed  = Deadband.get(signal.leftSpeed,  minSpeed);
-		signal.rightSpeed = Deadband.get(signal.rightSpeed, minSpeed);
+		signal.leftSpeed  = signal.leftSpeed * (1 - minSpeed) + minSpeed;
+		signal.rightSpeed = signal.rightSpeed * (1 - minSpeed) + minSpeed;
 
 		return signal;
 	}

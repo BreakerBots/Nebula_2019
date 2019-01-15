@@ -48,7 +48,12 @@ public class BreakerTeleopController {
 		
 		//Apply motor affects
 		signal = DriveActions.applyDriveStraight(signal);
-		signal = DriveActions.applyMotorMinSpeed(signal);
+		//signal = DriveActions.applyMotorMinSpeed(signal);
+		
+		//signal.leftSpeed = Deadband.getClipping(signal.leftSpeed, 0.1);
+		//signal.rightSpeed = Deadband.getClipping(signal.rightSpeed, 0.1);
+		
+		console.log(signal);
 		
 		//Set talon speeds
 		DriveActions.set(signal);

@@ -113,8 +113,8 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 		
 		// Left Talons Config
 		L2.set(ControlMode.Follower, L1.getDeviceID());
-		L1.setInverted(false);
-		L2.setInverted(false);
+		L1.setInverted(true);
+		L2.setInverted(true);
 	
 		L1.setNeutralMode(NeutralMode.Brake);
 		L2.setNeutralMode(NeutralMode.Brake);

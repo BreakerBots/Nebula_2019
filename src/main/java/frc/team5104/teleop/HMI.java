@@ -11,8 +11,8 @@ public class HMI {
 	//Drive
 	public static class Drive {
 		public static final Control _turn = Control.LX;
-		public static final Control _forward = Control.LT;
-		public static final Control _reverse = Control.RT;
+		public static final Control _forward = Control.RT;
+		public static final Control _reverse = Control.LT;
 		
 		public static final Control _shift = Control.LJ;
 		public static final Curve.BezierCurve _driveCurve = new Curve.BezierCurve(.2, 0, .2, 1);

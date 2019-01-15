@@ -44,4 +44,19 @@ public class Deadband {
 	public static double getReverse(double x, double radius) {
 		return get(x, -radius) - radius;
 	}
+	
+	/**
+	 * A clipping deadband that just cuts outs value in the radius
+	 */
+	public static double getClipping(double x, double radius) {
+		if (x > 0) {
+			if (x < radius)
+				x = 0;
+		}
+		else {
+			if (x > -radius)
+				x = 0;
+		}
+		return x;
+	}
 }
