@@ -18,4 +18,9 @@ public class HMI {
 		public static final Curve.BezierCurve _driveCurve = new Curve.BezierCurve(.2, 0, .2, 1);
 		public static final double _driveCurveChange = 0.2;
 	}
+	
+	//Vision 
+	public static class Vision {
+		public static final Control _toggle = Control.A;
+	}
 }

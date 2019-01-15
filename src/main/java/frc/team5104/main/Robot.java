@@ -11,6 +11,7 @@ import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
+import frc.team5104.subsystem.vision.VisionManager;
 import frc.team5104.teleop.BreakerTeleopController;
 import frc.team5104.util.console;
 import frc.team5104.util.controller.Control;
@@ -21,8 +22,8 @@ import frc.team5104.util.controller.Control;
 public class Robot extends BreakerRobotController.BreakerRobot {
 	public Robot() {
 		BreakerSubsystemManager.throwSubsystems(
-			// new DriveManager(),
-			// new VisionManager()
+			 new DriveManager(),
+			 new VisionManager()
 		);
 		
 //		CameraServer.getInstance().startAutomaticCapture();
@@ -39,12 +40,6 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 		BreakerSubsystemManager.disabled();
 		console.logFile.end();
 	}
-	
-	NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-	NetworkTableEntry tx = table.getEntry("tx");
-	NetworkTableEntry ty = table.getEntry("ty");
-	NetworkTableEntry ta = table.getEntry("ta");
-	NetworkTableEntry ts = table.getEntry("ts");
 
 	public void mainLoop() {
 		if (enabled) {
@@ -67,6 +62,11 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	
 	//Teleop
 	public void teleopLoop() {
+		BreakerTeleopController.update();
+	}
+	
+	//Vision
+	public void visionLoop() {
 		BreakerTeleopController.update();
 	}
 }

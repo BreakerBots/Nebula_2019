@@ -7,6 +7,7 @@ import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.team5104.subsystem.drive.Odometry;
+import frc.team5104.teleop.BreakerTeleopController;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
@@ -16,7 +17,12 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 		Disabled,
 		Auto,
 		Teleop,
-		Test
+		Test,
+		Vision;
+
+		public static RobotMode getTeleopMode() {
+			return BreakerTeleopController.inVision ? RobotMode.Vision : RobotMode.Teleop;
+		}
 	}
 	private RobotMode currentMode = RobotMode.Disabled;
 	private RobotMode lastMode = RobotMode.Disabled;
@@ -59,9 +65,9 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 	private void loop() {
 		currentMode = 
 				isDisabled()   ? RobotMode.Disabled : (
-				isAutonomous() ? RobotMode.Auto 	   : (
+				isAutonomous() ? RobotMode.Auto 	: (
 				isTest()	   ? RobotMode.Test     : 
-								 RobotMode.Teleop   ));
+								 RobotMode.getTeleopMode()   ));
 		
 		switch(currentMode) {
 			case Auto: {
@@ -77,6 +83,14 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 					robot.teleopEnabled();
 				
 				robot.teleopLoop();
+				HAL.observeUserProgramTeleop();
+				break;
+			}
+			case Vision: {
+				if (lastMode != currentMode)
+					robot.visionEnabled();
+				
+				robot.visionLoop();
 				HAL.observeUserProgramTeleop();
 				break;
 			}
@@ -144,5 +158,8 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 		public void testLoop() { }
 		public void testEnabled() { }
 		public void testDisabled() { }
+		public void visionLoop() { }
+		public void visionEnabled() { }
+		public void visionDisabled() { }
 	}
 }
