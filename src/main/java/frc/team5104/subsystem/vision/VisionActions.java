@@ -7,16 +7,26 @@ import frc.team5104.util.console;
 public class VisionActions extends BreakerSubsystem.Actions {
 	// Return what to add to the right wheels based on offset
 	public static double getRightOutput() {
-		double offSet = VisionSystems.limelight.getX() < -_VisionConstants._minXOffset ? VisionSystems.limelight.getX() : 0;
-		double p = _VisionConstants._p * _VisionConstants._maxXOffset;
+		double offSet = VisionSystems.limelight.getX() < _VisionConstants._xTargetCoordinate - _VisionConstants._minXOffset ? 
+				VisionSystems.limelight.getX() : 0;
+		double p = _VisionConstants._px * _VisionConstants._maxXOffset;
 		return -offSet/p;
 	}
 	
 	// Return what to add to the left wheels based on offset
 	public static double getLeftOutput() {
-		double offSet = VisionSystems.limelight.getX() > _VisionConstants._minXOffset ? VisionSystems.limelight.getX() : 0;
-		double p = _VisionConstants._p * _VisionConstants._maxXOffset;
+		double offSet = VisionSystems.limelight.getX() > _VisionConstants._xTargetCoordinate + _VisionConstants._minXOffset ? 
+				VisionSystems.limelight.getX() : 0;
+		double p = _VisionConstants._px * _VisionConstants._maxXOffset;
 		return offSet/p;
+	}
+	
+	// Return forward values based on offset
+	public static double getForward() {
+		double offSet = VisionSystems.limelight.getY() < _VisionConstants._yTargetCoordinate - _VisionConstants._minYOffset ? 
+				_VisionConstants._yTargetCoordinate - VisionSystems.limelight.getY() : 0;
+		double p = _VisionConstants._py * _VisionConstants._maxYOffset;
+		return offSet/p * _VisionConstants._maxSpeed;
 	}
 	
 	// Change the pipeline you are using

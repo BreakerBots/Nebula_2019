@@ -22,5 +22,6 @@ public class VisionManager extends BreakerSubsystem.Manager {
 	}
 	
 	public VisionManager() {
+		VisionActions.changePipeline(VisionPipeline.target);
 	}
 }
