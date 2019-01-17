@@ -7,7 +7,6 @@ import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.team5104.subsystem.drive.Odometry;
-import frc.team5104.teleop.BreakerTeleopController;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
@@ -19,21 +18,18 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 		Teleop,
 		Test,
 		Vision;
-
-		public static RobotMode getTeleopMode() {
-			return BreakerTeleopController.inVision ? RobotMode.Vision : RobotMode.Teleop;
-		}
 	}
-	private RobotMode currentMode = RobotMode.Disabled;
-	private RobotMode lastMode = RobotMode.Disabled;
-	private BreakerRobot robot;
-	private final double loopPeriod = 20;
+	private static RobotMode currentMode = RobotMode.Disabled;
+	private static RobotMode lastMode = RobotMode.Disabled;
+	private static BreakerRobot robot;
+	private static final double loopPeriod = 20;
 
-	public BreakerRobotController() {
-	    HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_Iterative);
-	}
+	public static void setMode(RobotMode mode) { currentMode = mode; }
+	public static RobotMode getMode() { return currentMode; }
 	
-	public void startCompetition() {
+	public static void startCompetition() {
+		HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_Iterative);
+		
 		console.sets.create("RobotInit");
 		console.log(c.MAIN, t.INFO, "Initializing Code");
 		
@@ -62,13 +58,15 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 	}
 
 	//Main Loop
-	private void loop() {
-		currentMode = 
-				isDisabled()   ? RobotMode.Disabled : (
-				isAutonomous() ? RobotMode.Auto 	: (
-				isTest()	   ? RobotMode.Test     : 
-								 RobotMode.getTeleopMode()   ));
+	private static void loop() {
+		if (isDisabled())
+			setMode(RobotMode.Disabled);
+		else if (isAutonomous())
+			setMode(RobotMode.Auto);
+		else if (isTest())
+			setMode(RobotMode.Test);
 		
+		//Handle Modes
 		switch(currentMode) {
 			case Auto: {
 				if (lastMode != currentMode)
@@ -108,6 +106,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 						case Auto: 	 { robot.autoDisabled(); break; }
 						case Teleop: { robot.teleopDisabled(); break; }
 						case Test: 	 { robot.testDisabled(); break; }
+						case Vision :{ robot.visionDisabled(); break; }
 						default: break;
 					}
 				
@@ -117,6 +116,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 			default: break;
 		}
 		
+		//Handle Mode Change
 		if (lastMode != currentMode) {
 			if (currentMode == RobotMode.Disabled) {
 				robot.mainDisabled();
@@ -127,11 +127,13 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 				BreakerRobot.enabled = true;
 			}
 			LiveWindow.setEnabled(currentMode == RobotMode.Disabled);
-			BreakerRobot.mode = currentMode;
 			lastMode = currentMode;
 		}
 		
+		//Update Main Robot Loop
 		robot.mainLoop();
+		
+		//Update Live Window
 		LiveWindow.updateValues();
 	}
 	
@@ -144,7 +146,6 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 	 */
 	public static abstract class BreakerRobot {
 		public static boolean enabled;
-		public static RobotMode mode;
 		
 		public void mainLoop() { }
 		public void mainEnabled() { }

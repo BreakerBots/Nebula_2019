@@ -1,20 +1,16 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.CameraServer;
-import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
+import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.drive.DriveManager;
-import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
-import frc.team5104.subsystem.vision.VisionManager;
 import frc.team5104.teleop.BreakerTeleopController;
 import frc.team5104.util.console;
-import frc.team5104.util.controller.Control;
+import frc.team5104.util.console.c;
+import frc.team5104.util.console.t;
+import frc.team5104.vision.VisionManager;
 
 /**
  * Fallthrough from <strong>Breaker Robot Controller</strong>
@@ -22,16 +18,18 @@ import frc.team5104.util.controller.Control;
 public class Robot extends BreakerRobotController.BreakerRobot {
 	public Robot() {
 		BreakerSubsystemManager.throwSubsystems(
-			 new DriveManager(),
-			 new VisionManager()
+			 new DriveManager()
 		);
 		
-//		CameraServer.getInstance().startAutomaticCapture();
+		VisionManager.init();
+		
+		//CameraServer.getInstance().startAutomaticCapture();
 	}
 	
 	//Main
 	public void mainEnabled() {
-		BreakerSubsystemManager.enabled(mode);
+		
+		BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
 		console.logFile.start();
 		Odometry.reset();
 	}
@@ -44,18 +42,27 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	public void mainLoop() {
 		if (enabled) {
 			BreakerSubsystemManager.update();
+			
+			//Vision Toggling
+			if (HMI.Main._toggleVision.getPressed()) {
+				BreakerRobotController.setMode(BreakerRobotController.getMode() == RobotMode.Vision ? RobotMode.Teleop : RobotMode.Vision);
+				console.log(c.VISION, t.INFO, BreakerRobotController.getMode() == RobotMode.Vision ? "Switched to vision" : "Switched to drive");
+			}
+			
+			//Auto Switching
+			if (HMI.Main._toggleAuto.getPressed()) {
+				//...
+			}
 		}
-		//console.log(Odometry.getPosition().toString(), "A: " + DriveSystems.gyro.getAngle());
 	}
 
 	//Auto
 	public void autoEnabled() {
-//		BreakerPathScheduler.set(
-////			AutoSelector.getAuto()
-// 			AutoSelector.Paths.Curve.getPath()
-//		);
+		//BreakerPathScheduler.set(
+		//	AutoSelector.getAuto()
+ 		//	AutoSelector.Paths.Curve.getPath()
+		//);
 	}
-	
 	public void autoLoop() {
 		BreakerPathScheduler.update();
 	}
@@ -67,6 +74,6 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	
 	//Vision
 	public void visionLoop() {
-		BreakerTeleopController.update();
+		VisionManager.update();
 	}
 }

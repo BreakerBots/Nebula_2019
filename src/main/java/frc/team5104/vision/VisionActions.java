@@ -1,10 +1,9 @@
 /*BreakerBots Robotics Team 2019*/
-package frc.team5104.subsystem.vision;
+package frc.team5104.vision;
 
-import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.console;
 
-public class VisionActions extends BreakerSubsystem.Actions {
+public class VisionActions {
 	// Return what to add to the right wheels based on offset
 	public static double getRightOutput() {
 		double offSet = VisionSystems.limelight.getX() < _VisionConstants._xTargetCoordinate - _VisionConstants._minXOffset ? 

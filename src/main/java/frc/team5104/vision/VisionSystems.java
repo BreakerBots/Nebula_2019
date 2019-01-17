@@ -1,13 +1,11 @@
 /*BreakerBots Robotics Team 2019*/
-package frc.team5104.subsystem.vision;
+package frc.team5104.vision;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import frc.team5104.subsystem.BreakerSubsystem;
-import frc.team5104.util.console;
 
-public class VisionSystems extends BreakerSubsystem.Systems {
+public class VisionSystems {
 	// Variables
 	static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 

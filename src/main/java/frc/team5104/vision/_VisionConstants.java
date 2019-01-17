@@ -1,5 +1,5 @@
 /*BreakerBots Robotics Team 2019*/
-package frc.team5104.subsystem.vision;
+package frc.team5104.vision;
 
 public class _VisionConstants {
 	public static double _maxXOffset = 27.0; // Outer X limit

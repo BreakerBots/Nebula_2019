@@ -24,6 +24,7 @@ public class console {
 		AUTO, 
 		MAIN, 
 		DRIVE, 
+		VISION,
 		OTHER
 	};
 	

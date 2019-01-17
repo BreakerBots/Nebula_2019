@@ -5,10 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Enumeration;
-import java.util.function.Supplier;
 import java.util.jar.Manifest;
 
 import edu.wpi.cscore.CameraServerJNI;
@@ -60,7 +58,7 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 		CameraServerSharedStore.setCameraServerShared(shared);
 	}
 
-	protected final DriverStation m_ds;
+	protected static DriverStation m_ds;
 
 	protected BreakerRobotControllerBase() {
 		NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -97,7 +95,7 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 	 *
 	 * @return True if the Robot is currently disabled by the field controls.
 	 */
-	public boolean isDisabled() {
+	public static boolean isDisabled() {
 		return m_ds.isDisabled();
 	}
 
@@ -116,7 +114,7 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 	 *
 	 * @return True if the robot is currently operating Autonomously.
 	 */
-	public boolean isAutonomous() {
+	public static boolean isAutonomous() {
 		return m_ds.isAutonomous();
 	}
 
@@ -126,7 +124,7 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 	 *
 	 * @return True if the robot is currently operating in Test mode.
 	 */
-	public boolean isTest() {
+	public static boolean isTest() {
 		return m_ds.isTest();
 	}
 
@@ -149,15 +147,8 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 		return m_ds.isNewControlData();
 	}
 
-	/**
-	 * Provide an alternate "main loop" via startCompetition().
-	 */
-	public abstract void startCompetition();
-	
-	
 	public void close() throws Exception { } 
 
-	@SuppressWarnings("JavadocMethod")
 	public static boolean getBooleanProperty(String name, boolean defaultValue) {
 		String propVal = System.getProperty(name);
 		if (propVal == null) {
@@ -183,6 +174,7 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 
 		HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Java);
 
+		@SuppressWarnings("unused")
 		String robotName = "";
 		if (args.length > 0) {
 			robotName = args[0];
@@ -214,8 +206,6 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 			"|____/|_|  \\___|\\__,_|_|\\_\\___|_|  |____/ \\___/ \\__|___/\n"
 		);
 
-		BreakerRobotController robot = new BreakerRobotController();
-
 		try {
 			final File file = new File("/tmp/frc_versions/FRC_Lib_Version.ini");
 
@@ -236,7 +226,7 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 
 		boolean errorOnExit = false;
 		try {
-			robot.startCompetition();
+			BreakerRobotController.startCompetition();
 		} 
 		catch (Throwable throwable) {
 			Throwable cause = throwable.getCause();

@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
-import frc.team5104.util.Deadband;
 import frc.team5104.util.Units;
 
 public class DriveActions extends BreakerSubsystem.Actions {
@@ -53,8 +52,10 @@ public class DriveActions extends BreakerSubsystem.Actions {
 		if (DriveSystems.shifters.inHighGear())
 			minSpeed = _DriveConstants._minSpeedHighGear;
 		
-		signal.leftSpeed  = signal.leftSpeed * (1 - minSpeed) + minSpeed;
-		signal.rightSpeed = signal.rightSpeed * (1 - minSpeed) + minSpeed;
+		if (signal.leftSpeed != 0)
+			signal.leftSpeed  = signal.leftSpeed * (1 - minSpeed) + minSpeed;
+		if (signal.rightSpeed != 0)
+			signal.rightSpeed = signal.rightSpeed * (1 - minSpeed) + minSpeed;
 
 		return signal;
 	}
