@@ -4,7 +4,9 @@ package frc.team5104.main;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PWM;
 import frc.team5104.util.TalonFactory;
 
 /**
@@ -15,6 +17,8 @@ public class Devices {
 	//Main
 	public static class Main {
 		//public static PowerDistributionPanel pdp = new PowerDistributionPanel();
+		public static Compressor compressor = new Compressor();
+		public static PWM compressorReader = new PWM(0);
 	}
 	
 	//Drive

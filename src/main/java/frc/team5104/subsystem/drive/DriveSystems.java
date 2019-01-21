@@ -62,15 +62,15 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 	
 	//Shifters
 	public static class shifters {
-		public static boolean inHighGear() {
-			return Devices.Drive.shift.get() == DoubleSolenoid.Value.kForward;
+		public static boolean inLowGear() {
+			return Devices.Drive.shift.get() == DoubleSolenoid.Value.kReverse;
 		}
 		
 		/**
 		 * @param high True: Set to High Gear, False: Set to Low Gear
 		 */
 		public static void set(boolean high) {
-			if (high ? !inHighGear() : inHighGear()) {
+			if (high ? inLowGear() : !inLowGear()) {
 				console.log(c.DRIVE, high ? "Shifting High" : "Shifting Low");
 				Devices.Drive.shift.set(high ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
 				controller.rumbleSoftFor(high ? 0.75 : 0.25, 0.2);
@@ -78,7 +78,7 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 		}
 		
 		public static void toggle() {
-			set(!inHighGear());
+			set(inLowGear());
 		}
 		
 	}

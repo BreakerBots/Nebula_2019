@@ -37,8 +37,10 @@ public class Drive {
 			DriveUnit.percentOutput
 		);
 		
-		//Apply motor effects
+		//Apply drive straight effects
 		signal = DriveActions.applyDriveStraight(signal);
+		
+		//Apply min speed
 		signal = DriveActions.applyMotorMinSpeed(signal);
 		
 		//Set talon speeds

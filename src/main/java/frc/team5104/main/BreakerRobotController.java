@@ -27,7 +27,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 	public static void setMode(RobotMode mode) { currentMode = mode; }
 	public static RobotMode getMode() { return currentMode; }
 	
-	public static void startCompetition() {
+	public void startCompetition() {
 		HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_Iterative);
 		
 		console.sets.create("RobotInit");
@@ -58,13 +58,22 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 	}
 
 	//Main Loop
-	private static void loop() {
+	private void loop() {
+		//Disabled
 		if (isDisabled())
 			setMode(RobotMode.Disabled);
-		else if (isAutonomous())
-			setMode(RobotMode.Auto);
-		else if (isTest())
-			setMode(RobotMode.Test);
+		
+		else if (isEnabled()) {
+			//Forced Through Driver Station
+			if (isAutonomous())
+				setMode(RobotMode.Auto);
+			else if (isTest())
+				setMode(RobotMode.Test);
+			
+			//Default to Teleop
+			else if (currentMode == RobotMode.Disabled)
+				setMode(RobotMode.Teleop);
+		}
 		
 		//Handle Modes
 		switch(currentMode) {

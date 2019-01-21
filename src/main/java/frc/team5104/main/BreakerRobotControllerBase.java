@@ -26,39 +26,7 @@ import frc.team5104.util.console;
 public abstract class BreakerRobotControllerBase implements AutoCloseable {
 	public static final long MAIN_THREAD_ID = Thread.currentThread().getId();
 
-	private static void setupCameraServerShared() {
-		CameraServerShared shared = new CameraServerShared() {
-
-			@Override
-			public void reportVideoServer(int id) {
-				HAL.report(tResourceType.kResourceType_PCVideoServer, id);
-			}
-
-			@Override
-			public void reportUsbCamera(int id) {
-				HAL.report(tResourceType.kResourceType_UsbCamera, id);
-			}
-
-			@Override
-			public void reportDriverStationError(String error) {
-				DriverStation.reportError(error, true);
-			}
-
-			@Override
-			public void reportAxisCamera(int id) {
-				HAL.report(tResourceType.kResourceType_AxisCamera, id);
-			}
-
-			@Override
-			public Long getRobotMainThreadId() {
-				return MAIN_THREAD_ID;
-			}
-		};
-
-		CameraServerSharedStore.setCameraServerShared(shared);
-	}
-
-	protected static DriverStation m_ds;
+	protected final DriverStation m_ds;
 
 	protected BreakerRobotControllerBase() {
 		NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -95,7 +63,7 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 	 *
 	 * @return True if the Robot is currently disabled by the field controls.
 	 */
-	public static boolean isDisabled() {
+	public boolean isDisabled() {
 		return m_ds.isDisabled();
 	}
 
@@ -114,7 +82,7 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 	 *
 	 * @return True if the robot is currently operating Autonomously.
 	 */
-	public static boolean isAutonomous() {
+	public boolean isAutonomous() {
 		return m_ds.isAutonomous();
 	}
 
@@ -124,7 +92,7 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 	 *
 	 * @return True if the robot is currently operating in Test mode.
 	 */
-	public static boolean isTest() {
+	public boolean isTest() {
 		return m_ds.isTest();
 	}
 
@@ -147,6 +115,11 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 		return m_ds.isNewControlData();
 	}
 
+	/**
+	 * Provide an alternate "main loop" via startCompetition().
+	 */
+	public abstract void startCompetition();
+	
 	public void close() throws Exception { } 
 
 	public static boolean getBooleanProperty(String name, boolean defaultValue) {
@@ -174,7 +147,6 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 
 		HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Java);
 
-		@SuppressWarnings("unused")
 		String robotName = "";
 		if (args.length > 0) {
 			robotName = args[0];
@@ -197,14 +169,11 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 			}
 		}
 
-		console.log(
-			" ____                 _             ____        _       \n" +
-			"|  _ \\               | |           |  _ \\      | |      \n" +
-			"| |_) |_ __ ___  __ _| | _____ _ __| |_) | ___ | |_ ___ \n" +
-			"|  _ <| '__/ _ \\/ _` | |/ / _ \\ '__|  _ < / _ \\| __/ __|\n" +
-			"| |_) | | |  __/ (_| |   <  __/ |  | |_) | (_) | |_\\__ \\\n" +
-			"|____/|_|  \\___|\\__,_|_|\\_\\___|_|  |____/ \\___/ \\__|___/\n"
-		);
+		console.log("BreakerBots Robotics Team 2019");
+		console.log("Running " + robotName + " code.");
+
+		@SuppressWarnings("resource")
+		BreakerRobotController robot = new BreakerRobotController();
 
 		try {
 			final File file = new File("/tmp/frc_versions/FRC_Lib_Version.ini");
@@ -226,7 +195,7 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 
 		boolean errorOnExit = false;
 		try {
-			BreakerRobotController.startCompetition();
+			robot.startCompetition();
 		} 
 		catch (Throwable throwable) {
 			Throwable cause = throwable.getCause();
@@ -250,4 +219,35 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 		}
 		System.exit(1);
 	} 
+	
+	private static void setupCameraServerShared() {
+		CameraServerShared shared = new CameraServerShared() {
+			@Override
+			public void reportVideoServer(int id) {
+				HAL.report(tResourceType.kResourceType_PCVideoServer, id);
+			}
+
+			@Override
+			public void reportUsbCamera(int id) {
+				HAL.report(tResourceType.kResourceType_UsbCamera, id);
+			}
+
+			@Override
+			public void reportDriverStationError(String error) {
+				DriverStation.reportError(error, true);
+			}
+
+			@Override
+			public void reportAxisCamera(int id) {
+				HAL.report(tResourceType.kResourceType_AxisCamera, id);
+			}
+
+			@Override
+			public Long getRobotMainThreadId() {
+				return MAIN_THREAD_ID;
+			}
+		};
+
+		CameraServerSharedStore.setCameraServerShared(shared);
+	}
 }

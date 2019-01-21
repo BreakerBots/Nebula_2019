@@ -69,6 +69,7 @@ public class AutoSelector {
 			console.log(c.AUTO, "Recieved Game Data => " + gameData + ". At => " + DriverStation.getInstance().getMatchTime());
 			
 			//Get our Robot Position on the Field
+			@SuppressWarnings("unused")
 			String position;
 			position = NetworkTableInstance.
 					getDefault().

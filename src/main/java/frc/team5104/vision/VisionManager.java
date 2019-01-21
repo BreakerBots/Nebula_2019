@@ -13,19 +13,17 @@ public class VisionManager {
 	}
 	
 	public static void init() {
+		VisionSystems.init();
 		VisionActions.changePipeline(VisionPipeline.target);
 	}
 	
 	public static void update() {
 		RobotDriveSignal signal = new RobotDriveSignal(
-				VisionActions.getForward() + VisionActions.getLeftOutput(), 
-				VisionActions.getForward() + VisionActions.getRightOutput(), 
+				VisionActions.getForward() + VisionActions.getLeftOutput() - VisionActions.getRightOutput(), 
+				VisionActions.getForward() + VisionActions.getRightOutput() - VisionActions.getLeftOutput(), 
 				DriveUnit.percentOutput
 			);
+		DriveActions.applyMotorMinSpeed(signal);
 		DriveActions.set(signal);
-	}
-
-	public VisionManager() {
-		VisionActions.changePipeline(VisionPipeline.target);
 	}
 }

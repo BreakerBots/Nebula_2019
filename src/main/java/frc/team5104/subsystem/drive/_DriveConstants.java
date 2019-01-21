@@ -15,8 +15,10 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	public static final double _rightAccountReverse = 1.000; //(TalSpeed) [Measure] Multiple the right motor by (For Driving Straight)
 	public static final double _leftAccountForward  = 1.000; //(TalSpeed) [Measure] Multiple the left  motor by (For Driving Straight)
 	public static final double _leftAccountReverse  = 1.000; //(TalSpeed) [Measure] Multiple the left  motor by (For Driving Straight)
-	public static final double _minSpeedHighGear = 0.20;
-	public static final double _minSpeedLowGear  = 0.20;
+	public static final double _minSpeedHighGearForward = 0.085;
+	public static final double _minSpeedHighGearTurn = 0.300;
+	public static final double _minSpeedLowGearForward = 0.065;
+	public static final double _minSpeedLowGearTurn = 0.225;
 	
 	//Gyro
 	public static final double _gyroAngle = 0;   //(Degrees) [Measure] Yaw Angle of Gyro (Athena is 65)

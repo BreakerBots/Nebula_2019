@@ -48,14 +48,22 @@ public class DriveActions extends BreakerSubsystem.Actions {
 	}
 	
 	public static RobotDriveSignal applyMotorMinSpeed(RobotDriveSignal signal) {
-		double minSpeed = _DriveConstants._minSpeedLowGear;
-		if (DriveSystems.shifters.inHighGear())
-			minSpeed = _DriveConstants._minSpeedHighGear;
+		double turn = Math.abs(signal.leftSpeed - signal.rightSpeed) / 2;
+		double biggerMax = (Math.abs(signal.leftSpeed) > Math.abs(signal.rightSpeed) ? Math.abs(signal.leftSpeed) : Math.abs(signal.rightSpeed));
+		if (biggerMax != 0)
+			turn = Math.abs(turn / biggerMax);
+		double forward = 1 - turn;
+		
+		double minSpeed;
+		if (DriveSystems.shifters.inLowGear())
+			minSpeed = forward * _DriveConstants._minSpeedLowGearForward + turn * _DriveConstants._minSpeedLowGearTurn;
+		else
+			minSpeed = forward * _DriveConstants._minSpeedHighGearForward + turn * _DriveConstants._minSpeedHighGearTurn;
 		
 		if (signal.leftSpeed != 0)
-			signal.leftSpeed  = signal.leftSpeed * (1 - minSpeed) + minSpeed;
+			signal.leftSpeed = signal.leftSpeed * (1 - minSpeed) + (signal.leftSpeed > 0 ? minSpeed : -minSpeed);
 		if (signal.rightSpeed != 0)
-			signal.rightSpeed = signal.rightSpeed * (1 - minSpeed) + minSpeed;
+			signal.rightSpeed = signal.rightSpeed * (1 - minSpeed) + (signal.rightSpeed > 0 ? minSpeed : -minSpeed);
 
 		return signal;
 	}

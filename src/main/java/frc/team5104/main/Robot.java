@@ -8,6 +8,7 @@ import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.teleop.BreakerTeleopController;
 import frc.team5104.util.console;
+import frc.team5104.util.controller;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
 import frc.team5104.vision.VisionManager;
@@ -28,6 +29,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	
 	//Main
 	public void mainEnabled() {
+		Devices.Main.compressor.stop();
 		
 		BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
 		console.logFile.start();
@@ -40,6 +42,8 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	}
 
 	public void mainLoop() {
+		//console.log(BreakerRobotController.getMode());
+		
 		if (enabled) {
 			BreakerSubsystemManager.update();
 			
@@ -53,6 +57,10 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 			if (HMI.Main._toggleAuto.getPressed()) {
 				//...
 			}
+			
+			console.log(Devices.Main.compressorReader.getRaw());
+			
+			controller.update();
 		}
 	}
 
