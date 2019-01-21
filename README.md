@@ -1,8 +1,7 @@
-# BreakerBots Robot Template
-Based on offseason code for **Athena** ([FRC Power-Up 2018](https://en.wikipedia.org/wiki/FIRST_Power_Up)). Athena's code is running **Java** through **[GradleRIO](https://github.com/wpilibsuite/GradleRIO)**.
+# Deep Space 2019
+The Robot code for all three (Alpha, Bravo, and Charlie) robots. Made for the 2019 FRC game Deep Space.
 
 ### Setup Instructions
-- Download [Gradle](https://gradle.org/releases/)
 - Download or Clone this Repository
 - Open Eclipse and go to "File > Import"
 - Under "Gradle" choose "Existing Gradle Project"
