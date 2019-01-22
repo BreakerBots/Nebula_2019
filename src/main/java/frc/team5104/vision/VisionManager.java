@@ -17,13 +17,17 @@ public class VisionManager {
 		VisionActions.changePipeline(VisionPipeline.target);
 	}
 	
+	public static void enabled() {
+		VisionActions.reset();
+	}
+	
 	public static void update() {
-		RobotDriveSignal signal = new RobotDriveSignal(
-				VisionActions.getForward() + VisionActions.getLeftOutput() - VisionActions.getRightOutput(), 
-				VisionActions.getForward() + VisionActions.getRightOutput() - VisionActions.getLeftOutput(), 
-				DriveUnit.percentOutput
-			);
-		DriveActions.applyMotorMinSpeed(signal);
+		RobotDriveSignal signal = VisionActions.getNextSignal();
+		DriveActions.applyMotorMinSpeedRough(signal);
 		DriveActions.set(signal);
+	}
+
+	public static void disabled() {
+		VisionActions.log.writeFile("vision_temp", "urmom");
 	}
 }

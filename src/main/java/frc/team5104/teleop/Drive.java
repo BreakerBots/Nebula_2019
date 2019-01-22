@@ -8,6 +8,7 @@ import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
 import frc.team5104.util.Curve;
 import frc.team5104.util.CurveInterpolator;
 import frc.team5104.util.Deadband;
+import frc.team5104.util.console;
 
 public class Drive {
 	//Drive
@@ -42,6 +43,8 @@ public class Drive {
 		
 		//Apply min speed
 		signal = DriveActions.applyMotorMinSpeed(signal);
+		
+//		console.log(signal.toString());
 		
 		//Set talon speeds
 		DriveActions.set(signal);

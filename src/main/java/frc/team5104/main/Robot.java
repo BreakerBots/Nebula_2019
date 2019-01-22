@@ -58,8 +58,6 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 				//...
 			}
 			
-			console.log(Devices.Main.compressorReader.getRaw());
-			
 			controller.update();
 		}
 	}
@@ -71,17 +69,13 @@ public class Robot extends BreakerRobotController.BreakerRobot {
  		//	AutoSelector.Paths.Curve.getPath()
 		//);
 	}
-	public void autoLoop() {
-		BreakerPathScheduler.update();
-	}
+	public void autoLoop() { BreakerPathScheduler.update(); }
 	
 	//Teleop
-	public void teleopLoop() {
-		BreakerTeleopController.update();
-	}
+	public void teleopLoop() { BreakerTeleopController.update(); }
 	
 	//Vision
-	public void visionLoop() {
-		VisionManager.update();
-	}
+	public void visionLoop() { VisionManager.update(); }
+	public void visionEnabled() { VisionManager.enabled(); }
+	public void visionDisabled() { VisionManager.disabled(); }
 }
