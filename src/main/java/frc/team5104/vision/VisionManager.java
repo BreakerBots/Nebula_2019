@@ -27,7 +27,5 @@ public class VisionManager {
 		DriveActions.set(signal);
 	}
 
-	public static void disabled() {
-		VisionActions.log.writeFile("vision_temp", "urmom");
-	}
+	public static void disabled() { }
 }

@@ -10,11 +10,9 @@ public class VisionActions {
 	static BreakerPIDController turnController = 
 			new BreakerPIDController(_VisionConstants._tP, _VisionConstants._tI,
 					_VisionConstants._tD, _VisionConstants._minXOffset);
-	public static CSV log = new CSV(new String[] { "CurrentX" });
 	
 	// Get signal to drive to target
 	public static RobotDriveSignal getNextSignal() {
-		log.update(new String[] { ""+VisionSystems.limelight.getX() });
 		return new RobotDriveSignal(
 				VisionActions.getForward() - VisionActions.getTurn(), 
 				VisionActions.getForward() + VisionActions.getTurn(), 
@@ -50,6 +48,11 @@ public class VisionActions {
 	// Change the pipeline you are using
 	public static void changePipeline(VisionManager.VisionPipeline p) {
 		VisionSystems.pipeline.set(p);
+	}
+	
+	// Change the state of the LED
+	public static void changeLEDState(int state) {
+		VisionSystems.networkTable.setEntry("ledMode", (double)(state));
 	}
 
 	public static void reset() {

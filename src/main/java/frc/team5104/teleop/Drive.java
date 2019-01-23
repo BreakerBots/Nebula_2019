@@ -24,17 +24,15 @@ public class Drive {
 		forward = Deadband.get(forward, 0.01);
 		
 		//Apply bezier curve
-		double x1 = (1 - Math.abs(forward)) * (1 - 0.3) + 0.3;
+		double x1 = (1 - Math.abs(forward)) * (1 - HMI.Drive._turnCurveSpeedAdjust) + HMI.Drive._turnCurveSpeedAdjust;
 		turn = Curve.getBezierCurve(turn, x1, 0.4, 1, 0.2);
 		
 		//Apply inertia affect
 		vTeleopLeftSpeed.setSetpoint(forward - turn);
 		vTeleopRightSpeed.setSetpoint(forward + turn);
 		RobotDriveSignal signal = new RobotDriveSignal(
-			//vTeleopLeftSpeed.update(), 
-			//vTeleopRightSpeed.update(), 
-				forward - turn,
-				forward + turn,
+			vTeleopLeftSpeed.update(), 
+			vTeleopRightSpeed.update(), 
 			DriveUnit.percentOutput
 		);
 		
@@ -43,8 +41,6 @@ public class Drive {
 		
 		//Apply min speed
 		signal = DriveActions.applyMotorMinSpeed(signal);
-		
-//		console.log(signal.toString());
 		
 		//Set talon speeds
 		DriveActions.set(signal);

@@ -22,6 +22,7 @@ public class HMI {
 		
 		public static final Control _shift = Control.LJ;
 		public static final Curve.BezierCurve _driveCurve = new Curve.BezierCurve(.2, 0, .2, 1);
-		public static final double _driveCurveChange = 0.2;
+		public static final double _driveCurveChange = 1.0;
+		public static final double _turnCurveSpeedAdjust = 0.5;
 	}
 }
