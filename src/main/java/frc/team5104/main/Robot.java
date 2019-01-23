@@ -5,8 +5,10 @@ import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.drive.DriveManager;
+import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.teleop.BreakerTeleopController;
+import frc.team5104.teleop.Drive;
 import frc.team5104.util.console;
 import frc.team5104.util.controller;
 import frc.team5104.util.console.c;
@@ -39,11 +41,10 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	public void mainDisabled() {
 		BreakerSubsystemManager.disabled();
 		console.logFile.end();
+		Drive.log.writeFile("vision_temp", "urmom");
 	}
 
 	public void mainLoop() {
-		//console.log(BreakerRobotController.getMode());
-		
 		if (enabled) {
 			BreakerSubsystemManager.update();
 			

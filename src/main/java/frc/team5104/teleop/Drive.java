@@ -1,19 +1,27 @@
 package frc.team5104.teleop;
 
+import frc.team5104.main.Devices;
 import frc.team5104.main.HMI;
 import frc.team5104.subsystem.drive.DriveActions;
 import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
 import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
+import frc.team5104.subsystem.drive._DriveConstants;
+import frc.team5104.util.CSV;
 import frc.team5104.util.Curve;
 import frc.team5104.util.CurveInterpolator;
 import frc.team5104.util.Deadband;
+import frc.team5104.util.Units;
 import frc.team5104.util.console;
+import frc.team5104.util.controller.Control;
 
 public class Drive {
 	//Drive
 	public static final CurveInterpolator vTeleopLeftSpeed  = new CurveInterpolator(HMI.Drive._driveCurveChange, HMI.Drive._driveCurve);
 	public static final CurveInterpolator vTeleopRightSpeed = new CurveInterpolator(HMI.Drive._driveCurveChange, HMI.Drive._driveCurve);
+	
+	public static CSV log = new CSV(new String[] { "CurrentEspeedody" });
+	
 	public static void handle() {
 		//Get inputs
 		double turn = HMI.Drive._turn.getAxis();
@@ -41,6 +49,13 @@ public class Drive {
 		
 		//Apply min speed
 		signal = DriveActions.applyMotorMinSpeed(signal);
+		
+		if (Control.X.getHeld()) {
+			signal.leftSpeed = Units.feetPerSecondToTalonVel(5, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter);
+			signal.rightSpeed = Units.feetPerSecondToTalonVel(5, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter);
+			signal.unit = DriveUnit.feetPerSecond;
+			log.update(new String[] { ""+Devices.Drive.L1.getSelectedSensorVelocity() });
+		}
 		
 		//Set talon speeds
 		DriveActions.set(signal);
