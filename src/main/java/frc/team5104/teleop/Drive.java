@@ -54,7 +54,7 @@ public class Drive {
 			signal.leftSpeed = Units.feetPerSecondToTalonVel(5, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter);
 			signal.rightSpeed = Units.feetPerSecondToTalonVel(5, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter);
 			signal.unit = DriveUnit.feetPerSecond;
-			log.update(new String[] { ""+Devices.Drive.L1.getSelectedSensorVelocity() });
+			log.update(new String[] { ""+Units.talonVelToFeetPerSecond(Devices.Drive.L1.getSelectedSensorVelocity(), _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter)});
 		}
 		
 		//Set talon speeds
