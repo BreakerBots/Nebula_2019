@@ -3,12 +3,12 @@ package frc.team5104.vision;
 
 import frc.team5104.subsystem.drive.RobotDriveSignal;
 import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
-import frc.team5104.util.BreakerPIDController;
+import frc.team5104.util.BreakerPositionController;
 import frc.team5104.util.CSV;
 
 public class VisionActions {
-	static BreakerPIDController turnController = 
-			new BreakerPIDController(_VisionConstants._tP, _VisionConstants._tI,
+	static BreakerPositionController turnController = 
+			new BreakerPositionController(_VisionConstants._tP, _VisionConstants._tI,
 					_VisionConstants._tD, _VisionConstants._minXOffset);
 	
 	// Get signal to drive to target
