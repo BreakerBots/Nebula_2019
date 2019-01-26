@@ -46,7 +46,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	}
 
 	public void mainLoop() {
-		console.log(BreakerRobotController.getMode());
+		console.log(Devices.Drive.L1.getOutputCurrent());
 		if (enabled) {
 			BreakerSubsystemManager.update();
 			
@@ -67,6 +67,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 
 	//Auto
 	public void autoEnabled() {
+		Devices.Main.compressor.stop();
 		BreakerPathScheduler.set(
 		//	AutoSelector.getAuto()
  			AutoSelector.Paths.Curve.getPath()

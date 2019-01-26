@@ -6,6 +6,7 @@ import frc.team5104.auto.BreakerTrajectoryFollower;
 import frc.team5104.auto.BreakerTrajectoryGenerator;
 import frc.team5104.subsystem.drive.DriveActions;
 import frc.team5104.subsystem.drive.Odometry;
+import frc.team5104.subsystem.drive.RobotDriveSignal;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 import jaci.pathfinder.Waypoint;
@@ -15,11 +16,11 @@ import jaci.pathfinder.Waypoint;
  */
 public class DriveTrajectory extends BreakerPathAction {
 
-	private BreakerTrajectoryFollower f;
-	private Waypoint[] p;
+	private BreakerTrajectoryFollower follower;
+	private Waypoint[] waypoints;
 		
     public DriveTrajectory(Waypoint[] points) {
-    	this.p = points;
+    	this.waypoints = points;
     }
 
     public void init() {
@@ -27,8 +28,7 @@ public class DriveTrajectory extends BreakerPathAction {
     	console.log(c.AUTO, "Running Trajectory");
     	
     	//Reset Odometry and Get Path (Reset it twice to make sure it all good)
-    	Odometry.reset();
-    	f = new BreakerTrajectoryFollower( BreakerTrajectoryGenerator.getTrajectory(p) );
+    	follower = new BreakerTrajectoryFollower( BreakerTrajectoryGenerator.getTrajectory(waypoints) );
 		Odometry.reset();
 		
 		//Wait 100ms for Device Catchup
@@ -36,15 +36,13 @@ public class DriveTrajectory extends BreakerPathAction {
     }
 
     public boolean update() {
-    	DriveActions.set(
-    		DriveActions.applyDriveStraight(
-    			f.getNextDriveSignal(
-    				Odometry.getPosition()
-    			)
-    		)
-    	);
+    	RobotDriveSignal nextSignal = follower.getNextDriveSignal(Odometry.getPosition());
+		nextSignal = DriveActions.applyDriveStraight(nextSignal);
+    	DriveActions.set(nextSignal);
     	
-		return f.isFinished();
+    	console.log(nextSignal.toString());
+    	
+		return follower.isFinished();
     }
 
     public void end() {

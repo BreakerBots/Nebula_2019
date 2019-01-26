@@ -7,6 +7,7 @@ import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
 import frc.team5104.subsystem.drive.RobotPosition;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.Units;
+import frc.team5104.util.console;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Trajectory.Segment;
@@ -58,17 +59,21 @@ public class BreakerTrajectoryFollower {
 		double w = calcAngleVel(current.x, current.y, current.heading, current.velocity, w_d);	  //Angular velocity
 
 		//Clamp Angular and Linear Velocities
-		//v = clamp(v, -20, 20);
-		//w = clamp(w, Math.PI * -2.0, Math.PI * 2.0);
+		v = BreakerMath.clamp(v, -20, 20);
+		w = BreakerMath.clamp(w, Math.PI * -2.0, Math.PI * 2.0);
 
 		//Convert Angular and Linear Velocities to into wheel speeds 
-		left  = -((+_DriveConstants._wheelBaseWidth * w) / 2 + v);
-		right = -((-_DriveConstants._wheelBaseWidth * w) / 2 + v);
+		left  = ((+_DriveConstants._wheelBaseWidth * w) / 2 + v);
+		right = ((-_DriveConstants._wheelBaseWidth * w) / 2 + v);
 
 		//Go to the next index
 		i += 1;
 	   
-		return new RobotDriveSignal(left, right, DriveUnit.feetPerSecond);
+		return new RobotDriveSignal(
+				BreakerMath.clamp(left, -5, 5), 
+				BreakerMath.clamp(right, -5, 5), 
+				DriveUnit.feetPerSecond
+			);
 	}
 
 	// -- Other -- \\
