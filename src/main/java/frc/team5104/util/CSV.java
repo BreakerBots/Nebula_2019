@@ -5,6 +5,10 @@ import java.io.PrintWriter;
 
 /**
  * A simple handler for saving CSV files.
+ * 
+ * SCP Pull command:
+ * scp lvuser@10.51.4.2:folder/filename.txt filename.csv
+ * 
  */
 public class CSV {
 	public String content;
