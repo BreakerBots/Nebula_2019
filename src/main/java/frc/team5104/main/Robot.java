@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
+import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.BreakerSubsystemManager;
@@ -9,6 +10,7 @@ import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.teleop.BreakerTeleopController;
 import frc.team5104.teleop.Drive;
+import frc.team5104.util.CSV;
 import frc.team5104.util.console;
 import frc.team5104.util.controller;
 import frc.team5104.util.console.c;
@@ -38,10 +40,11 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 		Odometry.reset();
 	}
 	
+	public static CSV csv = new CSV(new String[] { "C", "T" });
 	public void mainDisabled() {
 		BreakerSubsystemManager.disabled();
 		console.logFile.end();
-		Drive.log.writeFile("vision_temp", "urmom");
+		csv.writeFile("vision_temp", "urmom");
 	}
 
 	public void mainLoop() {
@@ -65,10 +68,11 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 
 	//Auto
 	public void autoEnabled() {
-		//BreakerPathScheduler.set(
+		Devices.Main.compressor.stop();
+		BreakerPathScheduler.set(
 		//	AutoSelector.getAuto()
- 		//	AutoSelector.Paths.Curve.getPath()
-		//);
+ 			AutoSelector.Paths.Curve.getPath()
+		);
 	}
 	public void autoLoop() { BreakerPathScheduler.update(); }
 	

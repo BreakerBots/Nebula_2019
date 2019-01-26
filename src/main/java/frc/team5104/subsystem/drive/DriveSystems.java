@@ -95,12 +95,8 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 			return a;
 		}
 		
-		public static void calibrate() {
-//			Devices.Drive.L2.
-		}
-		
-		public static void reset() {
-//			Devices.Drive.L2
+		public static void reset(int timeoutMs) {
+			Devices.Drive.gyro.setFusedHeading(0, timeoutMs);
 		}
 	}
 	
@@ -162,7 +158,7 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 		DriveActions.stop();
 		
 		//Reset Gyro
-		gyro.reset();
+		gyro.reset(10);
 		
 		//Reset Encoder
 		encoders.reset(10);

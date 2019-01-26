@@ -10,7 +10,7 @@ public class Curve extends BreakerPath {
 	public Curve() {
 		add(new DriveTrajectory(new Waypoint[] {
 				new Waypoint(0, 0, 0),
-				new Waypoint(2, 2, 0)
+				new Waypoint(3, 7, 90)
 			}));
 		add(new DriveStop());
 	}

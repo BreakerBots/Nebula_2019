@@ -2,6 +2,7 @@
 package frc.team5104.subsystem.drive;
 
 import frc.team5104.main._RobotConstants;
+import frc.team5104.util.BreakerMath;
 import frc.team5104.util.Units;
 import frc.team5104.util.console;
 
@@ -23,7 +24,7 @@ public class Odometry {
 			currentPos = (DriveSystems.encoders.getLeft() + DriveSystems.encoders.getRight()) / 2.0;
 			dPos = Units.ticksToFeet(currentPos - lastPos, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter);
 			lastPos = currentPos;
-			//theta = Units.degreesToRadians(BreakerMath.boundAngle180(DriveSystems.gyro.getAngle()));
+			theta = Units.degreesToRadians(BreakerMath.boundAngle180(DriveSystems.gyro.getAngle()));
             position.addX(Math.cos(theta) * dPos);
             position.addY(Math.sin(theta) * dPos);
             position.setTheta(theta);
@@ -51,7 +52,7 @@ public class Odometry {
 		
 		stop();
 		
-		//DriveSystems.gyro.reset();
+		DriveSystems.gyro.reset(10);
 		DriveSystems.encoders.reset(10);
 		
 		try { Thread.sleep(10); } catch (Exception e) {}

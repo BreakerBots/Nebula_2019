@@ -8,7 +8,6 @@ import java.io.PrintWriter;
  * 
  * SCP Pull command:
  * scp lvuser@10.51.4.2:folder/filename.txt filename.csv
- * 
  */
 public class CSV {
 	public String content;
