@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
+import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.BreakerSubsystemManager;
@@ -45,6 +46,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	}
 
 	public void mainLoop() {
+		console.log(BreakerRobotController.getMode());
 		if (enabled) {
 			BreakerSubsystemManager.update();
 			
@@ -65,10 +67,10 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 
 	//Auto
 	public void autoEnabled() {
-		//BreakerPathScheduler.set(
+		BreakerPathScheduler.set(
 		//	AutoSelector.getAuto()
- 		//	AutoSelector.Paths.Curve.getPath()
-		//);
+ 			AutoSelector.Paths.Curve.getPath()
+		);
 	}
 	public void autoLoop() { BreakerPathScheduler.update(); }
 	
