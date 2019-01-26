@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 /**
  * A simple handler for saving CSV files.
+ * scp lvuser@10.51.4.2:directory/file.txt file.csv
  */
 public class CSV {
 	public String content;

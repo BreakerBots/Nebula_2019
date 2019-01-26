@@ -10,6 +10,7 @@ import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.teleop.BreakerTeleopController;
 import frc.team5104.teleop.Drive;
+import frc.team5104.util.CSV;
 import frc.team5104.util.console;
 import frc.team5104.util.controller;
 import frc.team5104.util.console.c;
@@ -39,14 +40,14 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 		Odometry.reset();
 	}
 	
+	public static CSV csv = new CSV(new String[] { "C", "T" });
 	public void mainDisabled() {
 		BreakerSubsystemManager.disabled();
 		console.logFile.end();
-		Drive.log.writeFile("vision_temp", "urmom");
+		csv.writeFile("vision_temp", "urmom");
 	}
 
 	public void mainLoop() {
-		console.log(Devices.Drive.L1.getOutputCurrent());
 		if (enabled) {
 			BreakerSubsystemManager.update();
 			

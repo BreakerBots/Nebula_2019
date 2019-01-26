@@ -70,8 +70,8 @@ public class BreakerTrajectoryFollower {
 		i += 1;
 	   
 		return new RobotDriveSignal(
-				BreakerMath.clamp(left, -5, 5), 
-				BreakerMath.clamp(right, -5, 5), 
+				BreakerMath.clamp(left, -6, 6), 
+				BreakerMath.clamp(right, -6, 6), 
 				DriveUnit.feetPerSecond
 			);
 	}

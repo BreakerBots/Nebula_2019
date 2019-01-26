@@ -20,8 +20,6 @@ public class Drive {
 	public static final CurveInterpolator vTeleopLeftSpeed  = new CurveInterpolator(HMI.Drive._driveCurveChange, HMI.Drive._driveCurve);
 	public static final CurveInterpolator vTeleopRightSpeed = new CurveInterpolator(HMI.Drive._driveCurveChange, HMI.Drive._driveCurve);
 	
-	public static CSV log = new CSV(new String[] { "CurrentEspeedody" });
-	
 	public static void handle() {
 		//Get inputs
 		double turn = HMI.Drive._turn.getAxis();
@@ -49,12 +47,6 @@ public class Drive {
 		
 		//Apply min speed
 		signal = DriveActions.applyMotorMinSpeed(signal);
-		
-		if (Control.X.getHeld()) {
-			signal.leftSpeed = 1;
-			signal.rightSpeed = 1;
-			log.update(new String[] { ""+Units.talonVelToFeetPerSecond(Devices.Drive.L1.getSelectedSensorVelocity(), _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter)});
-		}
 		
 		//Set talon speeds
 		DriveActions.set(signal);
