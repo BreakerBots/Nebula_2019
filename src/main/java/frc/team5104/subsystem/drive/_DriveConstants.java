@@ -29,7 +29,7 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	//public static final int _currentLimitSustained = 36;  //(Current) [Tune/Choose]
 	public static final int _pidId = 0;
 	public static final double _pidF = 0.042227359;
-	public static final double _pidP = 0.285;
-	public static final double _pidI = 0.00;
-	public static final double _pidD = 12.0;
+	public static final double _pidP = 10;//0.285;
+	public static final double _pidI = 0;
+	public static final double _pidD = 0;//12.0;
 }

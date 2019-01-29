@@ -18,7 +18,6 @@ public class AutoSelector {
 	
 	//A trick to the pre initialize all the paths
 	public static enum Paths {
-		Baseline(new Baseline()),
 		Curve(new Curve());
 		
 		BreakerPath path;
@@ -33,7 +32,7 @@ public class AutoSelector {
 	public static BreakerPath getAuto() {
 		console.sets.create("GetAuto");
 		//Default Path is Baseline
-		BreakerPath auto = Paths.Baseline.getPath();
+		BreakerPath auto = Paths.Curve.getPath();
 
 		Thread gameDataThread = new Thread() {
 			public void run() {

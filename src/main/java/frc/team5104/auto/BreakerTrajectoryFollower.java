@@ -2,15 +2,13 @@
 package frc.team5104.auto;
 
 import frc.team5104.subsystem.drive._DriveConstants;
+import frc.team5104.auto.util.Trajectory;
+import frc.team5104.auto.util.TrajectorySegment;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
 import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
 import frc.team5104.subsystem.drive.RobotPosition;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.Units;
-import frc.team5104.util.console;
-import jaci.pathfinder.Pathfinder;
-import jaci.pathfinder.Trajectory;
-import jaci.pathfinder.Trajectory.Segment;
 
 /**
  * Pathfinder Trajectory Follower (Ramsete Follower)
@@ -47,9 +45,8 @@ public class BreakerTrajectoryFollower {
 		if (isFinished())
 			return new RobotDriveSignal(left, right, DriveUnit.feetPerSecond);
 		
-
 		//Get Current Segment from index
-		Segment current = trajectory.get(i);
+		TrajectorySegment current = trajectory.get(i);
 		
 		//Find wanted rate of change of the heading (angle)
 		double w_d = calcW_d();
@@ -70,8 +67,9 @@ public class BreakerTrajectoryFollower {
 		i += 1;
 	   
 		return new RobotDriveSignal(
-				BreakerMath.clamp(left, -6, 6), 
-				BreakerMath.clamp(right, -6, 6), 
+				//BreakerMath.clamp(left, -6, 6), 
+				//BreakerMath.clamp(right, -6, 6), 
+				left, right,
 				DriveUnit.feetPerSecond
 			);
 	}
@@ -85,7 +83,7 @@ public class BreakerTrajectoryFollower {
 	}
 
 	public boolean isFinished() {
-		return i == trajectory.length();
+		return false;//i == trajectoryPair.length();
 	}
 	
 	// -- Calculations -- \\
@@ -93,7 +91,7 @@ public class BreakerTrajectoryFollower {
 		if (i < trajectory.length()-1) {
 			double lastTheta = trajectory.get(i).heading;
 			double nextTheta = trajectory.get(i + 1).heading; 
-			return (nextTheta - lastTheta) / trajectory.get(i).dt;
+			return (nextTheta - lastTheta) / trajectory.get(i).deltaTime;
 		} 
 		else {
 			return 0;
@@ -103,7 +101,7 @@ public class BreakerTrajectoryFollower {
 	private double calcVel(double x_d, double y_d, double theta_d, double v_d, double w_d) {
 		double k = calcK(v_d, w_d);
 		double thetaError = theta_d - robotPosition.getTheta();
-		thetaError = Units.degreesToRadians(BreakerMath.boundAngle180(Units.radiansToDegress(thetaError)));
+		thetaError = Units.degreesToRadians(BreakerMath.boundDegrees180(Units.radiansToDegress(thetaError)));
 	   
 		return 
 				v_d * Math.cos(thetaError) 
@@ -114,7 +112,7 @@ public class BreakerTrajectoryFollower {
 	private double calcAngleVel(double x_d, double y_d, double theta_d, double v_d, double w_d) {
 		double k = calcK(v_d, w_d);
 		double thetaError = theta_d - robotPosition.getTheta();
-		thetaError = Pathfinder.d2r(Pathfinder.boundHalfDegrees(Pathfinder.r2d(thetaError)));
+		thetaError = Math.toDegrees(BreakerMath.boundDegrees180(Math.toRadians(thetaError)));
 		double sinThetaErrOverThetaErr;
 		
 		if (Math.abs(thetaError) < 0.00001)

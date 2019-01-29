@@ -6,10 +6,8 @@ import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.drive.DriveManager;
-import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.teleop.BreakerTeleopController;
-import frc.team5104.teleop.Drive;
 import frc.team5104.util.CSV;
 import frc.team5104.util.console;
 import frc.team5104.util.controller;
@@ -40,7 +38,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 		Odometry.reset();
 	}
 	
-	public static CSV csv = new CSV(new String[] { "C", "T" });
+	public static CSV csv = new CSV(new String[] { "LeftCurrent", "LeftTarget", "RightCurrent", "RightTarget" });
 	public void mainDisabled() {
 		BreakerSubsystemManager.disabled();
 		console.logFile.end();

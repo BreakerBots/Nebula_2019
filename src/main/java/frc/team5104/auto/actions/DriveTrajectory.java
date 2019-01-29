@@ -4,18 +4,16 @@ package frc.team5104.auto.actions;
 import frc.team5104.auto.BreakerPathAction;
 import frc.team5104.auto.BreakerTrajectoryFollower;
 import frc.team5104.auto.BreakerTrajectoryGenerator;
+import frc.team5104.auto.util.Waypoint;
 import frc.team5104.main.Devices;
 import frc.team5104.main.Robot;
-import frc.team5104.main.Devices.Drive;
 import frc.team5104.subsystem.drive.DriveActions;
-import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
 import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.util.Units;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
-import jaci.pathfinder.Waypoint;
 
 /**
  * Follow a trajectory using the Breaker Trajectory Follower (Ramses Follower)
@@ -46,7 +44,12 @@ public class DriveTrajectory extends BreakerPathAction {
 		nextSignal = DriveActions.applyDriveStraight(nextSignal);
     	DriveActions.set(nextSignal);
     	
-    	Robot.csv.update(new String[] { ""+Units.talonVelToFeetPerSecond(Devices.Drive.L1.getSelectedSensorVelocity(), _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), ""+nextSignal.leftSpeed });
+    	Robot.csv.update(new String[] { 
+    			""+Units.talonVelToFeetPerSecond(Devices.Drive.L1.getSelectedSensorVelocity(), _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
+    			""+nextSignal.leftSpeed,
+    			""+Units.talonVelToFeetPerSecond(Devices.Drive.R1.getSelectedSensorVelocity(), _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
+    			""+nextSignal.rightSpeed
+    		});
     	
 		return follower.isFinished();
     }
