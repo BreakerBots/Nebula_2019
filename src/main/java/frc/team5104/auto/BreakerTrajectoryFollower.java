@@ -56,8 +56,8 @@ public class BreakerTrajectoryFollower {
 		double w = calcAngleVel(current.x, current.y, current.heading, current.velocity, w_d);	  //Angular velocity
 
 		//Clamp Angular and Linear Velocities
-		v = BreakerMath.clamp(v, -20, 20);
-		w = BreakerMath.clamp(w, Math.PI * -2.0, Math.PI * 2.0);
+		v = BreakerMath.clamp(v, -_AutoConstants._maxVelocity, _AutoConstants._maxVelocity);
+		w = BreakerMath.clamp(w, Math.PI * -2, Math.PI * 2);
 
 		//Convert Angular and Linear Velocities to into wheel speeds 
 		left  = ((+_DriveConstants._wheelBaseWidth * w) / 2 + v);
@@ -67,8 +67,6 @@ public class BreakerTrajectoryFollower {
 		i += 1;
 	   
 		return new RobotDriveSignal(
-				//BreakerMath.clamp(left, -6, 6), 
-				//BreakerMath.clamp(right, -6, 6), 
 				left, right,
 				DriveUnit.feetPerSecond
 			);
@@ -83,7 +81,7 @@ public class BreakerTrajectoryFollower {
 	}
 
 	public boolean isFinished() {
-		return false;//i == trajectoryPair.length();
+		return i == trajectory.length();
 	}
 	
 	// -- Calculations -- \\

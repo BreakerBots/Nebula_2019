@@ -44,13 +44,6 @@ public class DriveTrajectory extends BreakerPathAction {
 		nextSignal = DriveActions.applyDriveStraight(nextSignal);
     	DriveActions.set(nextSignal);
     	
-    	Robot.csv.update(new String[] { 
-    			""+Units.talonVelToFeetPerSecond(Devices.Drive.L1.getSelectedSensorVelocity(), _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
-    			""+nextSignal.leftSpeed,
-    			""+Units.talonVelToFeetPerSecond(Devices.Drive.R1.getSelectedSensorVelocity(), _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
-    			""+nextSignal.rightSpeed
-    		});
-    	
 		return follower.isFinished();
     }
 
