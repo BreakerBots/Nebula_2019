@@ -44,6 +44,10 @@ public class VisionActions {
 	private static boolean targetVisible() {
 		return VisionSystems.limelight.getA() != 0;
 	}
+	
+	public static boolean targetAligned() {
+		return targetVisible() && turnController.onTarget();
+	}
 
 	// Change the pipeline you are using
 	public static void changePipeline(VisionManager.VisionPipeline p) {
