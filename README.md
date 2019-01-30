@@ -1,5 +1,5 @@
 # Deep Space 2019
-The Robot code for all three (Alpha, Bravo, and Charlie) robots. Made for the 2019 FRC game Deep Space.
+The Robot code for all three (Comet, Astro, and Nebula) robots. Made for the 2019 FRC game Deep Space.
 
 ### Setup Instructions
 - Download or Clone this Repository
