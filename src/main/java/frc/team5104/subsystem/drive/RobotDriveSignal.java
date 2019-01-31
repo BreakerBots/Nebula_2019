@@ -18,6 +18,7 @@ public class RobotDriveSignal {
 	// Robot Drive Signal Variables
 	public double leftSpeed;
 	public double rightSpeed;
+	public double feedForward = Double.POSITIVE_INFINITY;
 	public DriveUnit unit;
 	
 	/**
@@ -39,6 +40,19 @@ public class RobotDriveSignal {
 		this.leftSpeed = leftSpeed;
 		this.rightSpeed = rightSpeed;
 		this.unit = unit;
+	}
+	
+	/**
+	 * Creates a Robot Drive Signal, in the Feet Per Second Unit, with the specified feedForward value.
+	 * @param leftSpeed  Speed for the left  motors of the drive train to run
+	 * @param rightSpeed Speed for the right motors of the drive train to run
+	 * @param feedForward The specified feed forward value.
+	 */
+	public RobotDriveSignal(double leftSpeed, double rightSpeed, double feedForward) {
+		this.leftSpeed = leftSpeed;
+		this.rightSpeed = rightSpeed;
+		this.feedForward = feedForward;
+		this.unit = DriveUnit.feetPerSecond;
 	}
 	
 	public String toString() {

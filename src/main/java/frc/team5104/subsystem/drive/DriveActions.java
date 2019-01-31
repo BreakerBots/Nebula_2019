@@ -23,16 +23,25 @@ public class DriveActions extends BreakerSubsystem.Actions {
 				break;
 			}
 			case feetPerSecond: {
-				DriveSystems.motors.set(
-						Units.feetPerSecondToTalonVel(signal.leftSpeed, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
-						Units.feetPerSecondToTalonVel(signal.rightSpeed, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
-						ControlMode.Velocity
-					);
+				if (signal.feedForward != Double.POSITIVE_INFINITY) {
+					DriveSystems.motors.setWFF(
+							Units.feetPerSecondToTalonVel(signal.leftSpeed, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
+							Units.feetPerSecondToTalonVel(signal.rightSpeed, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
+							signal.feedForward
+						);
+				}
+				else {
+					DriveSystems.motors.set(
+							Units.feetPerSecondToTalonVel(signal.leftSpeed, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
+							Units.feetPerSecondToTalonVel(signal.rightSpeed, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
+							ControlMode.Velocity
+						);
+				}
 				break;
 			}
 		}
 	}
-	
+
 	public static RobotDriveSignal applyDriveStraight(RobotDriveSignal signal) {
 		double leftMult = (signal.leftSpeed > 0 ? 
 				_DriveConstants._leftAccountReverse : 

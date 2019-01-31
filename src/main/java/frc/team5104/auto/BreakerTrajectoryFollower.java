@@ -68,7 +68,7 @@ public class BreakerTrajectoryFollower {
 	   
 		return new RobotDriveSignal(
 				left, right,
-				DriveUnit.feetPerSecond
+				(_DriveConstants._kC + (_DriveConstants._kV * current.velocity) + (_DriveConstants._kA * current.acceleration))
 			);
 	}
 

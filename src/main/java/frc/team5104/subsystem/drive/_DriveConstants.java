@@ -22,14 +22,17 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	//Gyro
 	public static final double _gyroAngle = 0;   //(Degrees) [Measure] Yaw Angle of Gyro (Athena is 65)
 	
-	//Speed Control
-	public static final double _rampSeconds	= 0.0; //(Seconds) [Tune/Choose]
-	//public static final int _currentLimitPeak	= 80;  //(Current) [Tune/Choose]
-	//public static final int _currentLimitPeakTime	= 10;  //(Milliseconds) [Tune/Choose]
-	//public static final int _currentLimitSustained = 36;  //(Current) [Tune/Choose]
-	public static final int _pidId = 0;
-	public static final double _pidF = 0.042227359;
-	public static final double _pidP = 0.285;
-	public static final double _pidI = 0;
-	public static final double _pidD = 12.0;
+	//Current Limiting
+	public static final int _currentLimit = 60; //(Amps) [Measure (<250, or ~240/#ofmotorsinurdrivetrain)] The current limit of the drive motors
+	
+	//Speed Control (Regular)
+	public static final double _kP = 0.285;
+	public static final double _kI = 0;
+	public static final double _kD = 12.0;
+	
+	//Speed Control (Feed Forward)
+	public static final double _kF = 0;
+	public static final double _kC = 0;
+	public static final double _kV = 0;
+	public static final double _kA = 0;
 }

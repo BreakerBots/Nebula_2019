@@ -2,6 +2,7 @@
 package frc.team5104.subsystem.drive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -25,6 +26,10 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 		public static void set(double leftSpeed, double rightSpeed, ControlMode mode) {
 			L1.set(mode, leftSpeed);
 			R1.set(mode, rightSpeed);
+		}
+		public static void setWFF(double leftSpeed, double rightSpeed, double feedForward) {
+			L1.set(ControlMode.Velocity, leftSpeed, DemandType.ArbitraryFeedForward, feedForward);
+			R1.set(ControlMode.Velocity, rightSpeed, DemandType.ArbitraryFeedForward, feedForward);
 		}
 	}
 	
@@ -111,56 +116,35 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 		L2.set(ControlMode.Follower, L1.getDeviceID());
 		L1.setInverted(true);
 		L2.setInverted(true);
-	
 		L1.setNeutralMode(NeutralMode.Brake);
 		L2.setNeutralMode(NeutralMode.Brake);
-		
-		L1.configClosedloopRamp(_DriveConstants._rampSeconds, 10);
-        L2.configClosedloopRamp(_DriveConstants._rampSeconds, 10);
-		
-        L1.configAllowableClosedloopError(0, _DriveConstants._pidId, 10);
-        L1.config_kF(_DriveConstants._pidId, _DriveConstants._pidF, 10);
-        L1.config_kP(_DriveConstants._pidId, _DriveConstants._pidP, 10);
-        L1.config_kI(_DriveConstants._pidId, _DriveConstants._pidI, 10);
-        L1.config_kD(_DriveConstants._pidId, _DriveConstants._pidD, 10);
-        
-        //L1.configPeakCurrentLimit(DriveConstants._currentLimitPeak, 10);
-        //L1.configPeakCurrentDuration(DriveConstants._currentLimitPeakTime, 10);
-        //L1.configContinuousCurrentLimit(DriveConstants._currentLimitSustained, 10);
-        
-        //L1.enableCurrentLimit(true);
-        
+        L1.configAllowableClosedloopError(0, 0, 10);
+        L1.config_kF(0, _DriveConstants._kF, 10);
+        L1.config_kP(0, _DriveConstants._kP, 10);
+        L1.config_kI(0, _DriveConstants._kI, 10);
+        L1.config_kD(0, _DriveConstants._kD, 10);
+        L1.configContinuousCurrentLimit(_DriveConstants._currentLimit, 10);
+        L1.enableCurrentLimit(true);
         
         // Right Talons Config
         R2.set(ControlMode.Follower, R1.getDeviceID());
 		R1.setInverted(false);
 		R2.setInverted(false);
-	
 		R1.setNeutralMode(NeutralMode.Brake);
 		R2.setNeutralMode(NeutralMode.Brake);
-		
-		R1.configClosedloopRamp(_DriveConstants._rampSeconds, 10);
-        R2.configClosedloopRamp(_DriveConstants._rampSeconds, 10);
-		
-        R1.configAllowableClosedloopError(0, _DriveConstants._pidId, 10);
-        R1.config_kF(_DriveConstants._pidId, _DriveConstants._pidF, 10);
-        R1.config_kP(_DriveConstants._pidId, _DriveConstants._pidP, 10);
-        R1.config_kI(_DriveConstants._pidId, _DriveConstants._pidI, 10);
-        R1.config_kD(_DriveConstants._pidId, _DriveConstants._pidD, 10);
+        R1.configAllowableClosedloopError(0, 0, 10);
+        R1.config_kF(0, _DriveConstants._kF, 10);
+        R1.config_kP(0, _DriveConstants._kP, 10);
+        R1.config_kI(0, _DriveConstants._kI, 10);
+        R1.config_kD(0, _DriveConstants._kD, 10);
+        R1.configContinuousCurrentLimit(_DriveConstants._currentLimit, 10);
+        R1.enableCurrentLimit(true);
         
-        //R1.configPeakCurrentLimit(DriveConstants._currentLimitPeak, 10);
-        //R1.configPeakCurrentDuration(DriveConstants._currentLimitPeakTime, 10);
-        //R1.configContinuousCurrentLimit(DriveConstants._currentLimitSustained, 10);
-        
-        //R1.enableCurrentLimit(true);
-		
 		//Stop the motors
 		DriveActions.stop();
 		
-		//Reset Gyro
+		//Reset Gyro + Encodersg
 		gyro.reset(10);
-		
-		//Reset Encoder
 		encoders.reset(10);
 		
 		//Wait until Talons have Caught Up
