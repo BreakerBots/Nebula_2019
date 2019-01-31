@@ -5,13 +5,9 @@ import frc.team5104.auto.BreakerPathAction;
 import frc.team5104.auto.BreakerTrajectoryFollower;
 import frc.team5104.auto.BreakerTrajectoryGenerator;
 import frc.team5104.auto.util.Waypoint;
-import frc.team5104.main.Devices;
-import frc.team5104.main.Robot;
 import frc.team5104.subsystem.drive.DriveActions;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
-import frc.team5104.subsystem.drive._DriveConstants;
-import frc.team5104.util.Units;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 

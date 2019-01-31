@@ -37,6 +37,7 @@ public class Spline {
 		arc_length_ = -1;
 	}
 
+	@SuppressWarnings("unused")
 	private static boolean almostEqual(double x, double y) {
 		return Math.abs(x - y) < 1E-6;
 	}
@@ -44,49 +45,36 @@ public class Spline {
 	public static boolean reticulateSplines(Waypoint start, Waypoint goal, Spline result, Type type) {
 		return reticulateSplines(start.x, start.y, start.theta, goal.x, goal.y, goal.theta, result, type);
 	}
-	public static boolean reticulateSplines(double x0, double y0, double theta0,
-					double x1, double y1, double theta1, Spline result, Type type) {
+	public static boolean reticulateSplines(double x0, double y0, double theta0, double x1, double y1, double theta1, Spline result, Type type) {
 		result.type_ = type;
 
-		// Transform x to the origin
+		//Move point 0 to origin
 		result.x_offset_ = x0;
 		result.y_offset_ = y0;
 		double x1_hat = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
-		if (x1_hat == 0) {
+		if (x1_hat == 0)
 			return false;
-		}
 		result.knot_distance_ = x1_hat;
 		result.theta_offset_ = Math.atan2(y1 - y0, x1 - x0);
-		double theta0_hat = BreakerMath.radianDiff(
-						result.theta_offset_, theta0);
-		double theta1_hat = BreakerMath.radianDiff(
-						result.theta_offset_, theta1);
-		// We cannot handle vertical slopes in our rotated, translated basis.
-		// This would mean the user wants to end up 90 degrees off of the straight
-		// line between p0 and p1.
-		if (almostEqual(Math.abs(theta0_hat), Math.PI / 2)
-						|| almostEqual(Math.abs(theta1_hat), Math.PI / 2)) {
-			return false;
-		}
-		// We also cannot handle the case that the end angle is facing towards the
-		// start angle (total turn > 90 degrees).
-		if (Math.abs(BreakerMath.radianDiff(theta0_hat,
-						theta1_hat))
-						>= Math.PI / 2) {
-			return false;
-		}
+		double theta0_hat = BreakerMath.radianDiff(result.theta_offset_, theta0);
+		double theta1_hat = BreakerMath.radianDiff(result.theta_offset_, theta1);
+		
+		//90d Removal :l
+		//if (Math.abs(BreakerMath.radianDiff(theta0_hat, theta1_hat)) >= Math.PI / 2 || almostEqual(Math.abs(theta0_hat), Math.PI / 2) || almostEqual(Math.abs(theta1_hat), Math.PI / 2))
+		//	return false;
+		
 		// Turn angles into derivatives (slopes)
 		double yp0_hat = Math.tan(theta0_hat);
 		double yp1_hat = Math.tan(theta1_hat);
 
 		if (type == CubicHermite) {
-			// Calculate the cubic spline coefficients
 			result.a_ = 0;
 			result.b_ = 0;
 			result.c_ = (yp1_hat + yp0_hat) / (x1_hat * x1_hat);
 			result.d_ = -(2 * yp0_hat + yp1_hat) / x1_hat;
 			result.e_ = yp0_hat;
-		} else if (type == QuinticHermite) {
+		} 
+		else if (type == QuinticHermite) {
 			result.a_ = -(3 * (yp0_hat + yp1_hat)) / (x1_hat * x1_hat * x1_hat * x1_hat);
 			result.b_ = (8 * yp0_hat + 7 * yp1_hat) / (x1_hat * x1_hat * x1_hat);
 			result.c_ = -(6 * yp0_hat + 4 * yp1_hat) / (x1_hat * x1_hat);
@@ -98,9 +86,8 @@ public class Spline {
 	}
 
 	public double calculateLength() {
-		if (arc_length_ >= 0) {
+		if (arc_length_ >= 0)
 			return arc_length_;
-		}
 
 		final int kNumSamples = 100000;
 		double arc_length = 0;
