@@ -5,6 +5,8 @@ import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.BreakerSubsystem;
 
 class ChuteManager extends BreakerSubsystem.Manager {
+	static boolean rampUp = true;
+	
 	public void enabled(RobotMode mode) {
 		
 	}

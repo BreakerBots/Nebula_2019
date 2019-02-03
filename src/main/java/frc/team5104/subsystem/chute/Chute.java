@@ -15,4 +15,12 @@ public class Chute extends BreakerSubsystem.Actions {
 	public static void idle() {
 		
 	}
+	
+	public static void rampUp() {
+		
+	}
+	
+	public static void rampDown() {
+		
+	}
 }
