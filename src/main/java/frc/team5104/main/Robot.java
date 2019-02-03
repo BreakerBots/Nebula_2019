@@ -3,8 +3,8 @@ package frc.team5104.main;
 
 import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
-import frc.team5104.control.BreakerTeleopController;
-import frc.team5104.control.StateController;
+import frc.team5104.main.control.BreakerTeleopController;
+import frc.team5104.main.control.StateController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;

@@ -1,4 +1,4 @@
-package frc.team5104.control;
+package frc.team5104.main.control;
 
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.chute.Chute;

@@ -1,4 +1,4 @@
-package frc.team5104.control;
+package frc.team5104.main.control;
 
 import frc.team5104.main.BreakerRobotController;
 import frc.team5104.main.HMI;
