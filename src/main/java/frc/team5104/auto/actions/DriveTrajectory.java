@@ -5,7 +5,7 @@ import frc.team5104.auto.BreakerPathAction;
 import frc.team5104.auto.BreakerTrajectoryFollower;
 import frc.team5104.auto.BreakerTrajectoryGenerator;
 import frc.team5104.auto.util.Waypoint;
-import frc.team5104.subsystem.drive.DriveActions;
+import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
 import frc.team5104.util.console;
@@ -37,14 +37,14 @@ public class DriveTrajectory extends BreakerPathAction {
 
     public boolean update() {
     	RobotDriveSignal nextSignal = follower.getNextDriveSignal(Odometry.getPosition());
-		nextSignal = DriveActions.applyDriveStraight(nextSignal);
-    	DriveActions.set(nextSignal);
+		nextSignal = Drive.applyDriveStraight(nextSignal);
+    	Drive.set(nextSignal);
     	
 		return follower.isFinished();
     }
 
     public void end() {
-    	DriveActions.stop();
+    	Drive.stop();
     	console.log(c.AUTO, "Trajectory Finished in " + console.sets.getTime("RunTrajectoryTime") + "s at position " + Odometry.getPosition().toString());
     }
 }

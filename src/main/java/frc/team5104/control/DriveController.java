@@ -1,20 +1,15 @@
-package frc.team5104.teleop;
+package frc.team5104.control;
 
-import frc.team5104.main.Devices;
 import frc.team5104.main.HMI;
-import frc.team5104.main.Robot;
-import frc.team5104.subsystem.drive.DriveActions;
+import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
-import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
 import frc.team5104.util.Curve;
 import frc.team5104.util.CurveInterpolator;
 import frc.team5104.util.Deadband;
-import frc.team5104.util.Units;
-import frc.team5104.util.controller.Control;
 
-public class Drive {
+public class DriveController {
 	//Drive
 	public static final CurveInterpolator vTeleopLeftSpeed  = new CurveInterpolator(HMI.Drive._driveCurveChange, HMI.Drive._driveCurve);
 	public static final CurveInterpolator vTeleopRightSpeed = new CurveInterpolator(HMI.Drive._driveCurveChange, HMI.Drive._driveCurve);
@@ -42,25 +37,13 @@ public class Drive {
 		);
 		
 		//Apply drive straight effects
-		signal = DriveActions.applyDriveStraight(signal);
+		signal = Drive.applyDriveStraight(signal);
 		
 		//Apply min speed
-		signal = DriveActions.applyMotorMinSpeed(signal);
-		
-		if (Control.X.getHeld()) {
-			signal.leftSpeed = 5;
-			signal.rightSpeed = 5;
-			signal.unit = DriveUnit.feetPerSecond;
-			Robot.csv.update(new String[] { 
-	    			""+Units.talonVelToFeetPerSecond(Devices.Drive.L1.getSelectedSensorVelocity(), _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
-	    			""+5,
-	    			""+Units.talonVelToFeetPerSecond(Devices.Drive.R1.getSelectedSensorVelocity(), _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
-	    			""+5
-	    		});
-		}
+		signal = Drive.applyMotorMinSpeed(signal);
 		
 		//Set talon speeds
-		DriveActions.set(signal);
+		Drive.set(signal);
 		
 		//Shifting
 		if (HMI.Drive._shift.getPressed())

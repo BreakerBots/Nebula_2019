@@ -4,8 +4,7 @@ package frc.team5104.subsystem.chute;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.BreakerSubsystem;
 
-public class ChuteManager extends BreakerSubsystem.Manager {
-	
+class ChuteManager extends BreakerSubsystem.Manager {
 	public void enabled(RobotMode mode) {
 		
 	}

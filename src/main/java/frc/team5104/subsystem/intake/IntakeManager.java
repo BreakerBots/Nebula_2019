@@ -4,8 +4,7 @@ package frc.team5104.subsystem.intake;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.BreakerSubsystem;
 
-public class IntakeManager extends BreakerSubsystem.Manager {
-	
+class IntakeManager extends BreakerSubsystem.Manager {
 	public void enabled(RobotMode mode) {
 		
 	}

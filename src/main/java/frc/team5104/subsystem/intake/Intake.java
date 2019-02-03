@@ -3,6 +3,12 @@ package frc.team5104.subsystem.intake;
 
 import frc.team5104.subsystem.BreakerSubsystem;
 
-public class IntakeActions extends BreakerSubsystem.Actions {
+public class Intake extends BreakerSubsystem.Actions {
+	public static void intake() {
+		
+	}
 	
+	public static void idle() {
+		
+	}
 }

@@ -7,7 +7,7 @@ import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
 import frc.team5104.util.Units;
 
-public class DriveActions extends BreakerSubsystem.Actions {
+public class Drive extends BreakerSubsystem.Actions {
 	/**
 	 * Sets the speed of the drive motors to the corresponding speeds specified in the Drive Signal
 	 * @param signal

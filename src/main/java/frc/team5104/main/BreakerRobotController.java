@@ -10,6 +10,7 @@ import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
+import frc.team5104.vision.VisionManager;
 
 public class BreakerRobotController extends BreakerRobotControllerBase {
 	public static enum RobotMode {
@@ -29,18 +30,18 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 	
 	public void startCompetition() {
 		HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_Iterative);
-		
 		console.sets.create("RobotInit");
 		console.log(c.MAIN, t.INFO, "Initializing Code");
 		
-		//Initialize Robot
 		robot = new Robot();
+		
+		HAL.observeUserProgramStarting();
+		
+		//Initialize Vision
+		VisionManager.init();
 		
 		//Run Odometry
 		Odometry.run();
-		
-		//Update HAL
-		HAL.observeUserProgramStarting();
 		
 		console.log(c.MAIN, "Devices Created and Seth Proofed");
 		console.sets.log(c.MAIN, t.INFO, "RobotInit", "Initialization took ");
@@ -59,7 +60,6 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 
 	//Main Loop
 	private void loop() {
-		//Disabled
 		if (isDisabled())
 			setMode(RobotMode.Disabled);
 		
@@ -79,7 +79,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 		switch(currentMode) {
 			case Auto: {
 				if (lastMode != currentMode)
-					robot.autoEnabled();
+					robot.autoStart();
 					
 				robot.autoLoop();
 				HAL.observeUserProgramAutonomous();
@@ -87,7 +87,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 			}
 			case Teleop: {
 				if (lastMode != currentMode)
-					robot.teleopEnabled();
+					robot.teleopStart();
 				
 				robot.teleopLoop();
 				HAL.observeUserProgramTeleop();
@@ -95,7 +95,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 			}
 			case Vision: {
 				if (lastMode != currentMode)
-					robot.visionEnabled();
+					robot.visionStart();
 				
 				robot.visionLoop();
 				HAL.observeUserProgramTeleop();
@@ -103,7 +103,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 			}
 			case Test: {
 				if (lastMode != currentMode)
-					robot.testEnabled();
+					robot.testStart();
 				
 				robot.testLoop();
 				HAL.observeUserProgramTest();
@@ -112,10 +112,10 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 			case Disabled: {
 				if (lastMode != currentMode)
 					switch (lastMode) {
-						case Auto: 	 { robot.autoDisabled(); break; }
-						case Teleop: { robot.teleopDisabled(); break; }
-						case Test: 	 { robot.testDisabled(); break; }
-						case Vision :{ robot.visionDisabled(); break; }
+						case Auto: 	 { robot.autoStop(); break; }
+						case Teleop: { robot.teleopStop(); break; }
+						case Test: 	 { robot.testStop(); break; }
+						case Vision :{ robot.visionStop(); break; }
 						default: break;
 					}
 				
@@ -125,7 +125,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 			default: break;
 		}
 		
-		//Handle Mode Change
+		//Handle Main Disabling
 		if (lastMode != currentMode) {
 			if (currentMode == RobotMode.Disabled) {
 				robot.mainDisabled();
@@ -160,16 +160,16 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 		public void mainEnabled() { }
 		public void mainDisabled() { }
 		public void teleopLoop() { }
-		public void teleopEnabled() { }
-		public void teleopDisabled() { }
+		public void teleopStart() { }
+		public void teleopStop() { }
 		public void autoLoop() { }
-		public void autoEnabled() { }
-		public void autoDisabled() { }
+		public void autoStart() { }
+		public void autoStop() { }
 		public void testLoop() { }
-		public void testEnabled() { }
-		public void testDisabled() { }
+		public void testStart() { }
+		public void testStop() { }
 		public void visionLoop() { }
-		public void visionEnabled() { }
-		public void visionDisabled() { }
+		public void visionStart() { }
+		public void visionStop() { }
 	}
 }
