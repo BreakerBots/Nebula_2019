@@ -5,10 +5,10 @@ import frc.team5104.subsystem.BreakerSubsystem;
 
 public class Intake extends BreakerSubsystem.Actions {
 	public static void intake() {
-		
+		IntakeSystems.Arm.down();
 	}
 	
 	public static void idle() {
-		
+		IntakeSystems.Arm.up();
 	}
 }

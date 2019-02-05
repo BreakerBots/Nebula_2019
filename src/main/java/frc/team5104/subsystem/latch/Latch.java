@@ -5,14 +5,17 @@ import frc.team5104.subsystem.BreakerSubsystem;
 
 public class Latch extends BreakerSubsystem.Actions {
 	public static void intake() {
-		
+		LatchSystems.Lazyboy.up();
+		LatchSystems.Dad.open();
 	}
 	
 	public static void hold() {
-		
+		LatchSystems.Lazyboy.up();
+		LatchSystems.Dad.close();
 	}
 	
 	public static void idle() {
-		
+		LatchSystems.Lazyboy.down();
+		LatchSystems.Dad.close();	
 	}
 }

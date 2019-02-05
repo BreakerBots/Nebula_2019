@@ -32,4 +32,18 @@ public class Devices {
 		
 		public static DoubleSolenoid shift = new DoubleSolenoid(0, 1);
 	}
+	
+	//Cargo
+	public static class Cargo {
+		public static TalonSRX leftArm = TalonFactory.getTalon(21);
+		public static TalonSRX rightArm = TalonFactory.getTalon(22);
+		public static TalonSRX ramp = TalonFactory.getTalon(31);
+		public static DoubleSolenoid trapdoor = new DoubleSolenoid(2, 3);
+	}
+	
+	//Hatch
+	public static class Hatch {
+		public static DoubleSolenoid latch = new DoubleSolenoid(4, 5);
+		public static DoubleSolenoid lean = new DoubleSolenoid(6, 7);
+	}
 }

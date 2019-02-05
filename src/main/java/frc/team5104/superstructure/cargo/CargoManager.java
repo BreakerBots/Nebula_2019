@@ -25,7 +25,7 @@ class CargoManager extends BreakerSubsystem.Manager {
 			case eject:
 				Intake.idle();
 				Chute.eject();
-				CargoSystems.Motor.set(1);
+//				CargoSystems.Motor.set(1);
 				
 				if (System.currentTimeMillis() > ejectStart + 1000)
 					Cargo.idle();
@@ -37,12 +37,14 @@ class CargoManager extends BreakerSubsystem.Manager {
 			case intake:
 				Intake.intake();
 				Chute.intake();
-				CargoSystems.Motor.set(1);
+//				CargoSystems.Motor.set(1);
 				
 				if (ChuteSystems.BeamBreak.isHit())
 					Cargo.idle();
 				break;
 			default:
+				Intake.idle();
+				Chute.idle();
 				break;
 		}
 	}
