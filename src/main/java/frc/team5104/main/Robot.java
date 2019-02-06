@@ -8,6 +8,7 @@ import frc.team5104.main.control.StateController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
+import frc.team5104.subsystem.latch.LatchManager;
 import frc.team5104.util.console;
 import frc.team5104.util.controller;
 import frc.team5104.vision.VisionManager;
@@ -18,7 +19,8 @@ import frc.team5104.vision.VisionManager;
 public class Robot extends BreakerRobotController.BreakerRobot {
 	public Robot() {
 		BreakerSubsystemManager.throwSubsystems(
-			 new DriveManager()
+			 new DriveManager(),
+			 new LatchManager()
 		);
 	}
 	

@@ -8,7 +8,7 @@ import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.BreakerPositionController;
 
-class IntakeSystems extends BreakerSubsystem.Systems {
+public class IntakeSystems extends BreakerSubsystem.Systems {
 	//Devices
 	static TalonSRX leftArm = Devices.Cargo.leftArm;
 	static TalonSRX rightArm = Devices.Cargo.rightArm;
@@ -17,8 +17,8 @@ class IntakeSystems extends BreakerSubsystem.Systems {
 	static BreakerPositionController armDownController = new BreakerPositionController
 			(_IntakeConstants._kP, _IntakeConstants._kI, _IntakeConstants._kD, _IntakeConstants._tol, _IntakeConstants._downPos);
 	
-	static class Arm {
-		private static void set(double speed) {
+	public static class Arm {
+		public static void set(double speed) {
 			leftArm.set(ControlMode.PercentOutput, speed);
 			rightArm.set(ControlMode.PercentOutput, -speed);
 		}

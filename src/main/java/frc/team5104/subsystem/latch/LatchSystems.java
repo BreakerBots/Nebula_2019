@@ -8,7 +8,7 @@ import frc.team5104.subsystem.chute._ChuteConstants;
 
 public class LatchSystems extends BreakerSubsystem.Systems {
 	//Devices
-	static DoubleSolenoid lean = Devices.Hatch.lean;
+	static DoubleSolenoid lean = Devices.Hatch.lazyBoy;
 	static DoubleSolenoid latch = Devices.Hatch.latch;
 	
 	static class Lazyboy {

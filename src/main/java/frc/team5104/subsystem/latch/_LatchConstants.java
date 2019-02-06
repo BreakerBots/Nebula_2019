@@ -8,6 +8,6 @@ public class _LatchConstants {
 	public static DoubleSolenoid.Value _latchClose = DoubleSolenoid.Value.kReverse;
 
 	// Lazyboy
-	public static DoubleSolenoid.Value _leanUp = DoubleSolenoid.Value.kForward;
-	public static DoubleSolenoid.Value _leanDown = DoubleSolenoid.Value.kReverse;
+	public static DoubleSolenoid.Value _leanUp = DoubleSolenoid.Value.kReverse;
+	public static DoubleSolenoid.Value _leanDown = DoubleSolenoid.Value.kForward;
 }
