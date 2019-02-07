@@ -3,11 +3,12 @@ package frc.team5104.subsystem.latch;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class _LatchConstants {
-	// Dad
-	public static DoubleSolenoid.Value _latchOpen = DoubleSolenoid.Value.kForward;
-	public static DoubleSolenoid.Value _latchClose = DoubleSolenoid.Value.kReverse;
-
-	// Lazyboy
-	public static DoubleSolenoid.Value _leanUp = DoubleSolenoid.Value.kReverse;
-	public static DoubleSolenoid.Value _leanDown = DoubleSolenoid.Value.kForward;
+	//Dad
+	public static DoubleSolenoid.Value _dadOpen = DoubleSolenoid.Value.kForward;
+	
+	//Lazy Boy
+	public static DoubleSolenoid.Value _lazyBoyUp = DoubleSolenoid.Value.kReverse;
+	
+	//Intake Mode
+	public static int _intakeModeLength = 3000;
 }

@@ -16,44 +16,39 @@ class CargoManager extends BreakerSubsystem.Manager {
 	static CargoState currentState = CargoState.idle;
 	static long ejectStart = System.currentTimeMillis();
 	
-	public void enabled(RobotMode mode) {
-		
-	}
-	
 	public void update() {
 		switch (currentState) {
+			//Eject Mode
 			case eject:
-				Intake.idle();
-				Chute.eject();
-//				CargoSystems.Motor.set(1);
+				Intake.up();
+				
+				CargoSystems.Belt.set(_CargoConstants._ejectSpeed);
 				
 				if (System.currentTimeMillis() > ejectStart + 1000)
 					Cargo.idle();
 				break;
-			case idle:
-				Intake.idle();
-				Chute.idle();
-				break;
+				
+			//Intake Mode
 			case intake:
-				Intake.intake();
-				Chute.intake();
-//				CargoSystems.Motor.set(1);
+				Intake.down();
+				
+				CargoSystems.Belt.set(_CargoConstants._intakeSpeed);
 				
 				if (ChuteSystems.BeamBreak.isHit())
 					Cargo.idle();
 				break;
-			default:
-				Intake.idle();
-				Chute.idle();
+				
+			//Idle Mode
+			case idle:
+				Intake.up();
+				
+				Chute.trapdoorUp();
+				
 				break;
 		}
 	}
 
-	public void disabled() {
-		
-	}
-	
-	public CargoManager() {
-
-	}
+	public void disabled() { }
+	public void enabled(RobotMode mode) { }
+	public CargoManager() { }
 }

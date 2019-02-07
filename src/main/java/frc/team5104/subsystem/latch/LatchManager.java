@@ -6,24 +6,35 @@ import frc.team5104.subsystem.BreakerSubsystem;
 
 public class LatchManager extends BreakerSubsystem.Manager {
 	public static enum LatchState {
-		idle,  //Lazyboy: back, Dad: open
+		idle,  //Lazyboy: back, Dad: closed
 		intake,//Lazyboy: up, Dad: open
 		hold   //Lazyboy: up, Dad: closed
 	}
-	
-	public void enabled(RobotMode mode) {
-		
-	}
+	static LatchState currentState = LatchState.idle;
+	static long intakeStartTime = System.currentTimeMillis();
 	
 	public void update() {
-		
+		switch (currentState) {
+			case hold:
+				LatchSystems.Lazyboy.up();
+				LatchSystems.Dad.close();
+				break;
+			case intake:
+				LatchSystems.Lazyboy.up();
+				LatchSystems.Dad.open();
+				if (System.currentTimeMillis() + _LatchConstants._intakeModeLength > intakeStartTime)
+					currentState = LatchState.hold;
+				break;
+			case idle:
+				LatchSystems.Lazyboy.down();
+				LatchSystems.Dad.close();
+				break;
+			default:
+				break;
+		}
 	}
 
-	public void disabled() {
-		
-	}
-	
-	public LatchManager() {
-
-	}
+	public void disabled() { }
+	public void enabled(RobotMode mode) { }
+	public LatchManager() { }
 }

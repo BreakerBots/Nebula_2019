@@ -2,20 +2,15 @@
 package frc.team5104.subsystem.latch;
 
 import frc.team5104.subsystem.BreakerSubsystem;
+import frc.team5104.subsystem.latch.LatchManager.LatchState;
 
 public class Latch extends BreakerSubsystem.Actions {
 	public static void intake() {
-		LatchSystems.Lazyboy.up();
-		LatchSystems.Dad.open();
-	}
-	
-	public static void hold() {
-		LatchSystems.Lazyboy.up();
-		LatchSystems.Dad.close();
+		LatchManager.intakeStartTime = System.currentTimeMillis();
+		LatchManager.currentState = LatchState.intake;
 	}
 	
 	public static void idle() {
-		LatchSystems.Lazyboy.down();
-		LatchSystems.Dad.close();	
+		LatchManager.currentState = LatchState.idle;
 	}
 }

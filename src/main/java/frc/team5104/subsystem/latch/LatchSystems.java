@@ -4,37 +4,32 @@ package frc.team5104.subsystem.latch;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
-import frc.team5104.subsystem.chute._ChuteConstants;
 
 public class LatchSystems extends BreakerSubsystem.Systems {
-	//Devices
-	static DoubleSolenoid lean = Devices.Hatch.lazyBoy;
-	static DoubleSolenoid latch = Devices.Hatch.latch;
-	
 	static class Lazyboy {
 		static void down() {
-			lean.set(_LatchConstants._leanDown);
+			Devices.Hatch.lazyBoy.set(_LatchConstants._lazyBoyUp == DoubleSolenoid.Value.kForward ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
 		}
 		static void up() {
-			lean.set(_LatchConstants._leanUp);
+			Devices.Hatch.lazyBoy.set(_LatchConstants._lazyBoyUp);
 		}
 		
 		static boolean isUp() {
-			return lean.get() == _LatchConstants._leanUp;
+			return Devices.Hatch.lazyBoy.get() == _LatchConstants._lazyBoyUp;
 		}
 		static boolean isDown() { return !isUp(); }
 	}
 	
 	static class Dad {
 		static void open() {
-			latch.set(_LatchConstants._latchOpen);
+			Devices.Hatch.dad.set(_LatchConstants._dadOpen);
 		}
 		static void close() {
-			latch.set(_LatchConstants._latchClose);
+			Devices.Hatch.dad.set(_LatchConstants._dadOpen == DoubleSolenoid.Value.kForward ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
 		}
 		
 		static boolean isOpen() {
-			return latch.get() == _LatchConstants._latchOpen;
+			return Devices.Hatch.dad.get() == _LatchConstants._dadOpen;
 		}
 		static boolean isClosed() { return !isOpen(); }
 	}

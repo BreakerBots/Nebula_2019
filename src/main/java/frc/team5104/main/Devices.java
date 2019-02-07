@@ -35,15 +35,20 @@ public class Devices {
 	
 	//Cargo
 	public static class Cargo {
+		//Intake
 		public static TalonSRX leftArm = TalonFactory.getTalon(21);
 		public static TalonSRX rightArm = TalonFactory.getTalon(22);
-		public static TalonSRX ramp = TalonFactory.getTalon(31);
+		
+		//Ramp
 		public static DoubleSolenoid trapdoor = new DoubleSolenoid(4, 5);
+		
+		//Belt
+		public static TalonSRX belt = TalonFactory.getTalon(31);
 	}
 	
 	//Hatch
 	public static class Hatch {
-		public static DoubleSolenoid latch = new DoubleSolenoid(0, 1);
+		public static DoubleSolenoid dad = new DoubleSolenoid(0, 1);
 		public static DoubleSolenoid lazyBoy = new DoubleSolenoid(3, 2);
 	}
 }
