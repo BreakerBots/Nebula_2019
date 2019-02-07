@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
-import frc.team5104.util.Units;
 
 public class Drive extends BreakerSubsystem.Actions {
 	/**
@@ -25,15 +24,15 @@ public class Drive extends BreakerSubsystem.Actions {
 			case feetPerSecond: {
 				if (signal.feedForward != Double.POSITIVE_INFINITY) {
 					DriveSystems.motors.setWFF(
-							Units.feetPerSecondToTalonVel(signal.leftSpeed, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
-							Units.feetPerSecondToTalonVel(signal.rightSpeed, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
+							DriveUnits.feetPerSecondToTalonVel(signal.leftSpeed), 
+							DriveUnits.feetPerSecondToTalonVel(signal.rightSpeed), 
 							signal.feedForward
 						);
 				}
 				else {
 					DriveSystems.motors.set(
-							Units.feetPerSecondToTalonVel(signal.leftSpeed, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
-							Units.feetPerSecondToTalonVel(signal.rightSpeed, _DriveConstants._ticksPerRevolution, _DriveConstants._wheelDiameter), 
+							DriveUnits.feetPerSecondToTalonVel(signal.leftSpeed), 
+							DriveUnits.feetPerSecondToTalonVel(signal.rightSpeed), 
 							ControlMode.Velocity
 						);
 				}

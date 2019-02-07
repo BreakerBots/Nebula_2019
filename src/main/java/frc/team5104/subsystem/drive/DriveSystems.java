@@ -43,24 +43,26 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 			R1.setSelectedSensorPosition(0, 0, timeoutMs);
 		}
 		
-		/**
-		 * @return The Left encoder's value
-		 */
-		public static int getLeft() {
-			return L1.getSelectedSensorPosition(0);
-		}
+		//Raw Encoder Positions
+		public static int getRawLeftPosition() { return L1.getSelectedSensorPosition(0); }
+		public static int getRawRightPosition() { return R1.getSelectedSensorPosition(0); }
 		
-		/**
-		 * @return The Right encoder's value
-		 */
-		public static int getRight() {
-			return R1.getSelectedSensorPosition(0);
-		}
+		//Raw Encoder Velocities
+		public static int getRawLeftVelocity() { return L1.getSelectedSensorVelocity(0); }
+		public static int getRawRightVelocity() { return R1.getSelectedSensorVelocity(0); }
+		
+		//Feet Encoder Positions
+		public static double getLeftPositionFeet() { return DriveUnits.ticksToFeet(getRawLeftPosition()); }
+		public static double getRightPositionFeet() { return DriveUnits.ticksToFeet(getRawRightPosition()); }
+		
+		//Feet Encoder Velocities
+		public static double getLeftVelocityFeet() { return DriveUnits.talonVelToFeetPerSecond(getRawLeftVelocity()); }
+		public static double getRightVelocityFeet() { return DriveUnits.talonVelToFeetPerSecond(getRawRightVelocity()); }
 		
 		public static String getString() {
 			try {
-				return "L: " + getLeft() + 
-						", R: " + getRight();
+				return "L: " + getRawLeftPosition() + 
+						", R: " + getRawRightPosition();
 			} catch (Exception e) { e.printStackTrace(); return ""; }
 		}
 	}
