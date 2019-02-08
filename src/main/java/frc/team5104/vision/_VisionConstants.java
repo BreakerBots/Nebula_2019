@@ -17,5 +17,4 @@ public class _VisionConstants {
 	public static double _forwardP = 0.50;
 	public static double _forwardI = 0.00;
 	public static double _forwardD = 0.00;
-	public static double _maxSpeed = 0.3;
 }
