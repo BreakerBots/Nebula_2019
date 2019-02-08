@@ -6,22 +6,17 @@ import frc.team5104.subsystem.drive.RobotDriveSignal;
 
 public class VisionManager {
 	
-	public static enum VisionPipeline {
-		line,
-		target;
-	}
-	
 	public static void init() {
 		VisionSystems.init();
-		VisionActions.changePipeline(VisionPipeline.target);
+		VisionSystems.networkTable.setEntry("pipeline", 1);
 	}
 	
 	public static void start() {
-		VisionActions.reset();
+		Vision.reset();
 	}
 	
 	public static void update() {
-		RobotDriveSignal signal = VisionActions.getNextSignal();
+		RobotDriveSignal signal = Vision.getNextSignal();
 		Drive.applyMotorMinSpeedRough(signal);
 		Drive.set(signal);
 	}

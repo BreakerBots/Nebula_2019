@@ -14,9 +14,9 @@ public class IntakeSystems extends BreakerSubsystem.Systems {
 			(_IntakeConstants._kP, _IntakeConstants._kI, _IntakeConstants._kD, _IntakeConstants._tolerance, _IntakeConstants._downPos);
 	
 	public static class Arm {
-		public static void set(double speed) {
-			Devices.Cargo.leftArm.set(ControlMode.PercentOutput, speed);
-			Devices.Cargo.rightArm.set(ControlMode.PercentOutput, -speed);
+		public static void set(double voltage) {
+			Devices.Cargo.leftArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.leftArm.getBusVoltage());
+			Devices.Cargo.rightArm.set(ControlMode.PercentOutput, -voltage / Devices.Cargo.rightArm.getBusVoltage());
 		}
 		
 		static void up() {

@@ -12,13 +12,14 @@ public class RobotDriveSignal {
 	 */
 	public static enum DriveUnit {
 		feetPerSecond,
-		percentOutput
+		percentOutput,
+		voltage
 	}
 
 	// Robot Drive Signal Variables
 	public double leftSpeed;
 	public double rightSpeed;
-	public double feedForward = Double.POSITIVE_INFINITY;
+	public double feedForward = Double.NaN;
 	public DriveUnit unit;
 	
 	/**

@@ -4,7 +4,6 @@ package frc.team5104.vision;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import frc.team5104.vision.VisionManager.VisionPipeline;
 
 public class VisionSystems {
 	// Variables
@@ -37,29 +36,13 @@ public class VisionSystems {
 		}
 	}
 	
-	// Pipelines
-	static class pipeline {
-//		static int pn = (int)(pl.getDouble(0));
-		
-		public static void set(VisionPipeline p) {
-			switch(p) {
-			case target:
-				networkTable.setEntry("pipeline", (double)(_VisionConstants._target));
-				break;
-			case line:
-				networkTable.setEntry("pipeline", (double)(_VisionConstants._line));
-				break;
-			}
-		}
-	}
-	
 	// Network Table
 	static class networkTable {
 		public static NetworkTableEntry getEntry(String key) {
 			return table.getEntry(key);
 		}
 		
-		public static void setEntry(String key, Double entry) {
+		public static void setEntry(String key, double entry) {
 			NetworkTableEntry nte = table.getEntry(key);
 			nte.setDouble(entry);
 		}

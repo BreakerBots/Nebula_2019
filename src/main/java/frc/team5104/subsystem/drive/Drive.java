@@ -22,8 +22,8 @@ public class Drive extends BreakerSubsystem.Actions {
 				break;
 			}
 			case feetPerSecond: {
-				if (signal.feedForward != Double.POSITIVE_INFINITY) {
-					DriveSystems.motors.setWFF(
+				if (signal.feedForward != Double.NaN) {
+					DriveSystems.motors.setWithFeedforward(
 							DriveUnits.feetPerSecondToTalonVel(signal.leftSpeed), 
 							DriveUnits.feetPerSecondToTalonVel(signal.rightSpeed), 
 							signal.feedForward
@@ -37,6 +37,13 @@ public class Drive extends BreakerSubsystem.Actions {
 						);
 				}
 				break;
+			}
+			case voltage: {
+				DriveSystems.motors.set(
+						signal.leftSpeed / DriveSystems.motors.getLeftBusVoltage(),
+						signal.rightSpeed / DriveSystems.motors.getRightBusVoltage(),
+						ControlMode.PercentOutput
+					);
 			}
 		}
 	}

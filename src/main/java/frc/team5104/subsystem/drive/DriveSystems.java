@@ -27,10 +27,13 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 			L1.set(mode, leftSpeed);
 			R1.set(mode, rightSpeed);
 		}
-		public static void setWFF(double leftSpeed, double rightSpeed, double feedForward) {
+		public static void setWithFeedforward(double leftSpeed, double rightSpeed, double feedForward) {
 			L1.set(ControlMode.Velocity, leftSpeed, DemandType.ArbitraryFeedForward, feedForward);
 			R1.set(ControlMode.Velocity, rightSpeed, DemandType.ArbitraryFeedForward, feedForward);
 		}
+		
+		public static double getLeftBusVoltage() { return L1.getBusVoltage(); }
+		public static double getRightBusVoltage() { return R1.getBusVoltage(); }
 	}
 	
 	//Encoders
