@@ -5,11 +5,6 @@ package frc.team5104.util;
  * Some basic unit conversions
  */
 public class Units {
-	
-	// Wheels
-	/**
-	 * Calculates wheel circumfrance (in feet) from the wheel diameter
-	 */
 	public static double diameterToCircumfrance(double diameter) {
 		return diameter * Math.PI;
 	}

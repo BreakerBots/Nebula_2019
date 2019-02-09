@@ -10,5 +10,5 @@ public class _LatchConstants {
 	public static DoubleSolenoid.Value _lazyBoyUp = DoubleSolenoid.Value.kReverse;
 	
 	//Intake Mode
-	public static int _intakeModeLength = 3000;
+	public static int _intakeModeLength = 1000;
 }

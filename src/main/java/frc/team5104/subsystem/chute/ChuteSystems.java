@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.subsystem.chute;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 
@@ -12,7 +13,7 @@ public class ChuteSystems extends BreakerSubsystem.Systems {
 		}
 		
 		static void down() {
-			Devices.Cargo.trapdoor.set(_ChuteConstants._down);
+			Devices.Cargo.trapdoor.set(_ChuteConstants._up == DoubleSolenoid.Value.kForward ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
 		}
 		
 		static boolean isUp() {

@@ -3,12 +3,10 @@ package frc.team5104.vision;
 
 public class _VisionConstants {
 	//Coordinates
-	public static double _maxXOffset = 27.0; // Outer X limit
-	public static double _maxYOffset = 36.5; // Outer Y limit
-	public static double _minXOffset = 0.3;  // Where to cap the adjustment
-	public static double _minYOffset = 0.1;  // Cap 
-	public static double _xTargetCoordinate = 8.8; 	// Adjust to angle the robot
-	public static double _yTargetCoordinate = -8.3;	// Adjust how close the robot gets
+	public static double _targetX = 8.8;
+	public static double _targetY = -8.3;
+	public static double _toleranceX = 0.3;
+	public static double _toleranceY = 0.1;
 	
 	//Movement Control
 	public static double _turnP =  1;

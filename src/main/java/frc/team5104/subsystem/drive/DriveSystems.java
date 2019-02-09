@@ -3,7 +3,6 @@ package frc.team5104.subsystem.drive;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -119,31 +118,19 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 		
 		// Left Talons Config
 		L2.set(ControlMode.Follower, L1.getDeviceID());
-		L1.setInverted(true);
-		L2.setInverted(true);
-		L1.setNeutralMode(NeutralMode.Brake);
-		L2.setNeutralMode(NeutralMode.Brake);
         L1.configAllowableClosedloopError(0, 0, 10);
         L1.config_kF(0, _DriveConstants._kF, 10);
         L1.config_kP(0, _DriveConstants._kP, 10);
         L1.config_kI(0, _DriveConstants._kI, 10);
         L1.config_kD(0, _DriveConstants._kD, 10);
-        L1.configContinuousCurrentLimit(_DriveConstants._currentLimit, 10);
-        L1.enableCurrentLimit(true);
         
         // Right Talons Config
         R2.set(ControlMode.Follower, R1.getDeviceID());
-		R1.setInverted(false);
-		R2.setInverted(false);
-		R1.setNeutralMode(NeutralMode.Brake);
-		R2.setNeutralMode(NeutralMode.Brake);
         R1.configAllowableClosedloopError(0, 0, 10);
         R1.config_kF(0, _DriveConstants._kF, 10);
         R1.config_kP(0, _DriveConstants._kP, 10);
         R1.config_kI(0, _DriveConstants._kI, 10);
         R1.config_kD(0, _DriveConstants._kD, 10);
-        R1.configContinuousCurrentLimit(_DriveConstants._currentLimit, 10);
-        R1.enableCurrentLimit(true);
         
 		//Stop the motors
 		Drive.stop();
@@ -152,9 +139,7 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 		gyro.reset(10);
 		encoders.reset(10);
 		
-		//Wait until Talons have Caught Up
-		try {
-			Thread.sleep(100);
-		} catch (Exception e) { console.error(e); }
+		//Make Sure Everything is caught up :)
+		try { Thread.sleep(100); } catch (Exception e) { console.error(e); }
 	}
 }

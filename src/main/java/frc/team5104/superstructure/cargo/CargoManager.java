@@ -24,7 +24,7 @@ class CargoManager extends BreakerSubsystem.Manager {
 				
 				CargoSystems.Belt.set(_CargoConstants._ejectSpeed);
 				
-				if (System.currentTimeMillis() > ejectStart + 1000)
+				if (System.currentTimeMillis() > ejectStart + _CargoConstants._ejectTime)
 					Cargo.idle();
 				break;
 				

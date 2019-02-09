@@ -22,7 +22,5 @@ public class VisionManager {
 		Drive.set(signal);
 	}
 
-	public static void stop() {
-		csv.writeFile("vision_temp", "urmom");
-	}
+	public static void stop() { csv.writeFile("vision_temp", "urmom"); }
 }

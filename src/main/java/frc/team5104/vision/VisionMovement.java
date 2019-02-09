@@ -8,14 +8,8 @@ import frc.team5104.util.console;
 
 class VisionMovement {
 	//Movement Controllers
-	static BreakerPositionController turnController = new BreakerPositionController(
-				_VisionConstants._turnP, _VisionConstants._turnI, _VisionConstants._turnD, 
-				_VisionConstants._minXOffset, _VisionConstants._xTargetCoordinate
-			);
-	static BreakerPositionController forwardController = new BreakerPositionController(
-				_VisionConstants._forwardP, _VisionConstants._forwardI, _VisionConstants._forwardD, 
-				_VisionConstants._minYOffset, _VisionConstants._yTargetCoordinate
-			);
+	static BreakerPositionController turnController = new BreakerPositionController(_VisionConstants._turnP, _VisionConstants._turnI, _VisionConstants._turnD, _VisionConstants._toleranceX, _VisionConstants._targetX);
+	static BreakerPositionController forwardController = new BreakerPositionController(_VisionConstants._forwardP, _VisionConstants._forwardI, _VisionConstants._forwardD, _VisionConstants._toleranceY, _VisionConstants._targetY);
 	
 	//Main Movement Function
 	static RobotDriveSignal getNextSignal() {
