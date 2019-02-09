@@ -22,7 +22,7 @@ public class LatchManager extends BreakerSubsystem.Manager {
 			case intake:
 				LatchSystems.Lazyboy.up();
 				LatchSystems.Dad.open();
-				if (System.currentTimeMillis() + _LatchConstants._intakeModeLength > intakeStartTime)
+				if (System.currentTimeMillis() > _LatchConstants._intakeModeLength + intakeStartTime)
 					currentState = LatchState.hold;
 				break;
 			case idle:

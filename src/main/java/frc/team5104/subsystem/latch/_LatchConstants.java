@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class _LatchConstants {
 	//Dad
-	public static DoubleSolenoid.Value _dadOpen = DoubleSolenoid.Value.kForward;
+	public static DoubleSolenoid.Value _dadOpen = DoubleSolenoid.Value.kReverse;
 	
 	//Lazy Boy
 	public static DoubleSolenoid.Value _lazyBoyUp = DoubleSolenoid.Value.kReverse;

@@ -28,7 +28,7 @@ public class Devices {
 		public static TalonSRX R1 = TalonFactory.getTalon(13);
 		public static TalonSRX R2 = TalonFactory.getTalon(14);
 		
-		public static PigeonIMU gyro = new PigeonIMU(L2);
+//		public static PigeonIMU gyro = new PigeonIMU(L2);
 		
 		public static DoubleSolenoid shift = new DoubleSolenoid(6, 7);
 	}

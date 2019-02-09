@@ -14,7 +14,7 @@ public class BreakerTeleopController {
 		DriveController.handle();
 		
 		//Cargo
-		Devices.Cargo.belt.set(ControlMode.PercentOutput, Control.S.getHeld() ? 1 : 0);
+		Devices.Cargo.belt.set(ControlMode.PercentOutput, Control.E.getHeld() ? 1 : 0);
 		IntakeSystems.Arm.set(Control.RY.getAxis());
 //		if (Control.X.getPressed())
 //			Cargo.intake();

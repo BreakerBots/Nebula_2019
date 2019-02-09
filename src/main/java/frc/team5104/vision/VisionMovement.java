@@ -4,9 +4,10 @@ import frc.team5104.subsystem.drive.RobotDriveSignal;
 import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.BreakerPositionController;
+import frc.team5104.util.console;
 
 class VisionMovement {
-	//Movement Controlers
+	//Movement Controllers
 	static BreakerPositionController turnController = new BreakerPositionController(
 				_VisionConstants._turnP, _VisionConstants._turnI, _VisionConstants._turnD, 
 				_VisionConstants._minXOffset, _VisionConstants._xTargetCoordinate
@@ -18,6 +19,8 @@ class VisionMovement {
 	
 	//Main Movement Function
 	static RobotDriveSignal getNextSignal() {
+		console.log(getTurn());
+		VisionManager.csv.update(new String[] { ""+VisionSystems.limelight.getX(), ""+turnController.target });
 		return new RobotDriveSignal(
 				getForward() - getTurn(), 
 				getForward() + getTurn(), 
@@ -28,16 +31,16 @@ class VisionMovement {
 	//Turn Movement Function
 	private static double getTurn() {
 		if(Vision.targetVisible() && !turnController.onTarget()) {
-			return BreakerMath.clamp(turnController.update(VisionSystems.limelight.getX()), -1, 1);
+			return BreakerMath.clamp(turnController.update(VisionSystems.limelight.getX()), -9, 9);
 		}
 		return 0;
 	}
 	
 	//Forward Movement Function
 	private static double getForward() {
-		if(Vision.targetVisible() && !forwardController.onTarget()) {
-			return BreakerMath.clamp(forwardController.update(VisionSystems.limelight.getY()), -1, 1);
-		}
+//		if(Vision.targetVisible() && !forwardController.onTarget()) {
+//			return BreakerMath.clamp(forwardController.update(VisionSystems.limelight.getY()), -9, 9);
+//		}
 		return 0;
 	}
 	

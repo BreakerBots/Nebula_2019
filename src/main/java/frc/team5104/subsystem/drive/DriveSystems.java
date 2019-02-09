@@ -96,7 +96,7 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 	//Gyro
 	public static class gyro {
 		public static double getRawAngle() {
-			return Devices.Drive.gyro.getFusedHeading();
+			return 0; //Devices.Drive.gyro.getFusedHeading();
 		}
 		
 		public static double getAngle() {
@@ -106,7 +106,7 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 		}
 		
 		public static void reset(int timeoutMs) {
-			Devices.Drive.gyro.setFusedHeading(0, timeoutMs);
+			//Devices.Drive.gyro.setFusedHeading(0, timeoutMs);
 		}
 	}
 	
