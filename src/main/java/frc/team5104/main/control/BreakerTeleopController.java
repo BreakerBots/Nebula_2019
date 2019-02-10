@@ -27,13 +27,13 @@ public class BreakerTeleopController {
 		if (Control.N.getPressed())
 			Chute.trapdoorUp();
 		if (Control.S.getPressed()) {
-			Chute.trapdoorDown();
-			Latch.idle();
+			if (!Latch.hasHatch())
+				Chute.trapdoorDown();
 		}
 		
 		//Latch
 		if (Control.LB.getPressed())
-			Latch.idle();
+			Latch.eject();
 		if (Control.RB.getPressed()) {
 			Latch.intake();
 			Chute.trapdoorUp();

@@ -8,10 +8,12 @@ public class LatchManager extends BreakerSubsystem.Manager {
 	public static enum LatchState {
 		idle,  //Lazyboy: back, Dad: closed
 		intake,//Lazyboy: up, Dad: open
-		hold   //Lazyboy: up, Dad: closed
+		hold,  //Lazyboy: up, Dad: closed
+		eject  //Lazyboy: back, Dad: open
 	}
 	static LatchState currentState = LatchState.idle;
 	static long intakeStartTime = System.currentTimeMillis();
+	static long ejectStartTime;
 	
 	public void update() {
 		switch (currentState) {
@@ -26,8 +28,14 @@ public class LatchManager extends BreakerSubsystem.Manager {
 					currentState = LatchState.hold;
 				break;
 			case idle:
-				LatchSystems.Lazyboy.down();
+				LatchSystems.Lazyboy.back();
 				LatchSystems.Dad.close();
+				break;
+			case eject:
+				LatchSystems.Lazyboy.back();
+				LatchSystems.Dad.open();
+				if (System.currentTimeMillis() > _LatchConstants._ejectModeLength + ejectStartTime)
+					currentState = LatchState.idle;
 				break;
 			default:
 				break;
