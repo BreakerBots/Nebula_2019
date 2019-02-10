@@ -10,7 +10,12 @@ public class Latch extends BreakerSubsystem.Actions {
 		LatchManager.currentState = LatchState.intake;
 	}
 	
-	public static void idle() {
-		LatchManager.currentState = LatchState.idle;
+	public static void eject() {
+		LatchManager.ejectStartTime = System.currentTimeMillis();
+		LatchManager.currentState = LatchState.eject;
+	}
+	
+	public static boolean hasHatch() {
+		return LatchManager.currentState == LatchState.hold;
 	}
 }
