@@ -9,6 +9,7 @@ public class _LatchConstants {
 	//Lazy Boy
 	public static DoubleSolenoid.Value _lazyBoyUp = DoubleSolenoid.Value.kReverse;
 	
-	//Intake Mode
+	//Modes
 	public static int _intakeModeLength = 1000;
+	public static int _ejectModeLength = 1000;
 }
