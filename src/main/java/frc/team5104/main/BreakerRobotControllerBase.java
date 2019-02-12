@@ -122,20 +122,6 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 	
 	public void close() throws Exception { } 
 
-	public static boolean getBooleanProperty(String name, boolean defaultValue) {
-		String propVal = System.getProperty(name);
-		if (propVal == null) {
-			return defaultValue;
-		}
-		if ("false".equalsIgnoreCase(propVal)) {
-			return false;
-		} else if ("true".equalsIgnoreCase(propVal)) {
-			return true;
-		} else {
-			throw new IllegalStateException(propVal);
-		}
-	}
-
 	/**
 	 * Starting point for the applications.
 	 */

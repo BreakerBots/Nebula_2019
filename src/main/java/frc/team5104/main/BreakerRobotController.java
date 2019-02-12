@@ -65,9 +65,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 		
 		else if (isEnabled()) {
 			//Forced Through Driver Station
-			if (isAutonomous())
-				setMode(RobotMode.Auto);
-			else if (isTest())
+			if (isTest())
 				setMode(RobotMode.Test);
 			
 			//Default to Teleop
