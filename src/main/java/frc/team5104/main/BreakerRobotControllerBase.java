@@ -15,7 +15,6 @@ import edu.wpi.first.cameraserver.CameraServerSharedStore;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
-import edu.wpi.first.hal.HALUtil;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -28,103 +27,6 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 
 	protected final DriverStation m_ds;
 
-	protected BreakerRobotControllerBase() {
-		NetworkTableInstance inst = NetworkTableInstance.getDefault();
-		setupCameraServerShared();
-		inst.setNetworkIdentity("Robot");
-		inst.startServer("/home/lvuser/networktables.ini");
-		m_ds = DriverStation.getInstance();
-		inst.getTable("LiveWindow").getSubTable(".status").getEntry("LW Enabled").setBoolean(false);
-
-		LiveWindow.setEnabled(false);
-		Shuffleboard.disableActuatorWidgets();
-	}
-
-	/**
-	 * Get if the robot is a simulation.
-	 *
-	 * @return If the robot is running in simulation.
-	 */
-	public static boolean isSimulation() {
-		return !isReal();
-	}
-
-	/**
-	 * Get if the robot is real.
-	 *
-	 * @return If the robot is running in the real world.
-	 */
-	public static boolean isReal() {
-		return HALUtil.getHALRuntimeType() == 0;
-	}
-
-	/**
-	 * Determine if the Robot is currently disabled.
-	 *
-	 * @return True if the Robot is currently disabled by the field controls.
-	 */
-	public boolean isDisabled() {
-		return m_ds.isDisabled();
-	}
-
-	/**
-	 * Determine if the Robot is currently enabled.
-	 *
-	 * @return True if the Robot is currently enabled by the field controls.
-	 */
-	public boolean isEnabled() {
-		return m_ds.isEnabled();
-	}
-
-	/**
-	 * Determine if the robot is currently in Autonomous mode as determined by the field
-	 * controls.
-	 *
-	 * @return True if the robot is currently operating Autonomously.
-	 */
-	public boolean isAutonomous() {
-		return m_ds.isAutonomous();
-	}
-
-	/**
-	 * Determine if the robot is currently in Test mode as determined by the driver
-	 * station.
-	 *
-	 * @return True if the robot is currently operating in Test mode.
-	 */
-	public boolean isTest() {
-		return m_ds.isTest();
-	}
-
-	/**
-	 * Determine if the robot is currently in Operator Control mode as determined by the field
-	 * controls.
-	 *
-	 * @return True if the robot is currently operating in Tele-Op mode.
-	 */
-	public boolean isOperatorControl() {
-		return m_ds.isOperatorControl();
-	}
-
-	/**
-	 * Indicates if new data is available from the driver station.
-	 *
-	 * @return Has new data arrived over the network since the last time this function was called?
-	 */
-	public boolean isNewDataAvailable() {
-		return m_ds.isNewControlData();
-	}
-
-	/**
-	 * Provide an alternate "main loop" via startCompetition().
-	 */
-	public abstract void startCompetition();
-	
-	public void close() throws Exception { } 
-
-	/**
-	 * Starting point for the applications.
-	 */
 	public static void main(String... args) {
 		if (!HAL.initialize(500, 0))
 			throw new IllegalStateException("Failed to initialize. Exploding");
@@ -206,34 +108,34 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 		System.exit(1);
 	} 
 	
+	protected BreakerRobotControllerBase() {
+		NetworkTableInstance inst = NetworkTableInstance.getDefault();
+		setupCameraServerShared();
+		inst.setNetworkIdentity("Robot");
+		inst.startServer("/home/lvuser/networktables.ini");
+		m_ds = DriverStation.getInstance();
+		inst.getTable("LiveWindow").getSubTable(".status").getEntry("LW Enabled").setBoolean(false);
+
+		LiveWindow.setEnabled(false);
+		Shuffleboard.disableActuatorWidgets();
+	}
+	
+	//Extra Functions
+	public boolean isDisabled() { return m_ds.isDisabled(); }
+	public boolean isEnabled() { return m_ds.isEnabled(); }
+	public boolean isAutonomous() { return m_ds.isAutonomous(); }
+	public boolean isTest() { return m_ds.isTest(); }
+	public boolean isTeleop() { return m_ds.isOperatorControl(); }
+	public abstract void startCompetition();
+	public void close() throws Exception { } 
 	private static void setupCameraServerShared() {
 		CameraServerShared shared = new CameraServerShared() {
-			@Override
-			public void reportVideoServer(int id) {
-				HAL.report(tResourceType.kResourceType_PCVideoServer, id);
-			}
-
-			@Override
-			public void reportUsbCamera(int id) {
-				HAL.report(tResourceType.kResourceType_UsbCamera, id);
-			}
-
-			@Override
-			public void reportDriverStationError(String error) {
-				DriverStation.reportError(error, true);
-			}
-
-			@Override
-			public void reportAxisCamera(int id) {
-				HAL.report(tResourceType.kResourceType_AxisCamera, id);
-			}
-
-			@Override
-			public Long getRobotMainThreadId() {
-				return MAIN_THREAD_ID;
-			}
+			public void reportVideoServer(int id) { HAL.report(tResourceType.kResourceType_PCVideoServer, id); }
+			public void reportUsbCamera(int id) { HAL.report(tResourceType.kResourceType_UsbCamera, id); }
+			public void reportDriverStationError(String error) { DriverStation.reportError(error, true); }
+			public void reportAxisCamera(int id) { HAL.report(tResourceType.kResourceType_AxisCamera, id); }
+			public Long getRobotMainThreadId() { return MAIN_THREAD_ID; }
 		};
-
 		CameraServerSharedStore.setCameraServerShared(shared);
 	}
 }

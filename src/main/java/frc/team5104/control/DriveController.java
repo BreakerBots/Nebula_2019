@@ -1,4 +1,4 @@
-package frc.team5104.main.control;
+package frc.team5104.control;
 
 import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.DriveSystems;
@@ -10,20 +10,25 @@ import frc.team5104.util.Deadband;
 
 public class DriveController {
 	//Drive
-	public static final CurveInterpolator vTeleopLeftSpeed  = new CurveInterpolator(HMI.Drive._driveCurveChange, HMI.Drive._driveCurve);
-	public static final CurveInterpolator vTeleopRightSpeed = new CurveInterpolator(HMI.Drive._driveCurveChange, HMI.Drive._driveCurve);
+	
+	public static final Curve.BezierCurve _driveCurve = new Curve.BezierCurve(.2, 0, .2, 1);
+	public static final double _driveCurveChange = 1.0;
+	public static final double _turnCurveSpeedAdjust = 0.5;
+	
+	public static final CurveInterpolator vTeleopLeftSpeed  = new CurveInterpolator(_driveCurveChange, _driveCurve);
+	public static final CurveInterpolator vTeleopRightSpeed = new CurveInterpolator(_driveCurveChange, _driveCurve);
 	
 	public static void handle() {
 		//Get inputs
-		double turn = HMI.Drive._turn.getAxis();
-		double forward = HMI.Drive._forward.getAxis() - HMI.Drive._reverse.getAxis();
+		double turn = Controls.Drive._turn.getAxis();
+		double forward = Controls.Drive._forward.getAxis() - Controls.Drive._reverse.getAxis();
 
 		//Apply controller deadbands
 		turn = -Deadband.get(turn,  0.1);
 		forward = Deadband.get(forward, 0.01);
 		
 		//Apply bezier curve
-		double x1 = (1 - Math.abs(forward)) * (1 - HMI.Drive._turnCurveSpeedAdjust) + HMI.Drive._turnCurveSpeedAdjust;
+		double x1 = (1 - Math.abs(forward)) * (1 - _turnCurveSpeedAdjust) + _turnCurveSpeedAdjust;
 		turn = Curve.getBezierCurve(turn, x1, 0.4, 1, 0.2);
 		
 		//Apply inertia affect
@@ -45,7 +50,7 @@ public class DriveController {
 		Drive.set(signal);
 		
 		//Shifting
-		if (HMI.Drive._shift.getPressed())
+		if (Controls.Drive._shift.getPressed())
 			DriveSystems.shifters.toggle();
 	}
 }

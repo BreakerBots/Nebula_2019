@@ -3,14 +3,14 @@ package frc.team5104.main;
 
 import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
-import frc.team5104.main.control.BreakerTeleopController;
-import frc.team5104.main.control.StateController;
+import frc.team5104.control.BreakerTeleopController;
+import frc.team5104.control.StateController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.latch.LatchManager;
 import frc.team5104.util.console;
-import frc.team5104.util.controller;
+import frc.team5104.util.Controller;
 import frc.team5104.vision.VisionManager;
 
 /**
@@ -39,7 +39,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 		if (enabled) {
 			BreakerSubsystemManager.update();
 			StateController.handle();
-			controller.update();
+			Controller.update();
 		}
 	}
 

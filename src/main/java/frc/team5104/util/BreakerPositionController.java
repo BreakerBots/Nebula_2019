@@ -11,7 +11,7 @@ public class BreakerPositionController {
 	public double err, deriv, integ;
 	public double lastPoint, target, tolerance;
 
-	public BreakerPositionController(double P, double I, double D) {	this(P, I, D, 0, .01); }
+	public BreakerPositionController(double P, double I, double D) { this(P, I, D, 0, .01); }
 	public BreakerPositionController(double P, double I, double D, double tolerance) { this(P, I, D, 0, tolerance); }
 	public BreakerPositionController(double P, double I, double D, double target, double tolerance) {
 		_kP = P;

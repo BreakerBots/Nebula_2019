@@ -13,21 +13,20 @@ import frc.team5104.util.console.t;
 import frc.team5104.vision.VisionManager;
 
 public class BreakerRobotController extends BreakerRobotControllerBase {
-	public static enum RobotMode {
-		Disabled,
-		Auto,
-		Teleop,
-		Test,
-		Vision;
-	}
+	//Modes
+	public static enum RobotMode { Disabled, Auto, Teleop, Test, Vision; }
 	private static RobotMode currentMode = RobotMode.Disabled;
 	private static RobotMode lastMode = RobotMode.Disabled;
-	private static BreakerRobot robot;
-	private static final double loopPeriod = 20;
-
 	public static void setMode(RobotMode mode) { currentMode = mode; }
 	public static RobotMode getMode() { return currentMode; }
 	
+	private static BreakerRobot robot;
+	private static final double loopPeriod = 20;
+	
+	private static boolean isSandstorm;
+	public static boolean isSandstorm() { return isSandstorm; }
+	
+	//Init
 	public void startCompetition() {
 		HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_Iterative);
 		console.sets.create("RobotInit");
@@ -49,12 +48,8 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 		//Main Loop
 		while (true) {
 			double st = Timer.getFPGATimestamp();
-			
 			loop();
-			
-			try {
-				Thread.sleep(Math.round(loopPeriod - (Timer.getFPGATimestamp() - st)));
-			} catch (Exception e) { console.error(e); }
+			try { Thread.sleep(Math.round(loopPeriod - (Timer.getFPGATimestamp() - st))); } catch (Exception e) { console.error(e); }
 		}
 	}
 
@@ -62,6 +57,9 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 	private void loop() {
 		if (isDisabled())
 			setMode(RobotMode.Disabled);
+		
+		if (isAutonomous())
+			isSandstorm = true;
 		
 		else if (isEnabled()) {
 			//Forced Through Driver Station
@@ -144,6 +142,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 		LiveWindow.updateValues();
 	}
 	
+	//Child Class
 	/**
 	 * The Main Robot Interface. Called by this, Breaker Robot Controller
 	 * <br>Override these methods to run code
