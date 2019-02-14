@@ -6,11 +6,11 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.team5104.control.Controls;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.Units;
 import frc.team5104.util.console;
-import frc.team5104.util.Controller;
 import frc.team5104.util.console.c;
 
 public class DriveSystems extends BreakerSubsystem.Systems {
@@ -82,7 +82,8 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 			if (high ? inLowGear() : !inLowGear()) {
 				console.log(c.DRIVE, high ? "Shifting High" : "Shifting Low");
 				Devices.Drive.shift.set(high ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
-				Controller.rumbleSoftFor(high ? 0.75 : 0.25, 0.2);
+				if (high) Controls.Drive._shiftRumbleHigh.start();
+				else Controls.Drive._shiftRumbleLow.start();
 			}
 		}
 		

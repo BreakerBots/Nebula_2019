@@ -3,6 +3,7 @@ package frc.team5104.control;
 import frc.team5104.util.Controller.Control;
 import frc.team5104.util.Controller.ControlList;
 import frc.team5104.util.Controller.Controllers;
+import frc.team5104.util.Controller.Rumble;
 
 public class Controls {
 	//Main 
@@ -22,6 +23,8 @@ public class Controls {
 		public static final Control _reverse = new Control(ControlList.LeftTrigger, Controllers.Main);
 		
 		public static final Control _shift = new Control(ControlList.LeftJoystickPress, Controllers.Main);
+		public static final Rumble _shiftRumbleLow = new Rumble(0.25, false, 200, Controllers.Main);
+		public static final Rumble _shiftRumbleHigh = new Rumble(0.75, false, 200, Controllers.Main);
 		//public static final double _switchDrive = ;
 	}
 	

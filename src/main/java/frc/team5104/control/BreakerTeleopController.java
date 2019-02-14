@@ -6,7 +6,6 @@ import frc.team5104.main.Devices;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.subsystem.intake.IntakeSystems;
 import frc.team5104.subsystem.latch.Latch;
-import frc.team5104.util.Controller.ControlList;
 
 public class BreakerTeleopController {
 	public static void update() {
