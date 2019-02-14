@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.control.BreakerTeleopController;
@@ -26,10 +27,14 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	
 	//Main
 	public void mainEnabled() {
-		Devices.Main.compressor.stop();
-		BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
-		console.logFile.start();
-		Odometry.reset();
+		//Ignore second enabling after Sandstorm
+		if (DriverStation.getInstance().isFMSAttached() ? BreakerRobotController.isSandstorm() : true) {
+			Devices.Main.compressor.stop();
+			BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
+			console.logFile.start();
+			Odometry.reset();
+			BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
+		}
 	}
 	public void mainDisabled() {
 		BreakerSubsystemManager.disabled();
@@ -46,7 +51,6 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	//Auto
 	public void autoStart() {
 		Devices.Main.compressor.stop();
-		BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
 	}
 	public void autoLoop() { BreakerPathScheduler.update(); }
 	

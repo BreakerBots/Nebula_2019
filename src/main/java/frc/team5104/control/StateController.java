@@ -5,13 +5,16 @@ import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
+import frc.team5104.vision.Vision;
 
 public class StateController {
 	public static void handle() {
 		//Vision Toggling
 		if (Controls.Main._toggleVision.getPressed()) {
-			BreakerRobotController.setMode(BreakerRobotController.getMode() == RobotMode.Vision ? RobotMode.Teleop : RobotMode.Vision);
-			console.log(c.VISION, t.INFO, BreakerRobotController.getMode() == RobotMode.Vision ? "Switched to vision" : "Switched to drive");
+			if (BreakerRobotController.getMode() == RobotMode.Vision)
+				BreakerRobotController.setMode(RobotMode.Teleop);
+			else
+				Vision.runVision(RobotMode.Teleop);
 		}
 		
 		//Auto Switching

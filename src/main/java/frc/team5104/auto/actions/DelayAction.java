@@ -5,11 +5,11 @@ import frc.team5104.auto.BreakerPathAction;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 
-public class Delay extends BreakerPathAction {
+public class DelayAction extends BreakerPathAction {
 	long startTime;
 	int delay;
 
-    public Delay(int milliseconds) {
+    public DelayAction(int milliseconds) {
         delay = milliseconds;
     }
 

@@ -14,12 +14,12 @@ import frc.team5104.util.console.c;
 /**
  * Follow a trajectory using the Breaker Trajectory Follower (Ramses Follower)
  */
-public class DriveTrajectory extends BreakerPathAction {
+public class DriveTrajectoryAction extends BreakerPathAction {
 
 	private BreakerTrajectoryFollower follower;
 	private Waypoint[] waypoints;
 		
-    public DriveTrajectory(Waypoint[] points) {
+    public DriveTrajectoryAction(Waypoint[] points) {
     	this.waypoints = points;
     }
 

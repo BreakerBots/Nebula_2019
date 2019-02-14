@@ -11,6 +11,11 @@ class VisionMovement {
 	static BreakerPositionController turnController = new BreakerPositionController(_VisionConstants._turnP, _VisionConstants._turnI, _VisionConstants._turnD, _VisionConstants._toleranceX, _VisionConstants._targetX);
 	static BreakerPositionController forwardController = new BreakerPositionController(_VisionConstants._forwardP, _VisionConstants._forwardI, _VisionConstants._forwardD, _VisionConstants._toleranceY, _VisionConstants._targetY);
 	
+	//Is Finished
+	static boolean isFinished() {
+		return turnController.onTarget() && forwardController.onTarget();
+	}
+	
 	//Main Movement Function
 	static RobotDriveSignal getNextSignal() {
 		console.log(getTurn());

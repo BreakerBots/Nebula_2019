@@ -6,7 +6,7 @@ import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 
-public class DriveStop extends BreakerPathAction {
+public class DriveStopAction extends BreakerPathAction {
 
     public void init() {
     	console.log(c.DRIVE, "Stopping Drive");
