@@ -11,7 +11,7 @@ public class BreakerVelocityController {
 	public double err, deriv, integ;
 	public double lastPoint, target, tolerance;
 
-	public BreakerVelocityController(double P, double I, double D, double F) {	this(P, I, D, F, 0, .01); }
+	public BreakerVelocityController(double P, double I, double D, double F) { this(P, I, D, F, 0, .01); }
 	public BreakerVelocityController(double P, double I, double D, double F, double tolerance) { this(P, I, D, F, 0, tolerance); }
 	public BreakerVelocityController(double P, double I, double D, double F, double target, double tolerance) {
 		_kP = P;

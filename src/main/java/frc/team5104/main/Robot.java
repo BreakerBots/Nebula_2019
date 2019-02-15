@@ -1,17 +1,17 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
-import frc.team5104.main.control.BreakerTeleopController;
-import frc.team5104.main.control.StateController;
+import frc.team5104.control.BreakerTeleopController;
+import frc.team5104.control.StateController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
-import frc.team5104.subsystem.intake.Intake;
 import frc.team5104.subsystem.latch.LatchManager;
 import frc.team5104.util.console;
-import frc.team5104.util.controller;
+import frc.team5104.util.Controller;
 import frc.team5104.vision.VisionManager;
 
 /**
@@ -27,11 +27,14 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	
 	//Main
 	public void mainEnabled() {
-		Devices.Main.compressor.stop();
-		BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
-		console.logFile.start();
-		Odometry.reset();
-		Intake.zero();
+		//Ignore second enabling after Sandstorm
+		if (DriverStation.getInstance().isFMSAttached() ? BreakerRobotController.isSandstorm() : true) {
+			Devices.Main.compressor.stop();
+			BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
+			console.logFile.start();
+			Odometry.reset();
+			BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
+		}
 	}
 	public void mainDisabled() {
 		BreakerSubsystemManager.disabled();
@@ -41,14 +44,13 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 		if (enabled) {
 			BreakerSubsystemManager.update();
 			StateController.handle();
-			controller.update();
+			Controller.update();
 		}
 	}
 
 	//Auto
 	public void autoStart() {
 		Devices.Main.compressor.stop();
-		BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
 	}
 	public void autoLoop() { BreakerPathScheduler.update(); }
 	

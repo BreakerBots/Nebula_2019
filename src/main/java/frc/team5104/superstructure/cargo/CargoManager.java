@@ -6,7 +6,6 @@ import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.subsystem.chute.ChuteSystems;
 import frc.team5104.subsystem.intake.Intake;
-import frc.team5104.subsystem.intake.IntakeSystems;
 
 class CargoManager extends BreakerSubsystem.Manager {
 	public static enum CargoState {

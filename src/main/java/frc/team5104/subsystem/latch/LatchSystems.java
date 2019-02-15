@@ -7,7 +7,7 @@ import frc.team5104.subsystem.BreakerSubsystem;
 
 public class LatchSystems extends BreakerSubsystem.Systems {
 	static class Lazyboy {
-		static void down() {
+		static void back() {
 			Devices.Hatch.lazyBoy.set(_LatchConstants._lazyBoyUp == DoubleSolenoid.Value.kForward ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kForward);
 		}
 		static void up() {
@@ -17,7 +17,7 @@ public class LatchSystems extends BreakerSubsystem.Systems {
 		static boolean isUp() {
 			return Devices.Hatch.lazyBoy.get() == _LatchConstants._lazyBoyUp;
 		}
-		static boolean isDown() { return !isUp(); }
+		static boolean isBack() { return !isUp(); }
 	}
 	
 	static class Dad {

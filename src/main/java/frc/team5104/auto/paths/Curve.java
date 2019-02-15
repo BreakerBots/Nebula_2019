@@ -2,16 +2,16 @@
 package frc.team5104.auto.paths;
 
 import frc.team5104.auto.BreakerPath;
-import frc.team5104.auto.actions.DriveStop;
-import frc.team5104.auto.actions.DriveTrajectory;
+import frc.team5104.auto.actions.DriveStopAction;
+import frc.team5104.auto.actions.DriveTrajectoryAction;
 import frc.team5104.auto.util.Waypoint;
 
 public class Curve extends BreakerPath {
 	public Curve() {
-		add(new DriveTrajectory(new Waypoint[] {
+		add(new DriveTrajectoryAction(new Waypoint[] {
 				new Waypoint(0, 0, 0),
 				new Waypoint(5, 5, 0)
 		}));
-		add(new DriveStop());
+		add(new DriveStopAction());
 	}
 }

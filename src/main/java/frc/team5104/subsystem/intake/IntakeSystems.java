@@ -6,7 +6,6 @@ import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.BreakerPositionController;
 import frc.team5104.util.CSV;
-import frc.team5104.util.console;
 
 public class IntakeSystems extends BreakerSubsystem.Systems {
 	//Devices

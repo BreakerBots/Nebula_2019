@@ -17,6 +17,11 @@ class VisionMovement {
 			_VisionConstants._toleranceY, _VisionConstants._targetY
 		);
 	
+	//Is Finished
+	static boolean isFinished() {
+		return turnController.onTarget() && forwardController.onTarget();
+	}
+	
 	//Main Movement Function
 	static RobotDriveSignal getNextSignal() {
 		console.log(getTurn());
