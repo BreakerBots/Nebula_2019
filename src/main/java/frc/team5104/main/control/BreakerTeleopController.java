@@ -2,13 +2,10 @@ package frc.team5104.main.control;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.subsystem.intake.IntakeSystems;
 import frc.team5104.subsystem.latch.Latch;
-import frc.team5104.superstructure.cargo.Cargo;
-import frc.team5104.util.console;
 import frc.team5104.util.controller.Control;
 
 public class BreakerTeleopController {
@@ -18,14 +15,13 @@ public class BreakerTeleopController {
 		
 		//Cargo
 		Devices.Cargo.belt.set(ControlMode.PercentOutput, Control.E.getHeld() ? 1 : 0);
-		IntakeSystems.Arm.setVoltage(Control.RY.getAxis() * 10);
-		//console.log(IntakeSystems.Encoder.getDegrees());
-		if (Control.X.getPressed())
-			Cargo.intake();
-		if (Control.B.getPressed())
-			Cargo.eject();
-		if (Control.LIST.getPressed())
-			Cargo.idle();
+		IntakeSystems.Arm.set(Control.RY.getAxis());
+//		if (Control.X.getPressed())
+//			Cargo.intake();
+//		if (Control.B.getPressed())
+//			Cargo.eject();
+//		if (Control.LIST.getPressed())
+//			Cargo.idle();
 		
 		//Chute
 		if (Control.N.getPressed())
@@ -37,15 +33,11 @@ public class BreakerTeleopController {
 		
 		//Latch
 		if (Control.LB.getPressed())
-			Devices.Hatch.dad.set(DoubleSolenoid.Value.kReverse);
-		if (Control.RB.getPressed())
-			Devices.Hatch.dad.set(DoubleSolenoid.Value.kForward);
-//		if (Control.LB.getPressed())
-//			Latch.idle();
-//		if (Control.RB.getPressed()) {
-//			Latch.intake();
-//			Chute.trapdoorUp();
-//		}
+			Latch.idle();
+		if (Control.RB.getPressed()) {
+			Latch.intake();
+			Chute.trapdoorUp();
+		}
 			
 
 		

@@ -8,18 +8,13 @@ import frc.team5104.util.console;
 
 class VisionMovement {
 	//Movement Controllers
-	static BreakerPositionController turnController = new BreakerPositionController(
-			_VisionConstants._turnP, _VisionConstants._turnI, _VisionConstants._turnD, 
-			_VisionConstants._toleranceX, _VisionConstants._targetX
-		);
-	static BreakerPositionController forwardController = new BreakerPositionController(
-			_VisionConstants._forwardP, _VisionConstants._forwardI, _VisionConstants._forwardD, 
-			_VisionConstants._toleranceY, _VisionConstants._targetY
-		);
+	static BreakerPositionController turnController = new BreakerPositionController(_VisionConstants._turnP, _VisionConstants._turnI, _VisionConstants._turnD, _VisionConstants._toleranceX, _VisionConstants._targetX);
+	static BreakerPositionController forwardController = new BreakerPositionController(_VisionConstants._forwardP, _VisionConstants._forwardI, _VisionConstants._forwardD, _VisionConstants._toleranceY, _VisionConstants._targetY);
 	
 	//Main Movement Function
 	static RobotDriveSignal getNextSignal() {
 		console.log(getTurn());
+		VisionManager.csv.update(new String[] { ""+VisionSystems.limelight.getX(), ""+turnController.target });
 		return new RobotDriveSignal(
 				getForward() - getTurn(), 
 				getForward() + getTurn(), 
@@ -29,7 +24,6 @@ class VisionMovement {
 	
 	//Turn Movement Function
 	private static double getTurn() {
-		VisionManager.csv.update(new String[] { ""+VisionSystems.limelight.getX(), ""+turnController.target });
 		if(Vision.targetVisible() && !turnController.onTarget()) {
 			return BreakerMath.clamp(turnController.update(VisionSystems.limelight.getX()), -9, 9);
 		}
@@ -38,9 +32,9 @@ class VisionMovement {
 	
 	//Forward Movement Function
 	private static double getForward() {
-		if(Vision.targetVisible() && !forwardController.onTarget()) {
-			return BreakerMath.clamp(forwardController.update(VisionSystems.limelight.getY()), -9, 9);
-		}
+//		if(Vision.targetVisible() && !forwardController.onTarget()) {
+//			return BreakerMath.clamp(forwardController.update(VisionSystems.limelight.getY()), -9, 9);
+//		}
 		return 0;
 	}
 	

@@ -14,24 +14,24 @@ public class LatchManager extends BreakerSubsystem.Manager {
 	static long intakeStartTime = System.currentTimeMillis();
 	
 	public void update() {
-//		switch (currentState) {
-//			case hold:
-//				LatchSystems.Lazyboy.up();
-//				LatchSystems.Dad.close();
-//				break;
-//			case intake:
-//				LatchSystems.Lazyboy.up();
-//				LatchSystems.Dad.open();
-//				if (System.currentTimeMillis() > _LatchConstants._intakeModeLength + intakeStartTime)
-//					currentState = LatchState.hold;
-//				break;
-//			case idle:
-//				LatchSystems.Lazyboy.down();
-//				LatchSystems.Dad.close();
-//				break;
-//			default:
-//				break;
-//		}
+		switch (currentState) {
+			case hold:
+				LatchSystems.Lazyboy.up();
+				LatchSystems.Dad.close();
+				break;
+			case intake:
+				LatchSystems.Lazyboy.up();
+				LatchSystems.Dad.open();
+				if (System.currentTimeMillis() > _LatchConstants._intakeModeLength + intakeStartTime)
+					currentState = LatchState.hold;
+				break;
+			case idle:
+				LatchSystems.Lazyboy.down();
+				LatchSystems.Dad.close();
+				break;
+			default:
+				break;
+		}
 	}
 
 	public void disabled() { }

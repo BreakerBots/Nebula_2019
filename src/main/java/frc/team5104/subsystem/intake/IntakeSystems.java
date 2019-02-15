@@ -5,56 +5,58 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.BreakerPositionController;
-import frc.team5104.util.CSV;
-import frc.team5104.util.console;
 
 public class IntakeSystems extends BreakerSubsystem.Systems {
 	//Devices
-	static BreakerPositionController armController = new BreakerPositionController
-			(_IntakeConstants._kP, _IntakeConstants._kI, _IntakeConstants._kD, _IntakeConstants._tolerance);
-	
-	public static CSV csv = new CSV(new String[] { "current", "target" });
+	static BreakerPositionController armUpController = new BreakerPositionController
+			(_IntakeConstants._kP, _IntakeConstants._kI, _IntakeConstants._kD, _IntakeConstants._tolerance, _IntakeConstants._upPos);
+	static BreakerPositionController armDownController = new BreakerPositionController
+			(_IntakeConstants._kP, _IntakeConstants._kI, _IntakeConstants._kD, _IntakeConstants._tolerance, _IntakeConstants._downPos);
 	
 	public static class Arm {
-		public static void setVoltage(double voltage) {
-			Devices.Cargo.leftArm.set(ControlMode.PercentOutput, -voltage / Devices.Cargo.leftArm.getBusVoltage());
-			Devices.Cargo.rightArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.rightArm.getBusVoltage());
-		}
-		
-		static void applyForce(double force) {
-			setVoltage(force);
+		public static void set(double voltage) {
+			Devices.Cargo.leftArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.leftArm.getBusVoltage());
+			Devices.Cargo.rightArm.set(ControlMode.PercentOutput, -voltage / Devices.Cargo.rightArm.getBusVoltage());
 		}
 		
 		static void up() {
-			csv.update(new String[] { ""+Encoder.getDegrees(), ""+armController.target });
-			armController.setTarget(_IntakeConstants._upPos);
-			if(!armController.onTarget()) 
-				applyForce(armController.update(Encoder.getDegrees()));
+			if(!armUpController.onTarget()) 
+				set(armUpController.update(Encoder.getDegrees()));
 			 else
-				applyForce(0);
+				set(0);
 		}
 		
 		static void down() {
-			csv.update(new String[] { ""+Encoder.getDegrees(), ""+armController.target });
-			armController.setTarget(_IntakeConstants._downPos);
-			if(!armController.onTarget()) 
-				applyForce(armController.update(Encoder.getDegrees()));
-			else
-				applyForce(0);
+			if(!armDownController.onTarget()) 
+				set(armDownController.update(Encoder.getDegrees()));
+			 else
+				set(0);
 		}
 	}
 	
-	public static class Encoder {
-		public static int getRawRotation() { return Devices.Cargo.leftArm.getSelectedSensorPosition(); }
-		public static double getDegrees() { 
-			return getRawRotation() / _IntakeConstants._ticksPerRevolution * 360 + _IntakeConstants._fullyUpDegrees; 
+	static class Encoder {
+		static int getRawRotation() {
+			return Devices.Cargo.leftArm.getSelectedSensorPosition();
 		}
 		
-		static void zero() { Devices.Cargo.leftArm.setSelectedSensorPosition(0, 0, 10); }
+		static double getPercentRotation() {
+			return getRawRotation() / _IntakeConstants._ticksPerRevolution;
+		}
+		
+		static double getDegrees() {
+			return getPercentRotation() * 360;
+		}
+		
+		static void zero() {
+			Devices.Cargo.leftArm.setSelectedSensorPosition(0, 0, 10);
+		}
 	}
 	
 	static class LimitSwitch {
-		static boolean isHit() { return true; }
+		static boolean isHit() {
+			return true;
+		}
+		
 		static boolean isNotHit() { return !isHit(); }
 	}
 }

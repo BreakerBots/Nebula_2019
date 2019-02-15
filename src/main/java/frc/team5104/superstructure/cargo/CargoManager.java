@@ -6,7 +6,6 @@ import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.subsystem.chute.ChuteSystems;
 import frc.team5104.subsystem.intake.Intake;
-import frc.team5104.subsystem.intake.IntakeSystems;
 
 class CargoManager extends BreakerSubsystem.Manager {
 	public static enum CargoState {
@@ -50,8 +49,6 @@ class CargoManager extends BreakerSubsystem.Manager {
 	}
 
 	public void disabled() { }
-	public void enabled(RobotMode mode) {  }
-	public CargoManager() { 
-		//IntakeSystems.csv.writeFile("vision_temp", "urmom.txt"); }
-	}
+	public void enabled(RobotMode mode) { }
+	public CargoManager() { }
 }

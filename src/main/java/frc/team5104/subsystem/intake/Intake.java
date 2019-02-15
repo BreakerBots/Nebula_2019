@@ -11,8 +11,4 @@ public class Intake extends BreakerSubsystem.Actions {
 	public static void down() {
 		IntakeSystems.Arm.down();
 	}
-	
-	public static void zero() {
-		IntakeSystems.Encoder.zero();
-	}
 }
