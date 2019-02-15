@@ -2,6 +2,8 @@
 package frc.team5104.util;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -53,10 +55,10 @@ public class Controller {
 		private ControlList(int slot, int type) { this.slot = slot; this.type = type; }
 	}
 		
-	public static class Control {
-		private static ArrayList<Control> register = new ArrayList<Control>();
-		private static void updateAll() { for (Control obj : register) { obj.update(); } }
-		
+	private static abstract class ControllerElement { abstract void update(); }
+	private static List<ControllerElement> register = new ArrayList<ControllerElement>();
+	
+	public static class Control extends ControllerElement {
 		public ControlList control;
 		public Controllers controller;
 		public boolean reversed; 
@@ -100,7 +102,7 @@ public class Controller {
 		/**Returns true for one tick if the button has been held for the specified time*/
 		public boolean getHeldEvent(double time) { return Math.abs(getHeldTime() - time) <= 0.01; }
 		
-		private void update() {
+		void update() {
 			pressed = false;
 			released = false;
 			
@@ -122,10 +124,7 @@ public class Controller {
 		}
 	}
 	
-	public static class Rumble {
-		private static ArrayList<Rumble> register = new ArrayList<Rumble>();
-		private static void updateAll() { for (Rumble obj : register) { obj.update(); } }
-		
+	public static class Rumble extends ControllerElement {
 		private static long timerTarget; 
 		private static boolean timerRunning = false;
 		public Controllers controller;
@@ -165,7 +164,7 @@ public class Controller {
 			}
 		}
 		
-		private void update() {
+		void update() {
 			if (timerRunning && System.currentTimeMillis() >= timerTarget) { 
 				controller.handler.setRumble(hard ? RumbleType.kRightRumble : RumbleType.kLeftRumble, 0); 
 				timerRunning = false;
@@ -173,8 +172,9 @@ public class Controller {
 		}
 	}
 	
-	public static void update() {
-		Control.updateAll();
-		Rumble.updateAll();
+	public static void update() { 
+		for (ControllerElement obj : register) { 
+			obj.update(); 
+		} 
 	}
 }
