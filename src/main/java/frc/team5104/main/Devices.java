@@ -18,8 +18,6 @@ public class Devices {
 	//Main
 	public static class Main {
 		//public static PowerDistributionPanel pdp = new PowerDistributionPanel();
-		public static Compressor compressor = new Compressor();
-		public static AnalogInput compressorReader = new AnalogInput(0);
 	}
 	
 	//Drive
@@ -51,5 +49,11 @@ public class Devices {
 	public static class Hatch {
 		public static DoubleSolenoid dad = new DoubleSolenoid(1, 0);
 		public static DoubleSolenoid lazyBoy = new DoubleSolenoid(3, 2);
+	}
+	
+	//Other
+	public static class Other {
+		public static Compressor compressor = new Compressor();
+		public static AnalogInput compressorReader = new AnalogInput(3);
 	}
 }

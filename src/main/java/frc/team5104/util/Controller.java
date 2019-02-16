@@ -25,8 +25,8 @@ import edu.wpi.first.wpilibj.Joystick;
 public class Controller {
 	//List of Controllers
 	public static enum Controllers {
-		Main(0),
-		Secondary(1);
+		Main(0);
+		//Secondary(1);
 		private Joystick handler;
 		private Controllers(int slot) { this.handler = new Joystick(slot); }
 	};
@@ -107,7 +107,7 @@ public class Controller {
 			released = false;
 			
 			if (control.type == 1)
-				val = controller.handler.getRawButton(control.slot - 1);
+				val = controller.handler.getRawButton(control.slot);
 			else if (control.type == 2)
 				val = (controller.handler.getRawAxis(control.slot) * (reversed ? -1 : 1)) > deadzone ? true : false;
 			else if (control.type == 3)

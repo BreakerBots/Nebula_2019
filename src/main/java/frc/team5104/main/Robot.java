@@ -11,6 +11,7 @@ import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.latch.LatchManager;
 import frc.team5104.util.console;
+import frc.team5104.util.Compressor;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.VisionManager;
 
@@ -25,11 +26,13 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 		);
 	}
 	
+	
+	
 	//Main
 	public void mainEnabled() {
 		//Ignore second enabling after Sandstorm
 		if (DriverStation.getInstance().isFMSAttached() ? BreakerRobotController.isSandstorm() : true) {
-			Devices.Main.compressor.stop();
+			Compressor.stop();
 			BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
 			console.logFile.start();
 			Odometry.reset();
@@ -50,7 +53,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 
 	//Auto
 	public void autoStart() {
-		Devices.Main.compressor.stop();
+		Compressor.stop();
 	}
 	public void autoLoop() { BreakerPathScheduler.update(); }
 	
