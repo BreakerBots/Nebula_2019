@@ -57,6 +57,7 @@ public class BreakerTeleopController {
 //		}
 		if (Compressor.shouldRun(0)) Compressor.run();
 		else Compressor.stop();
+		Compressor.buffer.update(Compressor.getPressure());
 		
 	}
 }

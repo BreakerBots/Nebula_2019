@@ -49,7 +49,7 @@ public class Buffer {
 		double sum = 0;
 		for(int i = 0; i < values.length; i++) 
 			sum += values[i];
-		return (int)(sum) / values.length;
+		return (int)(sum / values.length);
 	}
 	public boolean getBooleanAvg() {
 		double sum = 0;

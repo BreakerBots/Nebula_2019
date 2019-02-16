@@ -96,7 +96,7 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 		} 
 		finally {
 			// startCompetition never returns unless exception occurs....
-			DriverStation.reportWarning("Robots should work, but yours doesnt.", false);
+			DriverStation.reportWarning("Robots should work, but yours is bad.", false);
 			if (errorOnExit) {
 				DriverStation.reportError(
 						"The startCompetition() method (or methods called by it) should have "
