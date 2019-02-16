@@ -11,7 +11,7 @@ public class StateController {
 			if (BreakerRobotController.getMode() == RobotMode.Vision)
 				BreakerRobotController.setMode(RobotMode.Teleop);
 			else
-				Vision.runVision(RobotMode.Teleop);
+				Vision.runVision(RobotMode.Teleop, null);
 		}
 		
 		//Auto Switching

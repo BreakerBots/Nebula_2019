@@ -1,12 +1,16 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.vision;
 
+import frc.team5104.control.Controls.Hatch;
 import frc.team5104.main.BreakerRobotController;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
+import frc.team5104.subsystem.latch.Latch;
+import frc.team5104.superstructure.cargo.Cargo;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
+import frc.team5104.vision.VisionManager.ActionMode;
 
 public class Vision {
 	/** Gets the desired drivetrain output to aligh with the visible target */
@@ -22,9 +26,27 @@ public class Vision {
 	/**
 	 * Runs vision
 	 */
-	public static void runVision(RobotMode exitState) {
+	public static void runVision(RobotMode exitState, ActionMode exitAction) {
 		BreakerRobotController.setMode(RobotMode.Vision);
 		VisionManager.exitState = exitState;
+		VisionManager.exitAction = exitAction;
 		console.log(c.VISION, t.INFO, "Running Vision");
+	}
+	
+	static void action(ActionMode exitAction) {
+		switch(exitAction) {
+		case cargo:
+			Cargo.eject();
+			break;
+		case hatchEject:
+			Latch.eject();
+			break;
+		case hatchIntake:
+			Latch.intake();
+			break;
+		default:
+			break;
+		
+		}
 	}
 }

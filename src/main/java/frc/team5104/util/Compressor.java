@@ -4,6 +4,8 @@ import frc.team5104.main.Devices;
 
 public class Compressor {
 	
+	static Buffer buffer;
+	
 	//Pressure Sensors
 	public static double getRawPressure() {
 		return Devices.Other.compressorReader.getVoltage();
@@ -14,12 +16,14 @@ public class Compressor {
 	
 	//Guesses
 	public static boolean shouldRun(double batteryVoltage) {
-		return true;
+		buffer.update(getPressure());
+		return buffer.getIntAvg() < 40;
 	}
 	
 	//Compressor Running
 	public static void run() {
 		Devices.Other.compressor.start();
+		buffer = new Buffer(5, 45);
 	}
 	
 	public static void stop() {
