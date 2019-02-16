@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
@@ -87,6 +88,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 				
 				robot.teleopLoop();
 				HAL.observeUserProgramTeleop();
+				DriverStation.getInstance().waitForData(0.2);
 				break;
 			}
 			case Vision: {

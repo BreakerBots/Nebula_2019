@@ -25,20 +25,20 @@ public class IntakeSystems extends BreakerSubsystem.Systems {
 		}
 		
 		static void up() {
-			csv.update(new String[] { ""+Encoder.getDegrees(), ""+armController.target });
-			armController.setTarget(_IntakeConstants._upPos);
-			if(!armController.onTarget()) 
-				applyForce(armController.update(Encoder.getDegrees()));
-			 else
+//			csv.update(new String[] { ""+Encoder.getDegrees(), ""+armController.target });
+//			armController.setTarget(_IntakeConstants._upPos);
+//			if(!armController.onTarget()) 
+//				applyForce(armController.update(Encoder.getDegrees()));
+//			 else
 				applyForce(0);
 		}
 		
 		static void down() {
-			csv.update(new String[] { ""+Encoder.getDegrees(), ""+armController.target });
-			armController.setTarget(_IntakeConstants._downPos);
-			if(!armController.onTarget()) 
-				applyForce(armController.update(Encoder.getDegrees()));
-			else
+//			csv.update(new String[] { ""+Encoder.getDegrees(), ""+armController.target });
+//			armController.setTarget(_IntakeConstants._downPos);
+//			if(!armController.onTarget()) 
+//				applyForce(armController.update(Encoder.getDegrees()));
+//			else
 				applyForce(0);
 		}
 	}

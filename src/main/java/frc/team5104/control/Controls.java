@@ -8,7 +8,7 @@ import frc.team5104.util.Controller.Rumble;
 public class Controls {
 	//Main 
 	public static class Main {
-		public static final Control _toggleVision = new Control(ControlList.A, Controllers.Main);
+		public static final Control _toggleVision = new Control(ControlList.DirectionPadDown, Controllers.Main);
 		public static final Control _toggleAuto = new Control(ControlList.Menu, Controllers.Main);
 		
 		public static final Control _idle = new Control(ControlList.List, Controllers.Main);

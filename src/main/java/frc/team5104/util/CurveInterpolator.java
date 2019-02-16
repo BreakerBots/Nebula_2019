@@ -38,7 +38,7 @@ public class CurveInterpolator {
 		
 		//Add Step
 		if ((Math.abs(startPoint - currentPoint) + deltaTime) < Math.abs(startPoint - setPoint))
-			currentPoint = currentPoint + (deltaTime * (startPoint < setPoint ? 1 : -1));
+			currentPoint += (deltaTime * (startPoint < setPoint ? 1 : -1));
 		else
 			currentPoint = setPoint;
 		

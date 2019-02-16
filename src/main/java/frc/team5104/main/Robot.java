@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
@@ -14,6 +15,7 @@ import frc.team5104.util.console;
 import frc.team5104.util.Compressor;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.VisionManager;
+import frc.team5104.superstructure.cargo.CargoManager;
 
 /**
  * Fallthrough from <strong>Breaker Robot Controller</strong>
@@ -22,7 +24,8 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	public Robot() {
 		BreakerSubsystemManager.throwSubsystems(
 			 new DriveManager(),
-			 new LatchManager()
+			 new LatchManager(),
+			 new CargoManager()
 		);
 	}
 	
@@ -43,6 +46,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 		BreakerSubsystemManager.disabled();
 		console.logFile.end();
 	}
+	
 	public void mainLoop() {
 		if (enabled) {
 			BreakerSubsystemManager.update();

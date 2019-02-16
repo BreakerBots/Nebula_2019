@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.util.TalonFactory;
@@ -40,6 +41,7 @@ public class Devices {
 		
 		//Ramp
 		public static DoubleSolenoid trapdoor = new DoubleSolenoid(4, 5);
+		public static DigitalInput di = new DigitalInput(0);
 		
 		//Belt
 		public static TalonSRX belt = TalonFactory.getTalon(31);
