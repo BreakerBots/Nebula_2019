@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Notifier;
  * <h1>Odometry (Robot Position Estimator/Kinematics)</h1>
  * Calculates the Robots x, y position according to encoder values.
  */
-public class Odometry {
+public class Odometry /*implements CSVLoggable*/ {
 	private static Notifier _thread = null;
 		
 	private volatile static double lastPos, currentPos, dPos, theta;

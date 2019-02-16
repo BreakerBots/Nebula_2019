@@ -3,19 +3,19 @@ package frc.team5104.util;
 import java.io.PrintWriter;
 
 public class CSV {
-	public static interface CSVWritable {
+	public static interface CSVLoggable {
 		String[] getHeader();
 		String[] getData();
 	}
 	
 	private static String content;
-	private static CSVWritable target;
+	private static CSVLoggable target;
 	
 	/**
 	 * Initialized the CSV class with a specified CSV target
 	 * @param csvTarget A class that can be logged to a csv
 	 */
-	public static void init(CSVWritable csvTarget) {
+	public static void init(CSVLoggable csvTarget) {
 		target = csvTarget;
 		content = stringArrayToString(target.getHeader()) + '\n';
 	}
