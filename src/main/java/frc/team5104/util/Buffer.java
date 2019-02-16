@@ -1,22 +1,20 @@
 package frc.team5104.util;
 /**
- * <h1>Boolean Change Listener</h1>
- * Send a boolean every tick to this class, and if that boolean changes (true => false, false => true) it will return true, else false
- * Similar to a button pressed event in controller.java
+ * 
  */
-public class RunningAverage {
+public class Buffer {
 	private double[] values;
-	public RunningAverage(int n, double init) {
+	public Buffer(int n, double init) {
 		values = new double[n];
 		for(int i = 0; i < n; i++) 
 			values[i] = init;
 	}
-	public RunningAverage(int n, int init) {
+	public Buffer(int n, int init) {
 		values = new double[n];
 		for(int i = 0; i < n; i++) 
 			values[i] = init;
 	}
-	public RunningAverage(int n, boolean init) {
+	public Buffer(int n, boolean init) {
 		values = new double[n];
 		for(int i = 0; i < n; i++) 
 			values[i] = init ? 1 : 0;

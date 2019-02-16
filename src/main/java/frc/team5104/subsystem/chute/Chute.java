@@ -2,10 +2,10 @@
 package frc.team5104.subsystem.chute;
 
 import frc.team5104.subsystem.BreakerSubsystem;
-import frc.team5104.util.RunningAverage;
+import frc.team5104.util.Buffer;
 
 public class Chute extends BreakerSubsystem.Actions {
-	public static RunningAverage BeamAverage;
+	public static Buffer BeamAverage;
 
 	public static void trapdoorUp() {
 		ChuteSystems.Trapdoor.up();

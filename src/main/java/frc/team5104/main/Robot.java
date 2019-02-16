@@ -1,7 +1,6 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
@@ -28,8 +27,6 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 			 new CargoManager()
 		);
 	}
-	
-	
 	
 	//Main
 	public void mainEnabled() {

@@ -8,7 +8,7 @@ import frc.team5104.subsystem.chute.ChuteSystems;
 import frc.team5104.subsystem.intake.Intake;
 import frc.team5104.util.Curve.BezierCurve;
 import frc.team5104.util.CurveInterpolator;
-import frc.team5104.util.RunningAverage;
+import frc.team5104.util.Buffer;
 import frc.team5104.util.console;
 
 public class CargoManager extends BreakerSubsystem.Manager {
@@ -69,7 +69,7 @@ public class CargoManager extends BreakerSubsystem.Manager {
 
 	public void disabled() { }
 	public void enabled(RobotMode mode) { 
-		Chute.BeamAverage = new RunningAverage(3, false);
+		Chute.BeamAverage = new Buffer(3, false);
 	}
 	public CargoManager() { 
 		//IntakeSystems.csv.writeFile("vision_temp", "urmom.txt"); }
