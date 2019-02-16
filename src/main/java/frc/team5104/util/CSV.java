@@ -1,51 +1,64 @@
-/*BreakerBots Robotics Team 2019*/
 package frc.team5104.util;
 
 import java.io.PrintWriter;
 
-/**
- * A simple handler for saving CSV files.
- * 
- * SCP Pull command:
- * scp lvuser@10.51.4.2:folder/filename.txt filename.csv
- */
 public class CSV {
-	public String content;
+	public static interface CSVLoggable {
+		String[] getHeader();
+		String[] getData();
+	}
+	
+	private static String content;
+	private static CSVLoggable target;
 	
 	/**
-	 * Log data to import into a CSV
-	 * @param heads Header of the file
+	 * Initialized the CSV class with a specified CSV target
+	 * @param csvTarget A class that can be logged to a csv
 	 */
-	public CSV(String[] heads) {
-		content = "";
-		for(int i = 0; i < heads.length; i++) 
-			content += heads[i] + (i < heads.length - 1 ? ", " : "");
-		content += '\n';
+	public static void init(CSVLoggable csvTarget) {
+		target = csvTarget;
+		content = stringArrayToString(target.getHeader()) + '\n';
 	}
 	
 	/**
-	 * Log next set of values
-	 * @param values Follow the order of the head
+	 * Updated with new data from the pre-specified CSV target
 	 */
-	public void update(String[] values) {
-		for(int i = 0; i < values.length; i++) 
-			content += values[i] + (i < values.length - 1 ? ", " : "");
-		content += '\n';
+	public static void update() {
+		content += stringArrayToString(target.getData()) + '\n';
 	}
 	
 	/**
-	 * Saves the CSV File
-	 * @param path The path where to save on the robot
-	 * @param fileName The file name (not the extension)
+	 * Saves the file onto the roborio
+	 * @param folder The folder on the roborio
+	 * @param fileName The name of the file to save on the roboio
 	 */
-	public void writeFile(String path, String fileName) {
+	public static void writeFile(String folder, String file) {
 		try {
-			String home = "/home/lvuser/";
-			PrintWriter writer = new PrintWriter(home + path + "/" + fileName + ".txt", "UTF-8");
+			//Anti dumb
+			if (file.indexOf(".") != -1)
+				file = file.substring(0, file.indexOf("."));
+			file += ".csv";
+			if (folder.indexOf("lvuser") != -1)
+				folder = folder.substring(folder.indexOf("lvuser") + 6);
+			if (folder.charAt(0) == '/')
+				folder = folder.substring(1);
+			folder = "/home/lvuser/" + folder;
+			if (folder.charAt(folder.length() - 1) != '/')
+				folder += "/";
+			
+			PrintWriter writer = new PrintWriter(folder + file, "UTF-8");
 			writer.print(content);
 			writer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	//Takes a string array and turns it into a string (separated by commas)
+	private static String stringArrayToString(String[] stringArray) {
+		String returnValue = "";
+		for(int i = 0; i < stringArray.length; i++) 
+			returnValue += stringArray[i] + (i < stringArray.length - 1 ? ", " : "");
+		return returnValue;
 	}
 }

@@ -4,9 +4,10 @@ import frc.team5104.subsystem.drive.RobotDriveSignal;
 import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.BreakerPositionController;
+import frc.team5104.util.CSV.CSVLoggable;
 import frc.team5104.util.console;
 
-class VisionMovement {
+class VisionMovement implements CSVLoggable {
 	//Movement Controllers
 	static BreakerPositionController turnController = new BreakerPositionController(
 			_VisionConstants._turnP, _VisionConstants._turnI, _VisionConstants._turnD, 
@@ -34,7 +35,6 @@ class VisionMovement {
 	
 	//Turn Movement Function
 	private static double getTurn() {
-		VisionManager.csv.update(new String[] { ""+VisionSystems.limelight.getX(), ""+turnController.target });
 		if(!isFinished()) {
 			return BreakerMath.clamp(turnController.update(VisionSystems.limelight.getX()), -9, 9);
 		}
@@ -51,5 +51,14 @@ class VisionMovement {
 	
 	static void reset() {
 		turnController.reset();
+	}
+
+	public String[] getHeader() {
+		return new String[] { "turnCurrent", "turnTarget", "forwardCurrent", "forwardTarget" };
+	}
+
+	public String[] getData() {
+		return new String[] { ""+VisionSystems.limelight.getX(), ""+turnController.target, 
+							  ""+VisionSystems.limelight.getY(), ""+forwardController.target };
 	}
 }
