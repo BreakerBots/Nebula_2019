@@ -8,6 +8,13 @@ import frc.team5104.subsystem.drive.RobotDriveSignal;
 
 public class VisionManager {
 	static RobotMode exitState;
+	static ActionMode exitAction;
+	
+	public static enum ActionMode {
+		cargo,
+		hatchIntake, 
+		hatchEject
+	}
 	
 	public static void init() {
 		VisionSystems.init();
@@ -19,8 +26,10 @@ public class VisionManager {
 	}
 	
 	public static void update() {
-		if (VisionMovement.isFinished())
+		if (VisionMovement.isFinished()) {
 			BreakerRobotController.setMode(exitState);
+			Vision.action(exitAction);
+		}
 		else {
 			RobotDriveSignal signal = Vision.getNextSignal();
 			Drive.applyMotorMinSpeedRough(signal);

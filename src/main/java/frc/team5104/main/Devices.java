@@ -12,7 +12,7 @@ import frc.team5104.util.TalonFactory;
 import frc.team5104.util.TalonFactory.TalonSettings;
 
 /**
- * All Devices used in Athena's Code
+ * All Devices used in Code
  */
 public class Devices {
 
@@ -49,8 +49,8 @@ public class Devices {
 	
 	//Hatch
 	public static class Hatch {
-		public static DoubleSolenoid dad = new DoubleSolenoid(1, 0);
-		public static DoubleSolenoid lazyBoy = new DoubleSolenoid(3, 2);
+		public static DoubleSolenoid dad = new DoubleSolenoid(3, 2);
+		public static DoubleSolenoid lazyBoy = new DoubleSolenoid(1, 0);
 	}
 	
 	//Other

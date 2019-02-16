@@ -16,30 +16,30 @@ public class LatchManager extends BreakerSubsystem.Manager {
 	static long ejectStartTime;
 	
 	public void update() {
-		switch (currentState) {
-			case hold:
-				LatchSystems.Lazyboy.up();
-				LatchSystems.Dad.close();
-				break;
-			case intake:
-				LatchSystems.Lazyboy.up();
-				LatchSystems.Dad.open();
-				if (System.currentTimeMillis() > _LatchConstants._intakeModeLength + intakeStartTime)
-					currentState = LatchState.hold;
-				break;
-			case idle:
-				LatchSystems.Lazyboy.back();
-				LatchSystems.Dad.close();
-				break;
-			case eject:
-				LatchSystems.Lazyboy.back();
-				LatchSystems.Dad.open();
-				if (System.currentTimeMillis() > _LatchConstants._ejectModeLength + ejectStartTime)
-					currentState = LatchState.idle;
-				break;
-			default:
-				break;
-		}
+//		switch (currentState) {
+//			case hold:
+//				LatchSystems.Lazyboy.up();
+//				LatchSystems.Dad.close();
+//				break;
+//			case intake:
+//				LatchSystems.Lazyboy.up();
+//				LatchSystems.Dad.open();
+//				if (System.currentTimeMillis() > _LatchConstants._intakeModeLength + intakeStartTime)
+//					currentState = LatchState.hold;
+//				break;
+//			case idle:
+//				LatchSystems.Lazyboy.back();
+//				LatchSystems.Dad.close();
+//				break;
+//			case eject:
+//				LatchSystems.Lazyboy.back();
+//				LatchSystems.Dad.open();
+//				if (System.currentTimeMillis() > _LatchConstants._ejectModeLength + ejectStartTime)
+//					currentState = LatchState.idle;
+//				break;
+//			default:
+//				break;
+//		}
 	}
 
 	public void disabled() { }

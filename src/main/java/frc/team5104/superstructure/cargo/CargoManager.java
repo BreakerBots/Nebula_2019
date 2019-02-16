@@ -23,9 +23,7 @@ public class CargoManager extends BreakerSubsystem.Manager {
 	
 	public void update() {
 		Chute.BeamAverage.update(ChuteSystems.BeamBreak.isHit());
-		
-		console.log(beltInterpolator.update());
-		
+				
 		switch (currentState) {
 			//Eject Mode
 			case eject:

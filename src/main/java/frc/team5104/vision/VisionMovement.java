@@ -19,7 +19,7 @@ class VisionMovement {
 	
 	//Is Finished
 	static boolean isFinished() {
-		return turnController.onTarget() && forwardController.onTarget();
+		return Vision.targetVisible() && turnController.onTarget() && forwardController.onTarget();
 	}
 	
 	//Main Movement Function
@@ -34,7 +34,7 @@ class VisionMovement {
 	
 	//Turn Movement Function
 	private static double getTurn() {
-		if(Vision.targetVisible() && !turnController.onTarget()) {
+		if(!isFinished()) {
 			return BreakerMath.clamp(turnController.update(VisionSystems.limelight.getX()), -9, 9);
 		}
 		return 0;
@@ -42,7 +42,7 @@ class VisionMovement {
 	
 	//Forward Movement Function
 	private static double getForward() {
-		if(Vision.targetVisible() && !forwardController.onTarget()) {
+		if(!isFinished()) {
 			return BreakerMath.clamp(forwardController.update(VisionSystems.limelight.getY()), -9, 9);
 		}
 		return 0;
