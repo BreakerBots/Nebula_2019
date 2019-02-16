@@ -5,10 +5,8 @@ import frc.team5104.main.BreakerRobotController;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
-import frc.team5104.util.CSV;
 
 public class VisionManager {
-	static CSV csv = new CSV(new String[] { "current", "target" });
 	static RobotMode exitState;
 	
 	public static void init() {
@@ -31,6 +29,6 @@ public class VisionManager {
 	}
 
 	public static void stop() {
-		csv.writeFile("vision_temp", "urmom");
+		
 	}
 }

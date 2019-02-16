@@ -11,6 +11,7 @@ import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.latch.LatchManager;
 import frc.team5104.util.console;
+import frc.team5104.util.CSV;
 import frc.team5104.util.Compressor;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.VisionManager;
@@ -32,19 +33,23 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	public void mainEnabled() {
 		//Ignore second enabling after Sandstorm
 		if (DriverStation.getInstance().isFMSAttached() ? BreakerRobotController.isSandstorm() : true) {
+			//Initialization
 			Compressor.stop();
 			BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
 			console.logFile.start();
 			Odometry.reset();
 			BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
 		}
+		CSV.init(null);
 	}
 	public void mainDisabled() {
 		BreakerSubsystemManager.disabled();
 		console.logFile.end();
+		CSV.writeFile("temp", "csvData");
 	}
 	
 	public void mainLoop() {
+		CSV.update();
 		if (enabled) {
 			BreakerSubsystemManager.update();
 			StateController.handle();

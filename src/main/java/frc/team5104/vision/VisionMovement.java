@@ -34,7 +34,6 @@ class VisionMovement {
 	
 	//Turn Movement Function
 	private static double getTurn() {
-		VisionManager.csv.update(new String[] { ""+VisionSystems.limelight.getX(), ""+turnController.target });
 		if(Vision.targetVisible() && !turnController.onTarget()) {
 			return BreakerMath.clamp(turnController.update(VisionSystems.limelight.getX()), -9, 9);
 		}
