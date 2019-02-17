@@ -6,9 +6,9 @@ public class _VisionConstants {
 	public static double _targetCargoY = -8.5;
 	public static double _targetRocketY = 6.15;
 	public static double _targetX = 9.6;
-	public static double _targetY = _targetRocketY;
+	public static double _targetY = _targetCargoY;
 	public static double _toleranceX = 0.3;
-	public static double _toleranceY = 0.1;
+	public static double _toleranceY = 0.5;
 	
 	//Movement Control
 	public static double _turnP =  0.5;

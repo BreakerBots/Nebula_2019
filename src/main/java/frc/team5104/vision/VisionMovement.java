@@ -15,18 +15,17 @@ public class VisionMovement implements CSVLoggable {
 			_VisionConstants._turnP, 0, _VisionConstants._turnD, 
 			_VisionConstants._toleranceX, _VisionConstants._targetX
 		);
-	static BreakerPositionController forwardController = new BreakerPositionController(
-			1, 0, 0, _VisionConstants._toleranceY, _VisionConstants._targetY
-		);
 	static Buffer buffer = new Buffer(10, 45);
 	//Is Finished
 	static boolean isFinished() {
-		return Vision.targetVisible() && turnController.onTarget() && forwardController.onTarget();
+		boolean onTarget = Math.abs(_VisionConstants._targetY - VisionSystems.limelight.getY()) 
+				<= _VisionConstants._toleranceY;
+		console.log(Vision.targetVisible() + " " + onTarget);
+		return Vision.targetVisible() && onTarget;
 	}
 	
 	//Main Movement Function
 	static RobotDriveSignal getNextSignal() {
-		console.log(getTurn());
 		return new RobotDriveSignal(
 				getForward() - getTurn(), 
 				getForward() + getTurn(), 
@@ -50,11 +49,12 @@ public class VisionMovement implements CSVLoggable {
 //		if(!isFinished()) {
 //			return BreakerMath.clamp(forwardController.update(VisionSystems.limelight.getY()), -9, 9);
 //		}
-		return forwardController.onTarget() ? 0 : 2;
+		return (Math.abs(_VisionConstants._targetY - VisionSystems.limelight.getY()) 
+				<= _VisionConstants._toleranceY) ? 0 : 2;
 	}
 	
 	public static double getScaleFactor() {
-		double d = _VisionConstants._targetY - limelight.getY() > _VisionConstants._toleranceY ? 
+		double d = Math.abs(_VisionConstants._targetY - limelight.getY()) > _VisionConstants._toleranceY ? 
 				_VisionConstants._targetY - limelight.getY() : 0;
 		if (d == 0) return 0;
 		d = (2.0 / (d + 10)) + 0.8;
@@ -73,7 +73,7 @@ public class VisionMovement implements CSVLoggable {
 
 	public String[] getData() {
 		return new String[] { ""+VisionSystems.limelight.getX(), ""+turnController.target, 
-							  ""+VisionSystems.limelight.getY(), ""+forwardController.target,
+							  ""+VisionSystems.limelight.getY(), ""+_VisionConstants._targetY,
 							  ""+getScaleFactor()};
 	}
 }

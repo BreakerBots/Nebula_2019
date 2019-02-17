@@ -56,7 +56,6 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 			StateController.handle();
 			Controller.update();
 		}
-		console.log(VisionMovement.getScaleFactor());
 	}
 
 	//Auto
