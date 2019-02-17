@@ -5,7 +5,8 @@ import frc.team5104.main._RobotConstants;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.Units;
 import frc.team5104.util.console;
-
+import frc.team5104.util.console.c;
+import frc.team5104.util.console.t;
 import edu.wpi.first.wpilibj.Notifier;
 
 /**
@@ -21,13 +22,17 @@ public class Odometry /*implements CSVLoggable*/ {
 	private static void init() {
 		lastPos = currentPos = (DriveSystems.encoders.getRawLeftPosition() + DriveSystems.encoders.getRawRightPosition()) / 2.0;
 		_thread = new Notifier(() -> {
-			currentPos = (DriveSystems.encoders.getRawLeftPosition() + DriveSystems.encoders.getRawRightPosition()) / 2.0;
-			dPos = DriveUnits.ticksToFeet(currentPos - lastPos);
-			lastPos = currentPos;
-			theta = Units.degreesToRadians(BreakerMath.boundDegrees180(DriveSystems.gyro.getAngle()));
-            position.addX(Math.cos(theta) * dPos);
-            position.addY(Math.sin(theta) * dPos);
-            position.setTheta(theta);
+			try {
+				currentPos = (DriveSystems.encoders.getRawLeftPosition() + DriveSystems.encoders.getRawRightPosition()) / 2.0;
+				dPos = DriveUnits.ticksToFeet(currentPos - lastPos);
+				lastPos = currentPos;
+				theta = Units.degreesToRadians(BreakerMath.boundDegrees180(DriveSystems.gyro.getAngle()));
+	            position.addX(Math.cos(theta) * dPos);
+	            position.addY(Math.sin(theta) * dPos);
+	            position.setTheta(theta);
+			} catch (Exception e) {
+				console.log(t.ERROR, c.DRIVE, "(at Odometry): Caught fatal error!");
+			}
         });
 	}
 	

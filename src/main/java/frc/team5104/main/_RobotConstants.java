@@ -11,8 +11,8 @@ public class _RobotConstants {
 	
 	//Logging
 	public static final class Logging {
-		public static final boolean _SaveNonMatchLogs = false;
-		public static final boolean _SaveMatchLogs = true;
+		public static final boolean _OverwriteNonMatchLogs = true;
+		public static final boolean _OverwriteMatchLogs = false;
 	}
 	
 	//Looper

@@ -1,7 +1,6 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.control.BreakerTeleopController;
@@ -32,18 +31,17 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	
 	//Main
 	public void mainEnabled() {
-		//Ignore second enabling after Sandstorm
-		if (DriverStation.getInstance().isFMSAttached() ? BreakerRobotController.isSandstorm() : true) {
-			//Initialization
-			Compressor.stop();
-			BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
-			console.logFile.start();
-			Odometry.reset();
-			BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
-		}
+		//TODO: ignore enable/disable between sandstorm/teleop
+		console.log("Robot Enabled");
+		Compressor.stop();
+		BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
+		console.logFile.start();
+		Odometry.reset();
+		BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
 		CSV.init(new VisionMovement());
 	}
 	public void mainDisabled() {
+		//TODO: ignore enable/disable between sandstorm/teleop
 		BreakerSubsystemManager.disabled();
 		console.logFile.end();
 		CSV.writeFile("temp", "csvData");

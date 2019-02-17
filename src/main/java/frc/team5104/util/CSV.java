@@ -1,5 +1,6 @@
 package frc.team5104.util;
 
+import java.io.File;
 import java.io.PrintWriter;
 
 public class CSV {
@@ -36,18 +37,25 @@ public class CSV {
 	public static void writeFile(String folder, String file) {
 		try {
 			//Anti dumb
+			String path = folder;
 			if (file.indexOf(".") != -1)
 				file = file.substring(0, file.indexOf("."));
 			file += ".csv";
-			if (folder.indexOf("lvuser") != -1)
-				folder = folder.substring(folder.indexOf("lvuser") + 6);
-			if (folder.charAt(0) == '/')
-				folder = folder.substring(1);
-			folder = "/home/lvuser/" + folder;
-			if (folder.charAt(folder.length() - 1) != '/')
-				folder += "/";
+			if (path.indexOf("lvuser") != -1)
+				path = path.substring(path.indexOf("lvuser") + 6);
+			if (path.charAt(0) == '/')
+				path = path.substring(1);
+			path = "/home/lvuser/" + path;
+			if (path.charAt(path.length() - 1) != '/')
+				path += "/";
 			
-			PrintWriter writer = new PrintWriter(folder + file, "UTF-8");
+			//Create the directory if it doesn't exist
+			File directory = new File(path);
+			if (!directory.exists())
+				directory.mkdir();
+			
+			//Save the file
+			PrintWriter writer = new PrintWriter(path + file, "UTF-8");
 			writer.print(content);
 			writer.close();
 		} catch (Exception e) {

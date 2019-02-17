@@ -99,8 +99,10 @@ public class Controller {
 		public boolean getReleased() { return released; }
 		/**Returns the time the click lasted for, for one tick when button goes from down to up*/
 		public double getClickTime() { return released ? ((double)(System.currentTimeMillis() - time))/1000 : 0; }
-		/**Returns true for one tick if the button has been held for the specified time*/
-		public boolean getHeldEvent(double time) { return Math.abs(getHeldTime() - time) <= 0.01; }
+		
+		//TODO: Make an actual listener
+		///**Returns true for one tick if the button has been held for the specified time*/
+		//public boolean getHeldEvent(double time) { return Math.abs(getHeldTime() - time) <= 0.01; }
 		
 		void update() {
 			pressed = false;

@@ -49,7 +49,14 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 		//Main Loop
 		while (true) {
 			double st = Timer.getFPGATimestamp();
-			loop();
+			
+			//Call main loop function (and crash tracker)
+			try {
+				loop();
+			} catch (Exception e) {
+				console.log(t.WARNING, c.MAIN, "(at Main Thread): Caught fatal error!", e);
+			}
+			
 			try { Thread.sleep(Math.round(loopPeriod - (Timer.getFPGATimestamp() - st))); } catch (Exception e) { console.error(e); }
 		}
 	}
