@@ -16,9 +16,9 @@ public class Compressor {
 	
 	//Guesses
 	public static boolean shouldRun(double batteryVoltage) {
-		console.log(buffer.getIntAvg());
-		return buffer.getIntAvg() < 40;
-//		return getPressure() < 40;
+		return true;
+//		console.log(buffer.getIntAvg());
+//		return buffer.getIntAvg() < 40;
 	}
 	
 	//Compressor Running

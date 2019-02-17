@@ -59,7 +59,7 @@ public class CargoManager extends BreakerSubsystem.Manager {
 				beltInterpolator.setSetpoint(0);
 				CargoSystems.Belt.set(beltInterpolator.update());
 				
-				Chute.trapdoorUp();
+				//Chute.trapdoorUp();
 				
 				break;
 		}

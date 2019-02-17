@@ -15,6 +15,7 @@ import frc.team5104.util.CSV;
 import frc.team5104.util.Compressor;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.VisionManager;
+import frc.team5104.vision.VisionMovement;
 import frc.team5104.superstructure.cargo.CargoManager;
 
 /**
@@ -40,7 +41,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 			Odometry.reset();
 			BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
 		}
-		CSV.init(null);
+		CSV.init(new VisionMovement());
 	}
 	public void mainDisabled() {
 		BreakerSubsystemManager.disabled();
@@ -55,6 +56,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 			StateController.handle();
 			Controller.update();
 		}
+		console.log(VisionMovement.getScaleFactor());
 	}
 
 	//Auto

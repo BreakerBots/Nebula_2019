@@ -18,7 +18,7 @@ public class VisionManager {
 	
 	public static void init() {
 		VisionSystems.init();
-		VisionSystems.networkTable.setEntry("pipeline", 1);
+		VisionSystems.networkTable.setEntry("pipeline", 0);
 	}
 	
 	public static void start() {

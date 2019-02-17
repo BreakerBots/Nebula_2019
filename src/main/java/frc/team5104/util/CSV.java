@@ -24,7 +24,8 @@ public class CSV {
 	 * Updated with new data from the pre-specified CSV target
 	 */
 	public static void update() {
-		content += stringArrayToString(target.getData()) + '\n';
+		if (target != null)
+			content += stringArrayToString(target.getData()) + '\n';
 	}
 	
 	/**

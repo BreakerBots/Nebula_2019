@@ -34,8 +34,8 @@ public class BreakerTeleopController {
 		if (Controls.Cargo._trapdoorUp.getPressed())
 			Chute.trapdoorUp();
 		if (Controls.Cargo._trapdoorDown.getPressed()) {
-			if (!Latch.hasHatch())
-				Chute.trapdoorDown();
+			//if (!Latch.hasHatch())
+			Chute.trapdoorDown();
 		}
 		
 		//Latch
@@ -51,13 +51,13 @@ public class BreakerTeleopController {
 		}
 			
 		//Compressor
-//		if (Controls.Main._toggleCompressor.getPressed()) {
-//			if (Compressor.isRunning()) Compressor.stop();
-//			else Compressor.run();
-//		}
-		if (Compressor.shouldRun(0)) Compressor.run();
-		else Compressor.stop();
-		Compressor.buffer.update(Compressor.getPressure());
+		if (Controls.Main._toggleCompressor.getPressed()) {
+			if (Compressor.isRunning()) Compressor.stop();
+			else Compressor.run();
+		}
+//		if (Compressor.shouldRun(0)) Compressor.run();
+//		else Compressor.stop();
+//		Compressor.buffer.update(Compressor.getPressure());
 		
 	}
 }
