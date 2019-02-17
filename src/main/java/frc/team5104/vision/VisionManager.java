@@ -5,10 +5,12 @@ import frc.team5104.main.BreakerRobotController;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
+import frc.team5104.vision.VisionMovement.VisionTarget;
 
 public class VisionManager {
 	static RobotMode exitState;
 	static ActionMode exitAction;
+	static VisionTarget target;
 	
 	public static enum ActionMode {
 		cargo,

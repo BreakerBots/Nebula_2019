@@ -10,6 +10,7 @@ import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
 import frc.team5104.vision.VisionManager.ActionMode;
+import frc.team5104.vision.VisionMovement.VisionTarget;
 
 public class Vision {
 	/** Gets the desired drivetrain output to aligh with the visible target */
@@ -25,10 +26,11 @@ public class Vision {
 	/**
 	 * Runs vision
 	 */
-	public static void runVision(RobotMode exitState, ActionMode exitAction) {
+	public static void runVision(RobotMode exitState, ActionMode exitAction, VisionTarget target) {
 		BreakerRobotController.setMode(RobotMode.Vision);
 		VisionManager.exitState = exitState;
 		VisionManager.exitAction = exitAction;
+		VisionManager.target = target;
 		console.log(c.VISION, t.INFO, "Running Vision");
 	}
 	
