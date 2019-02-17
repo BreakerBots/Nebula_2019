@@ -12,8 +12,9 @@ public class Controls {
 		public static final Control _toggleAuto = new Control(ControlList.Menu, Controllers.Main);
 		
 		public static final Control _idle = new Control(ControlList.List, Controllers.Main);
+
 		public static final Control _toggleCompressor = new Control(ControlList.DirectionPadLeft , Controllers.Main);
-		// public static final Control _toggleVision = 
+		public static final boolean _automaticCompressor = false;
 	}
 	
 	//Drive

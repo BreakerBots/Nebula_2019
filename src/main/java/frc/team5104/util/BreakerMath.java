@@ -12,6 +12,14 @@ public class BreakerMath {
 	public static double min(double value, double min) { return value < min ? min : value; }
 	public static double max(double value, double max) { return value > max ? max : value; }
 	
+	//Equals
+	public static boolean roughlyEquals(double a, double b, double tolerance) {
+		return Math.abs(a - b) <= tolerance;
+	}
+	public static boolean roughlyEquals(int a, int b, double tolerance) {
+		return Math.abs(a - b) <= tolerance;
+	}
+	
 	//Angle Difference
 	/** Find the difference between two angles (in radians). Accounts for overflow. */
 	public static double radianDiff(double from, double to) {

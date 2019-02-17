@@ -9,7 +9,6 @@ import frc.team5104.subsystem.intake.Intake;
 import frc.team5104.util.Curve.BezierCurve;
 import frc.team5104.util.CurveInterpolator;
 import frc.team5104.util.Buffer;
-import frc.team5104.util.console;
 
 public class CargoManager extends BreakerSubsystem.Manager {
 	public static enum CargoState {
@@ -58,8 +57,6 @@ public class CargoManager extends BreakerSubsystem.Manager {
 				beltInterpolator.deltaTime = 0.25;
 				beltInterpolator.setSetpoint(0);
 				CargoSystems.Belt.set(beltInterpolator.update());
-				
-				//Chute.trapdoorUp();
 				
 				break;
 		}

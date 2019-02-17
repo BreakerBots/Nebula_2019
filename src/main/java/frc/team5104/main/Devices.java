@@ -49,8 +49,9 @@ public class Devices {
 	
 	//Hatch
 	public static class Hatch {
-		public static DoubleSolenoid dad = new DoubleSolenoid(3, 2);
+		public static DoubleSolenoid trap = new DoubleSolenoid(3, 2);
 		public static DoubleSolenoid lazyBoy = new DoubleSolenoid(1, 0);
+		//public static DoubleSolenoid ejector = new DoubleSolenoid(?, ?);
 	}
 	
 	//Other

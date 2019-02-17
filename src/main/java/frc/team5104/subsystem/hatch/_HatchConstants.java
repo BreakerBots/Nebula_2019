@@ -1,10 +1,10 @@
-package frc.team5104.subsystem.latch;
+package frc.team5104.subsystem.hatch;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 
-public class _LatchConstants {
+public class _HatchConstants {
 	//Dad
-	public static DoubleSolenoid.Value _dadOpen = DoubleSolenoid.Value.kReverse;
+	public static DoubleSolenoid.Value _trapOpen = DoubleSolenoid.Value.kReverse;
 	
 	//Lazy Boy
 	public static DoubleSolenoid.Value _lazyBoyUp = DoubleSolenoid.Value.kReverse;

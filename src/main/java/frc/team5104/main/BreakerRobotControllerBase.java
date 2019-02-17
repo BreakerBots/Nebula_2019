@@ -4,10 +4,7 @@ package frc.team5104.main;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.URL;
 import java.nio.file.Files;
-import java.util.Enumeration;
-import java.util.jar.Manifest;
 
 import edu.wpi.cscore.CameraServerJNI;
 import edu.wpi.first.cameraserver.CameraServerShared;
@@ -35,30 +32,8 @@ public abstract class BreakerRobotControllerBase implements AutoCloseable {
 
 		HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Java);
 
-		String robotName = "";
-		if (args.length > 0) {
-			robotName = args[0];
-		} 
-		else {
-			Enumeration<URL> resources = null;
-			try {
-				resources = Thread.currentThread()
-						.getContextClassLoader().getResources("META-INF/MANIFEST.MF");
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-			while (resources != null && resources.hasMoreElements()) {
-				try {
-					Manifest manifest = new Manifest(resources.nextElement().openStream());
-					robotName = manifest.getMainAttributes().getValue("Robot-Class");
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		}
-
 		console.log("BreakerBots Robotics Team 2019");
-		console.log("Running " + robotName + " code.");
+		console.log("Running " + _RobotConstants._robotName + " code.");
 
 		@SuppressWarnings("resource")
 		BreakerRobotController robot = new BreakerRobotController();

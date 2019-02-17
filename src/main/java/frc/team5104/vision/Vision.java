@@ -1,11 +1,10 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.vision;
 
-import frc.team5104.control.Controls.Hatch;
 import frc.team5104.main.BreakerRobotController;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
-import frc.team5104.subsystem.latch.Latch;
+import frc.team5104.subsystem.hatch.Hatch;
 import frc.team5104.superstructure.cargo.Cargo;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
@@ -39,10 +38,10 @@ public class Vision {
 			Cargo.eject();
 			break;
 		case hatchEject:
-			Latch.eject();
+			Hatch.eject();
 			break;
 		case hatchIntake:
-			Latch.intake();
+			Hatch.intake();
 			break;
 		default:
 			break;
