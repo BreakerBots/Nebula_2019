@@ -10,15 +10,27 @@ import frc.team5104.util.console;
 import frc.team5104.vision.VisionSystems.limelight;
 
 public class VisionMovement implements CSVLoggable {
+	public static enum VisionTarget {
+		rocket,
+		standard
+	}
+	
 	//Movement Controllers
 	static BreakerPositionController turnController = new BreakerPositionController(
 			_VisionConstants._turnP, 0, _VisionConstants._turnD, 
 			_VisionConstants._toleranceX, _VisionConstants._targetX
 		);
 	static Buffer buffer = new Buffer(10, 45);
+	
 	//Is Finished
+	public static double _targetY() {
+		return VisionManager.target == VisionTarget.rocket ? _VisionConstants._targetRocketY : 
+			_VisionConstants._targetStandardY;
+	}
+
+	
 	static boolean isFinished() {
-		boolean onTarget = Math.abs(_VisionConstants._targetY - VisionSystems.limelight.getY()) 
+		boolean onTarget = Math.abs(_targetY() - VisionSystems.limelight.getY()) 
 				<= _VisionConstants._toleranceY;
 		console.log(Vision.targetVisible() + " " + onTarget);
 		return Vision.targetVisible() && onTarget;
@@ -46,16 +58,13 @@ public class VisionMovement implements CSVLoggable {
 	
 	//Forward Movement Function
 	private static double getForward() {
-//		if(!isFinished()) {
-//			return BreakerMath.clamp(forwardController.update(VisionSystems.limelight.getY()), -9, 9);
-//		}
-		return (Math.abs(_VisionConstants._targetY - VisionSystems.limelight.getY()) 
+		return (Math.abs(_targetY() - VisionSystems.limelight.getY()) 
 				<= _VisionConstants._toleranceY) ? 0 : 2;
 	}
 	
 	public static double getScaleFactor() {
-		double d = Math.abs(_VisionConstants._targetY - limelight.getY()) > _VisionConstants._toleranceY ? 
-				_VisionConstants._targetY - limelight.getY() : 0;
+		double d = Math.abs(_targetY() - limelight.getY()) > _VisionConstants._toleranceY ? 
+				_targetY() - limelight.getY() : 0;
 		if (d == 0) return 0;
 		d = (2.0 / (d + 10)) + 0.8;
 		buffer.update(d);
@@ -73,7 +82,7 @@ public class VisionMovement implements CSVLoggable {
 
 	public String[] getData() {
 		return new String[] { ""+VisionSystems.limelight.getX(), ""+turnController.target, 
-							  ""+VisionSystems.limelight.getY(), ""+_VisionConstants._targetY,
+							  ""+VisionSystems.limelight.getY(), ""+_targetY(),
 							  ""+getScaleFactor()};
 	}
 }
