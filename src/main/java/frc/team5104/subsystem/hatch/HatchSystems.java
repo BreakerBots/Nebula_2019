@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 
-public class HatchSystems extends BreakerSubsystem.Systems {
+class HatchSystems extends BreakerSubsystem.Systems {
 	//Lazyboy
 	public static class Lazyboy {
 		static void back() {

@@ -25,8 +25,12 @@ public class console {
 		AUTO, 
 		MAIN, 
 		DRIVE, 
+		OTHER,
+		
 		VISION,
-		OTHER
+		CARGO,
+		HATCH,
+		CLIMBER
 	};
 	
 	/**
