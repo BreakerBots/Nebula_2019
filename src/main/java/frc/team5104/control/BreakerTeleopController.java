@@ -5,12 +5,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.chute.Chute;
-import frc.team5104.subsystem.hatch.HatchSystems;
 import frc.team5104.subsystem.intake.IntakeSystems;
 import frc.team5104.superstructure.cargo.Cargo;
 import frc.team5104.util.Compressor;
 import frc.team5104.vision.Vision;
-import frc.team5104.vision.VisionMovement;
 import frc.team5104.vision.VisionMovement.VisionTarget;
 import frc.team5104.vision.VisionManager.ActionMode;
 

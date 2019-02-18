@@ -6,8 +6,8 @@ import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.subsystem.chute.ChuteSystems;
 import frc.team5104.subsystem.intake.Intake;
-import frc.team5104.util.Curve.BezierCurve;
-import frc.team5104.util.CurveInterpolator;
+import frc.team5104.util.BezierCurve;
+import frc.team5104.util.BezierCurveInterpolator;
 import frc.team5104.util.Buffer;
 
 public class CargoManager extends BreakerSubsystem.Manager {
@@ -18,7 +18,7 @@ public class CargoManager extends BreakerSubsystem.Manager {
 	}
 	static CargoState currentState = CargoState.idle;
 	static long ejectStart = System.currentTimeMillis();
-	CurveInterpolator beltInterpolator = new CurveInterpolator(0.05, new BezierCurve(0.4, 0.2, 0.0, 1));
+	BezierCurveInterpolator beltInterpolator = new BezierCurveInterpolator(0.05, new BezierCurve(0.4, 0.2, 0.0, 1));
 	
 	public void update() {
 		Chute.BeamAverage.update(ChuteSystems.BeamBreak.isHit());
@@ -45,7 +45,7 @@ public class CargoManager extends BreakerSubsystem.Manager {
 				beltInterpolator.setSetpoint(_CargoConstants._intakeSpeed);
 				CargoSystems.Belt.set(beltInterpolator.update());
 				
-				if (Chute.BeamAverage.getBooleanAvg())
+				if (Chute.BeamAverage.getBooleanOutput())
 					Cargo.idle();
 				
 				break;

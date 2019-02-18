@@ -4,20 +4,21 @@ import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
 import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
-import frc.team5104.util.Curve;
-import frc.team5104.util.CurveInterpolator;
+import frc.team5104.util.BezierCurve;
+import frc.team5104.util.BezierCurveInterpolator;
 import frc.team5104.util.Deadband;
 
 public class DriveController {
-	//Drive
+	//Variables
+	private static final BezierCurve _driveCurve = new BezierCurve(.2, 0, .2, 1);
+	private static final double _driveCurveChange = 1.0;
+	private static final BezierCurveInterpolator vTeleopLeftSpeed  = new BezierCurveInterpolator(_driveCurveChange, _driveCurve);
+	private static final BezierCurveInterpolator vTeleopRightSpeed = new BezierCurveInterpolator(_driveCurveChange, _driveCurve);
 	
-	public static final Curve.BezierCurve _driveCurve = new Curve.BezierCurve(.2, 0, .2, 1);
-	public static final double _driveCurveChange = 1.0;
-	public static final double _turnCurveSpeedAdjust = 0.5;
+	private static BezierCurve turnCurve = new BezierCurve(0, 0.4, 1, 0.2);
+	private static final double _turnCurveSpeedAdjust = 0.5;
 	
-	public static final CurveInterpolator vTeleopLeftSpeed  = new CurveInterpolator(_driveCurveChange, _driveCurve);
-	public static final CurveInterpolator vTeleopRightSpeed = new CurveInterpolator(_driveCurveChange, _driveCurve);
-	
+	//Main Handle Function
 	public static void handle() {
 		//Get inputs
 		double turn = Controls.Drive._turn.getAxis();
@@ -28,8 +29,8 @@ public class DriveController {
 		forward = Deadband.get(forward, 0.01);
 		
 		//Apply bezier curve
-		double x1 = (1 - Math.abs(forward)) * (1 - _turnCurveSpeedAdjust) + _turnCurveSpeedAdjust;
-		turn = Curve.getBezierCurve(turn, x1, 0.4, 1, 0.2);
+		turnCurve.x1 = (1 - Math.abs(forward)) * (1 - _turnCurveSpeedAdjust) + _turnCurveSpeedAdjust;
+		turn = turnCurve.getPoint(turn);
 		
 		//Apply inertia affect
 		vTeleopLeftSpeed.setSetpoint(forward - turn);

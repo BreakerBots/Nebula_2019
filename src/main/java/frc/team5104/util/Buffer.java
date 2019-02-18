@@ -1,6 +1,9 @@
+/*BreakerBots Robotics Team 2019*/
 package frc.team5104.util;
+
 /**
- * 
+ * Simply smoothes out a input by using an average between the last n inputs.
+ * Useful for sensors that give variable outputs or any variable that spikes.
  */
 public class Buffer {
 	private double[] values;
@@ -38,20 +41,20 @@ public class Buffer {
 	}
 	
 	//Getters
-	public double getDoubleAvg() {
+	public double getDoubleOutput() {
 		double sum = 0;
 		for(int i = 0; i < values.length; i++) 
 			sum += values[i];
 		return sum / values.length;
 	}
 	
-	public int getIntAvg() {
+	public int getIntegerOutput() {
 		double sum = 0;
 		for(int i = 0; i < values.length; i++) 
 			sum += values[i];
 		return (int)(sum / values.length);
 	}
-	public boolean getBooleanAvg() {
+	public boolean getBooleanOutput() {
 		double sum = 0;
 		for(int i = 0; i < values.length; i++) 
 			sum += values[i];

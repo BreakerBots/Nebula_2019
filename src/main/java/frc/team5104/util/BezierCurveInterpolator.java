@@ -5,7 +5,7 @@ package frc.team5104.util;
  * <h1>Interpolating Curve</h1>
  * Iterates to a changing setpoint in a certain amount of time.
  */
-public class CurveInterpolator {
+public class BezierCurveInterpolator {
 	private double setPoint;  //Setpoint
 	private double currentPoint;  //Current Point
 	
@@ -13,7 +13,7 @@ public class CurveInterpolator {
 	
 	public double deltaTime; //The time in terms of how many ticks to get from 0-1 to change the current point by
 	
-	Curve.BezierCurve curve;
+	BezierCurve curve;
 	
 	/**
 	 * <h1>Interpolating Curve</h1>
@@ -22,7 +22,7 @@ public class CurveInterpolator {
 	 * @param min The min value being input for the Setpoint
 	 * @param max The max value being input for the Setpoint
 	 */
-	public CurveInterpolator(double deltaTime, Curve.BezierCurve curve) {
+	public BezierCurveInterpolator(double deltaTime, BezierCurve curve) {
 		this.deltaTime = deltaTime;
 		this.curve = curve;
 		setSetpoint(0, true);

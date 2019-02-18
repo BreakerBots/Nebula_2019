@@ -1,7 +1,11 @@
+/*BreakerBots Robotics Team 2019*/
 package frc.team5104.util;
 
 import frc.team5104.main.Devices;
 
+/**
+ * Handles the compressor and the compressor reader together
+ */
 public class Compressor {
 	
 	public static Buffer buffer = new Buffer(5, 45);
@@ -17,8 +21,7 @@ public class Compressor {
 	//Guesses
 	public static boolean shouldRun(double batteryVoltage) {
 		return true;
-//		console.log(buffer.getIntAvg());
-//		return buffer.getIntAvg() < 40;
+		//return buffer.getIntAvg() < 40;
 	}
 	
 	//Compressor Running

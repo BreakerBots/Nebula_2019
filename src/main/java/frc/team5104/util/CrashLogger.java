@@ -1,3 +1,4 @@
+/*BreakerBots Robotics Team 2019*/
 package frc.team5104.util;
 
 import java.io.PrintWriter;
@@ -5,6 +6,9 @@ import java.io.StringWriter;
 
 import frc.team5104.util.console.c;
 
+/**
+ * Handles the logging of thread crashes
+ */
 public class CrashLogger {
 	
 	//Crash Object

@@ -1,8 +1,12 @@
+/*BreakerBots Robotics Team 2019*/
 package frc.team5104.util;
 
 import java.io.File;
 import java.io.PrintWriter;
 
+/**
+ * Generates a csv of specific data for tuning/debugging.
+ */
 public class CSV {
 	public static interface CSVLoggable {
 		String[] getHeader();

@@ -69,7 +69,7 @@ public class VisionMovement implements CSVLoggable {
 		d = (2.0 / (d + 10)) + 0.8;
 		buffer.update(d);
 		
-		return buffer.getDoubleAvg(); 
+		return buffer.getDoubleOutput(); 
 	}
 	
 	static void reset() {
