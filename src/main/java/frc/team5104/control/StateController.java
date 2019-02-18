@@ -1,3 +1,4 @@
+/*BreakerBots Robotics Team 2019*/
 package frc.team5104.control;
 
 import frc.team5104.main.BreakerRobotController;
@@ -6,6 +7,9 @@ import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.vision.Vision;
 import frc.team5104.vision.VisionMovement;
 
+/**
+ * Handles manual mode switching between auto/vision/teleop
+ */
 public class StateController {
 	public static void handle() {
 		//Vision Toggling

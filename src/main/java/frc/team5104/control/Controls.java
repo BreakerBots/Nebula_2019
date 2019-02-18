@@ -1,3 +1,4 @@
+/*BreakerBots Robotics Team 2019*/
 package frc.team5104.control;
 
 import frc.team5104.util.Controller.Control;
@@ -5,6 +6,9 @@ import frc.team5104.util.Controller.ControlList;
 import frc.team5104.util.Controller.Controllers;
 import frc.team5104.util.Controller.Rumble;
 
+/**
+ * All the controls for the robot
+ */
 public class Controls {
 	//Main 
 	public static class Main {

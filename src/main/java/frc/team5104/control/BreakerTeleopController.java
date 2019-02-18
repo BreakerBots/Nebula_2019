@@ -1,3 +1,4 @@
+/*BreakerBots Robotics Team 2019*/
 package frc.team5104.control;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -12,6 +13,9 @@ import frc.team5104.vision.Vision;
 import frc.team5104.vision.VisionMovement.VisionTarget;
 import frc.team5104.vision.VisionManager.ActionMode;
 
+/**
+ * Handles teleoperation control
+ */
 public class BreakerTeleopController {
 	public static void update() {
 		//Drive

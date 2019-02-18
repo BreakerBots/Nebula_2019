@@ -1,3 +1,4 @@
+/*BreakerBots Robotics Team 2019*/
 package frc.team5104.control;
 
 import frc.team5104.subsystem.drive.Drive;
@@ -9,6 +10,9 @@ import frc.team5104.util.BezierCurveInterpolator;
 import frc.team5104.util.Deadband;
 import frc.team5104.util.Deadband.deadbandType;
 
+/**
+ * Handles drive control (included all augmentation from the driver to the robot)
+ */
 public class DriveController {
 	//Variables
 	private static final BezierCurve _driveCurve = new BezierCurve(.2, 0, .2, 1);
