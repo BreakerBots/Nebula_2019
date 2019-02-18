@@ -7,6 +7,7 @@ import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
 import frc.team5104.util.BezierCurve;
 import frc.team5104.util.BezierCurveInterpolator;
 import frc.team5104.util.Deadband;
+import frc.team5104.util.Deadband.deadbandType;
 
 public class DriveController {
 	//Variables
@@ -25,8 +26,8 @@ public class DriveController {
 		double forward = Controls.Drive._forward.getAxis() - Controls.Drive._reverse.getAxis();
 
 		//Apply controller deadbands
-		turn = -Deadband.get(turn,  0.1);
-		forward = Deadband.get(forward, 0.01);
+		turn = -Deadband.get(turn,  0.1, deadbandType.slopeAdjustment);
+		forward = Deadband.get(forward, 0.01, deadbandType.slopeAdjustment);
 		
 		//Apply bezier curve
 		turnCurve.x1 = (1 - Math.abs(forward)) * (1 - _turnCurveSpeedAdjust) + _turnCurveSpeedAdjust;
