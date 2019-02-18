@@ -5,8 +5,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.BreakerPositionController;
+import frc.team5104.util.CSV.CSVLoggable;
 
-public class IntakeSystems extends BreakerSubsystem.Systems {
+public class IntakeSystems extends BreakerSubsystem.Systems implements CSVLoggable {
 	//Devices
 	static BreakerPositionController armController = new BreakerPositionController
 			(_IntakeConstants._kP, _IntakeConstants._kI, _IntakeConstants._kD, _IntakeConstants._tolerance);
@@ -52,5 +53,13 @@ public class IntakeSystems extends BreakerSubsystem.Systems {
 	static class LimitSwitch {
 		static boolean isHit() { return true; }
 		static boolean isNotHit() { return !isHit(); }
+	}
+
+	public String[] getHeader() {
+		return new String[] { "current", "target" };
+	}
+
+	public String[] getData() {
+		return new String[] { ""+Encoder.getDegrees(), ""+armController.target };
 	}
 }

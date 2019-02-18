@@ -40,7 +40,7 @@ public class Vision {
 			Cargo.eject();
 			break;
 		case hatchEject:
-			Hatch.eject();
+			Hatch.eject(false);
 			break;
 		case hatchIntake:
 			Hatch.intake();

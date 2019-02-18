@@ -54,6 +54,12 @@ public class Devices {
 		//public static DoubleSolenoid ejector = new DoubleSolenoid(?, ?);
 	}
 	
+	//Climber
+	public static class Climber {
+		//public static DoubleSolenoid stage1 = new DoubleSolenoid(?, ?);
+		//public static DoubleSolenoid stage2 = new DoubleSolenoid(?, ?);
+	}
+	
 	//Other
 	public static class Other {
 		public static Compressor compressor = new Compressor();
