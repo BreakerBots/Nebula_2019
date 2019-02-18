@@ -3,10 +3,10 @@ package frc.team5104.subsystem.drive;
 
 import frc.team5104.main._RobotConstants;
 import frc.team5104.util.BreakerMath;
+import frc.team5104.util.CrashLogger;
+import frc.team5104.util.CrashLogger.Crash;
 import frc.team5104.util.Units;
 import frc.team5104.util.console;
-import frc.team5104.util.console.c;
-import frc.team5104.util.console.t;
 import edu.wpi.first.wpilibj.Notifier;
 
 /**
@@ -31,7 +31,7 @@ public class Odometry /*implements CSVLoggable*/ {
 	            position.addY(Math.sin(theta) * dPos);
 	            position.setTheta(theta);
 			} catch (Exception e) {
-				console.log(t.ERROR, c.DRIVE, "(at Odometry): Caught fatal error!");
+				CrashLogger.logCrash(new Crash("odometry", e));
 			}
         });
 	}

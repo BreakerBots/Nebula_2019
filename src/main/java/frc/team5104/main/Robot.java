@@ -32,16 +32,17 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	//Main
 	public void mainEnabled() {
 		//TODO: ignore enable/disable between sandstorm/teleop
-		console.log("Robot Enabled");
 		Compressor.stop();
-		BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
 		console.logFile.start();
+		console.log("Robot Enabled");
+		BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
 		Odometry.reset();
 		BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
 		CSV.init(new VisionMovement());
 	}
 	public void mainDisabled() {
 		//TODO: ignore enable/disable between sandstorm/teleop
+		console.log("Robot Disabled");
 		BreakerSubsystemManager.disabled();
 		console.logFile.end();
 		CSV.writeFile("temp", "csvData");
@@ -58,15 +59,31 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 
 	//Auto
 	public void autoStart() {
+		console.log("Autonomous Started");
 		Compressor.stop();
 	}
 	public void autoLoop() { BreakerPathScheduler.update(); }
+	public void autoStop() {
+		console.log("Autonomous Stopped");
+	}
 	
 	//Teleop
+	public void teleopStart() {
+		console.log("Teleoperation Started");
+	}
 	public void teleopLoop() { BreakerTeleopController.update(); }
+	public void teleopStop() {
+		console.log("Teleoperation Stopped");
+	}
 	
 	//Vision
+	public void visionStart() { 
+		console.log("Vision Started");
+		VisionManager.start(); 
+	}
 	public void visionLoop() { VisionManager.update(); }
-	public void visionStart() { VisionManager.start(); }
-	public void visionStop() { VisionManager.stop(); }
+	public void visionStop() { 
+		console.log("Vision Stopped");
+		VisionManager.stop(); 
+	}
 }

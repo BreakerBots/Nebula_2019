@@ -8,6 +8,8 @@ import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.team5104.subsystem.drive.Odometry;
+import frc.team5104.util.CrashLogger;
+import frc.team5104.util.CrashLogger.Crash;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
@@ -54,7 +56,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 			try {
 				loop();
 			} catch (Exception e) {
-				console.log(t.WARNING, c.MAIN, "(at Main Thread): Caught fatal error!", e);
+				CrashLogger.logCrash(new Crash("main", e));
 			}
 			
 			try { Thread.sleep(Math.round(loopPeriod - (Timer.getFPGATimestamp() - st))); } catch (Exception e) { console.error(e); }
