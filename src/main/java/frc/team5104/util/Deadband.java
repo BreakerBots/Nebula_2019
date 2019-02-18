@@ -8,6 +8,7 @@ package frc.team5104.util;
  * This class has two deadbands. 
  *  - Clipping: in which areas will be directly cut out (r=.05: .05->0, .06->.06)
  *  - Slope Adjustment: in which the slope is adjusted (r=.05: .05->0, 0.06->0.01)
+ * Desmos Link: https://www.desmos.com/calculator/xhbilptzt9
  */
 public class Deadband {
 	//Deadband Types
