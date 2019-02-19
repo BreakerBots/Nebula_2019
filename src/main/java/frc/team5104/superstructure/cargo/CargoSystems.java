@@ -9,7 +9,7 @@ import frc.team5104.subsystem.BreakerSubsystem;
 class CargoSystems extends BreakerSubsystem.Systems {
 	static class Belt {
 		static void set(double speed) {
-			Devices.Cargo.belt.set(ControlMode.PercentOutput, speed);
+			Devices.Cargo.belt.set(ControlMode.PercentOutput, -speed); //no neg for astro
 		}
 	}
 }

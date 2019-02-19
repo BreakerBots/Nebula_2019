@@ -9,6 +9,7 @@ import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.hatch.HatchManager;
+import frc.team5104.subsystem.intake.IntakeSystems;
 import frc.team5104.util.console;
 import frc.team5104.util.CSV;
 import frc.team5104.util.Compressor;
@@ -24,7 +25,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	public Robot() {
 		BreakerSubsystemManager.throwSubsystems(
 			 new DriveManager(),
-			 new HatchManager(),
+//			 new HatchManager(),
 			 new CargoManager()
 		);
 	}
@@ -49,6 +50,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	}
 	
 	public void mainLoop() {
+//		console.log( IntakeSystems.LimitSwitch.isHit());
 		CSV.update();
 		if (enabled) {
 			BreakerSubsystemManager.update();

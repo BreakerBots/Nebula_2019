@@ -41,7 +41,7 @@ public class Devices {
 		
 		//Ramp
 		public static DoubleSolenoid trapdoor = new DoubleSolenoid(4, 5);
-		public static DigitalInput di = new DigitalInput(0);
+		public static DigitalInput photoelectricSensor = new DigitalInput(9); //0 for astro
 		
 		//Belt
 		public static TalonSRX belt = TalonFactory.getTalon(31);

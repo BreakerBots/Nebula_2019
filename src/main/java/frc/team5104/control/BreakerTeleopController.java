@@ -25,13 +25,16 @@ public class BreakerTeleopController {
 			Cargo.idle();
 		
 		//Cargo
-		Devices.Cargo.belt.set(ControlMode.PercentOutput, Controls.Cargo._beltManual.getHeld() ? 1 : 0);
-		IntakeSystems.Arm.setVoltage(Controls.Cargo._armManual.getAxis() * 10);
+		//Devices.Cargo.belt.set(ControlMode.PercentOutput, Controls.Cargo._beltManual.getHeld() ? 1 : 0);
+		double _armVoltage = Controls.Cargo._armManual.getAxis() * 10;
+		if(IntakeSystems.LimitSwitch.isHit() && _armVoltage < 0) _armVoltage = 0;
+		IntakeSystems.Arm.setVoltage(_armVoltage);
 		if (Controls.Cargo._intake.getPressed()) 
 			Cargo.intake();
 		if (Controls.Cargo._eject.getPressed())
-			Vision.runVision(RobotMode.Teleop, ActionMode.cargo, Chute.isDown() ? 
-					VisionTarget.rocket : VisionTarget.standard);
+//			Vision.runVision(RobotMode.Teleop, ActionMode.cargo, Chute.isDown() ? 
+//					VisionTarget.rocket : VisionTarget.standard);
+			Cargo.eject();
 		
 		//Chute
 		if (Controls.Cargo._trapdoorUp.getPressed())
