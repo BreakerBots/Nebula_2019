@@ -8,19 +8,15 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.team5104.subsystem.drive._DriveConstants;
+import frc.team5104.util.PneumaticFactory;
 import frc.team5104.util.TalonFactory;
+import frc.team5104.util.PneumaticFactory.PCM;
 import frc.team5104.util.TalonFactory.TalonSettings;
 
 /**
  * All Devices used in Code
  */
 public class Devices {
-
-	//Main
-	public static class Main {
-		//public static PowerDistributionPanel pdp = new PowerDistributionPanel();
-	}
-	
 	//Drive
 	public static class Drive {
 		public static TalonSRX L1 = TalonFactory.getTalon(11, new TalonSettings(NeutralMode.Brake, true, _DriveConstants._currentLimit, true));
@@ -30,39 +26,36 @@ public class Devices {
 		
 //		public static PigeonIMU gyro = new PigeonIMU(L2);
 		
-		public static DoubleSolenoid shift = new DoubleSolenoid(6, 7);
+		public static DoubleSolenoid shift = PneumaticFactory.getDoubleSolenoid(PCM.Red, 6, 7);
 	}
 	
 	//Cargo
 	public static class Cargo {
-		//Intake
 		public static TalonSRX leftArm = TalonFactory.getTalon(21);
 		public static TalonSRX rightArm = TalonFactory.getTalon(22);
 		
-		//Ramp
-		public static DoubleSolenoid trapdoor = new DoubleSolenoid(4, 5);
+		public static DoubleSolenoid trapdoor = PneumaticFactory.getDoubleSolenoid(PCM.Red, 4, 5);
 		public static DigitalInput photoelectricSensor = new DigitalInput(9); //0 for astro
 		
-		//Belt
 		public static TalonSRX belt = TalonFactory.getTalon(31);
 	}
 	
 	//Hatch
 	public static class Hatch {
-		public static DoubleSolenoid trap = new DoubleSolenoid(3, 2);
-		public static DoubleSolenoid lazyBoy = new DoubleSolenoid(1, 0);
-		//public static DoubleSolenoid ejector = new DoubleSolenoid(?, ?);
+		public static DoubleSolenoid trap = PneumaticFactory.getDoubleSolenoid(PCM.Red, 3, 2);
+		public static DoubleSolenoid lazyBoy = PneumaticFactory.getDoubleSolenoid(PCM.Red, 1, 0);
+		//public static DoubleSolenoid ejector = PneumaticFactory.getDoubleSolenoid(PCM.Red, ?, ?);
 	}
 	
 	//Climber
 	public static class Climber {
-		//public static DoubleSolenoid stage1 = new DoubleSolenoid(?, ?);
-		//public static DoubleSolenoid stage2 = new DoubleSolenoid(?, ?);
+		//public static DoubleSolenoid stage1 = PneumaticFactory.getDoubleSolenoid(PCM.?, ?, ?);
+		//public static DoubleSolenoid stage2 = PneumaticFactory.getDoubleSolenoid(PCM.?, ?, ?);
 	}
 	
 	//Other
 	public static class Other {
-		public static Compressor compressor = new Compressor();
+		public static Compressor compressor = PneumaticFactory.getCompressor(PCM.Gold);
 		public static AnalogInput compressorReader = new AnalogInput(3);
 	}
 }
