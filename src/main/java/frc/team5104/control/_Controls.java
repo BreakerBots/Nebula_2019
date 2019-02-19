@@ -8,7 +8,7 @@ import frc.team5104.util.Controller.Rumble;
 /**
  * All the controls for the robot
  */
-class _Controls {
+public class _Controls {
 	//Main 
 	static class Main {
 		public static final Control _toggleVision = new Control(ControlList.DirectionPadDown);
@@ -21,7 +21,7 @@ class _Controls {
 	}
 	
 	//Drive
-	static class Drive {
+	public static class Drive {
 		public static final Control _turn = new Control(ControlList.LeftJoystickX);
 		public static final Control _forward = new Control(ControlList.RightTrigger);
 		public static final Control _reverse = new Control(ControlList.LeftTrigger);
