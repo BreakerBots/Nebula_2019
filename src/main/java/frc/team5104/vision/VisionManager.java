@@ -5,6 +5,8 @@ import frc.team5104.main.BreakerRobotController;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
+import frc.team5104.util.CrashLogger;
+import frc.team5104.util.CrashLogger.Crash;
 import frc.team5104.vision.VisionMovement.VisionTarget;
 
 public class VisionManager {
@@ -27,7 +29,10 @@ public class VisionManager {
 		Vision.reset();
 	}
 	
-	public static void update() {
+	public static void handle() {
+		try { update(); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); }
+	}
+	private static void update() {
 		if (VisionMovement.isFinished()) {
 			BreakerRobotController.setMode(exitState);
 			Vision.action(exitAction);

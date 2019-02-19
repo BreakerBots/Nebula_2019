@@ -5,13 +5,13 @@ import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.BreakerSubsystem;
 
 public class HatchManager extends BreakerSubsystem.Manager {
-	public static enum LatchState {
+	public static enum HatchState {
 		intake,//Trap: open, Lazyboy: up, Ejector: in
 		idle,  //Trap: open, Lazyboy: either, Ejector: in
 		hold,  //Trap: closed, Lazyboy: up, Ejector: in
 		eject  //Trap: open, Lazyboy: up, Ejector: either
 	}
-	static LatchState currentState = LatchState.idle;
+	static HatchState currentState = HatchState.idle;
 	static long ejectStartTime = System.currentTimeMillis();
 	static boolean ejectHard = false;
 	static long intakeStartTime = System.currentTimeMillis();
@@ -37,7 +37,7 @@ public class HatchManager extends BreakerSubsystem.Manager {
 					HatchSystems.Ejector.pullOut();
 					
 				if (System.currentTimeMillis() > _HatchConstants._ejectModeLength + ejectStartTime)
-					currentState = LatchState.idle;
+					currentState = HatchState.idle;
 				break;
 			case intake:
 				HatchSystems.Trap.open();
@@ -45,7 +45,7 @@ public class HatchManager extends BreakerSubsystem.Manager {
 				HatchSystems.Ejector.pullOut();
 				
 				if (System.currentTimeMillis() > _HatchConstants._intakeModeLength + intakeStartTime)
-					currentState = LatchState.idle;
+					currentState = HatchState.idle;
 			default:
 				break;
 		}

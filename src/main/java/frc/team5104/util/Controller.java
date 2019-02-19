@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import frc.team5104.util.CrashLogger.Crash;
 import edu.wpi.first.wpilibj.Joystick;
 
 /**
@@ -69,9 +70,23 @@ public class Controller {
 		/**
 		 * Creates a control object that can be referenced later.
 		 * @param control The specified control
+		 */
+		public Control(ControlList control) { this(control, Controllers.Main); }
+		/**
+		 * Creates a control object that can be referenced later.
+		 * @param control The specified control
 		 * @param controller The target controller for this rumble.
 		 */
 		public Control(ControlList control, Controllers controller) { this(control, controller, false, 0.6); }
+		/**
+		 * Creates a control object that can be referenced later.
+		 * @param control The specified control
+		 * @param reversed (For axis only) When converting from axis to button: if the axis should be flipped before
+		 * @param deadzone (For axis only) When converting from axis to button: the crossover point in which the axis should be considered pressed
+		 */
+		public Control(ControlList control, boolean reversed, double deadzone) {
+			this(control, Controllers.Main, reversed, deadzone);
+		}
 		/**
 		 * Creates a control object that can be referenced later.
 		 * @param control The specified control
@@ -137,9 +152,24 @@ public class Controller {
 		 * Creates a saveable rumble object that can be referenced later.
 		 * @param strength (0-1) Perecent strength of the rumble
 		 * @param hard If the rumble should be hard (a deeper rumble) or soft (a lighter rumble)
+		 */
+		public Rumble(double strength, boolean hard) { this(strength, hard, Controllers.Main); }
+		/**
+		 * Creates a saveable rumble object that can be referenced later.
+		 * @param strength (0-1) Perecent strength of the rumble
+		 * @param hard If the rumble should be hard (a deeper rumble) or soft (a lighter rumble)
 		 * @param controller The target controller for this rumble.
 		 */
 		public Rumble(double strength, boolean hard, Controllers controller) { this(strength, hard, Integer.MIN_VALUE, controller); }
+		/**
+		 * Creates a saveable rumble object that can be referenced later.
+		 * @param strength (0-1) Perecent strength of the rumble
+		 * @param hard If the rumble should be hard (a deeper rumble) or soft (a lighter rumble)
+		 * @param timeoutMs The time (milliseconds) in which the rumble should automatically stop.
+		 */
+		public Rumble(double strength, boolean hard, int timeoutMs) {
+			this(strength, hard, timeoutMs, Controllers.Main);
+		}
 		/**
 		 * Creates a saveable rumble object that can be referenced later.
 		 * @param strength (0-1) Perecent strength of the rumble
@@ -174,9 +204,16 @@ public class Controller {
 		}
 	}
 	
-	public static void update() { 
+	public static void handle() {
+		try { update(); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); }
+	}
+	private static void update() {
 		for (ControllerElement obj : register) { 
-			obj.update(); 
+			try {
+				obj.update(); 
+			} catch (Exception e) {
+				CrashLogger.logCrash(new Crash("main", e));
+			}
 		} 
 	}
 }

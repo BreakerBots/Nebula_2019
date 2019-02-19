@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.control;
 
+import frc.team5104.control.BreakerMainController.BreakerController;
 import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
@@ -13,7 +14,7 @@ import frc.team5104.util.Deadband.deadbandType;
 /**
  * Handles drive control (included all augmentation from the driver to the robot)
  */
-public class DriveController {
+class DriveController extends BreakerController {
 	//Variables
 	private static final BezierCurve _driveCurve = new BezierCurve(.2, 0, .2, 1);
 	private static final double _driveCurveChange = 1.0;
@@ -24,10 +25,10 @@ public class DriveController {
 	private static final double _turnCurveSpeedAdjust = 0.5;
 	
 	//Main Handle Function
-	public static void handle() {
+	static void update() {
 		//Get inputs
-		double turn = Controls.Drive._turn.getAxis();
-		double forward = Controls.Drive._forward.getAxis() - Controls.Drive._reverse.getAxis();
+		double turn = _Controls.Drive._turn.getAxis();
+		double forward = _Controls.Drive._forward.getAxis() - _Controls.Drive._reverse.getAxis();
 
 		//Apply controller deadbands
 		turn = -Deadband.get(turn,  0.1, deadbandType.slopeAdjustment);
@@ -56,7 +57,13 @@ public class DriveController {
 		Drive.set(signal);
 		
 		//Shifting
-		if (Controls.Drive._shift.getPressed())
+		if (_Controls.Drive._shift.getPressed())
 			DriveSystems.shifters.toggle();
+	}
+
+	//Stop The Subsystem
+	static void idle() {
+		Drive.stop();
+		DriveSystems.shifters.set(true);
 	}
 }

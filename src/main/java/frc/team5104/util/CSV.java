@@ -4,6 +4,8 @@ package frc.team5104.util;
 import java.io.File;
 import java.io.PrintWriter;
 
+import frc.team5104.util.CrashLogger.Crash;
+
 /**
  * Generates a csv of specific data for tuning/debugging.
  */
@@ -28,7 +30,10 @@ public class CSV {
 	/**
 	 * Updated with new data from the pre-specified CSV target
 	 */
-	public static void update() {
+	public static void handle() {
+		try { update(); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); }
+	}
+	private static void update() {
 		if (target != null)
 			content += stringArrayToString(target.getData()) + '\n';
 	}

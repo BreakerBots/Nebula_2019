@@ -2,6 +2,8 @@
 package frc.team5104.subsystem;
 
 import frc.team5104.main.BreakerRobotController.RobotMode;
+import frc.team5104.util.CrashLogger;
+import frc.team5104.util.CrashLogger.Crash;
 
 /**
  * Manages the updating and handling of all BreakerSubsystems thrown into it
@@ -22,16 +24,27 @@ public class BreakerSubsystemManager {
 	 */
 	public static void enabled(RobotMode mode) {
 		for (BreakerSubsystem.Manager t : targets) {
-			t.enabled(mode);
+			try {
+				t.enabled(mode);
+			} catch (Exception e) {
+				CrashLogger.logCrash(new Crash("main", e));
+			}
 		}
 	}
 	
 	/**
 	 * CALL periodically when the robot is enabled
 	 */
-	public static void update() {
+	public static void handle() {
+		try { update(); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); }
+	}
+	private static void update() {
 		for (BreakerSubsystem.Manager t : targets) {
-			t.update();
+			try {
+				t.update();
+			} catch (Exception e) {
+				CrashLogger.logCrash(new Crash("main", e));
+			}
 		}
 	}
 	
@@ -40,7 +53,11 @@ public class BreakerSubsystemManager {
 	 */
 	public static void disabled() {
 		for (BreakerSubsystem.Manager t : targets) {
-			t.disabled();
+			try {
+				t.disabled();
+			} catch (Exception e) {
+				CrashLogger.logCrash(new Crash("main", e));
+			}
 		}
 	}
 }

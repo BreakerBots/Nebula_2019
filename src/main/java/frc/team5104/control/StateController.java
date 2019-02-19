@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.control;
 
+import frc.team5104.control.BreakerMainController.BreakerController;
 import frc.team5104.main.BreakerRobotController;
 import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.chute.Chute;
@@ -10,10 +11,10 @@ import frc.team5104.vision.VisionMovement;
 /**
  * Handles manual mode switching between auto/vision/teleop
  */
-public class StateController {
-	public static void handle() {
+class StateController extends BreakerController {
+	static void update() {
 		//Vision Toggling
-		if (Controls.Main._toggleVision.getPressed()) {
+		if (_Controls.Main._toggleVision.getPressed()) {
 			if (BreakerRobotController.getMode() == RobotMode.Vision)
 				BreakerRobotController.setMode(RobotMode.Teleop);
 			else
@@ -22,7 +23,7 @@ public class StateController {
 		}
 		
 		//Auto Switching
-		if (Controls.Main._toggleAuto.getPressed()) {
+		if (_Controls.Main._toggleAuto.getPressed()) {
 			//...
 		}
 	}

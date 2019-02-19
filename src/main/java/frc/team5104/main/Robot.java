@@ -3,16 +3,12 @@ package frc.team5104.main;
 
 import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
-import frc.team5104.control.BreakerTeleopController;
-import frc.team5104.control.StateController;
+import frc.team5104.control.BreakerMainController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
-import frc.team5104.subsystem.hatch.HatchManager;
-import frc.team5104.subsystem.intake.IntakeSystems;
 import frc.team5104.util.console;
 import frc.team5104.util.CSV;
-import frc.team5104.util.Compressor;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.VisionManager;
 import frc.team5104.vision.VisionMovement;
@@ -33,7 +29,6 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	//Main
 	public void mainEnabled() {
 		//TODO: ignore enable/disable between sandstorm/teleop
-		Compressor.stop();
 		console.logFile.start();
 		console.log("Robot Enabled");
 		BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
@@ -51,41 +46,26 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	
 	public void mainLoop() {
 //		console.log( IntakeSystems.LimitSwitch.isHit());
-		CSV.update();
 		if (enabled) {
-			BreakerSubsystemManager.update();
-			StateController.handle();
-			Controller.update();
+			BreakerMainController.handle(BreakerRobotController.getMode());
+			BreakerSubsystemManager.handle();
+			Controller.handle();
 		}
+		CSV.handle();
 	}
 
 	//Auto
-	public void autoStart() {
-		console.log("Autonomous Started");
-		Compressor.stop();
-	}
-	public void autoLoop() { BreakerPathScheduler.update(); }
-	public void autoStop() {
-		console.log("Autonomous Stopped");
-	}
+	public void autoStart() { console.log("Autonomous Started"); }
+	public void autoLoop() { BreakerPathScheduler.handle(); }
+	public void autoStop() { console.log("Autonomous Stopped"); }
 	
 	//Teleop
-	public void teleopStart() {
-		console.log("Teleoperation Started");
-	}
-	public void teleopLoop() { BreakerTeleopController.update(); }
-	public void teleopStop() {
-		console.log("Teleoperation Stopped");
-	}
+	public void teleopStart() { console.log("Teleoperation Started"); }
+	public void teleopLoop() { }
+	public void teleopStop() { console.log("Teleoperation Stopped"); }
 	
 	//Vision
-	public void visionStart() { 
-		console.log("Vision Started");
-		VisionManager.start(); 
-	}
-	public void visionLoop() { VisionManager.update(); }
-	public void visionStop() { 
-		console.log("Vision Stopped");
-		VisionManager.stop(); 
-	}
+	public void visionStart() {  console.log("Vision Started"); VisionManager.start();  }
+	public void visionLoop() { VisionManager.handle(); }
+	public void visionStop() { console.log("Vision Stopped"); VisionManager.stop();  }
 }

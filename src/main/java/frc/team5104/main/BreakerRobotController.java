@@ -84,70 +84,103 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 		//Handle Modes
 		switch(currentMode) {
 			case Auto: {
-				if (lastMode != currentMode)
-					robot.autoStart();
-					
-				robot.autoLoop();
-				HAL.observeUserProgramAutonomous();
+				try {
+					//Auto
+					if (lastMode != currentMode)
+						robot.autoStart();
+						
+					robot.autoLoop();
+					HAL.observeUserProgramAutonomous();
+				} catch (Exception e) {
+					CrashLogger.logCrash(new Crash("main", e));
+				}
 				break;
 			}
 			case Teleop: {
-				if (lastMode != currentMode)
-					robot.teleopStart();
-				
-				robot.teleopLoop();
-				HAL.observeUserProgramTeleop();
-				DriverStation.getInstance().waitForData(0.2);
+				try {
+					//Teleop
+					if (lastMode != currentMode)
+						robot.teleopStart();
+					
+					robot.teleopLoop();
+					HAL.observeUserProgramTeleop();
+					DriverStation.getInstance().waitForData(0.2);
+				} catch (Exception e) {
+					CrashLogger.logCrash(new Crash("main", e));
+				}
 				break;
 			}
 			case Vision: {
-				if (lastMode != currentMode)
-					robot.visionStart();
-				
-				robot.visionLoop();
-				HAL.observeUserProgramTeleop();
+				try {
+					//Vision
+					if (lastMode != currentMode)
+						robot.visionStart();
+					
+					robot.visionLoop();
+					HAL.observeUserProgramTeleop();
+				} catch (Exception e) {
+					CrashLogger.logCrash(new Crash("main", e));
+				}
 				break;
 			}
 			case Test: {
-				if (lastMode != currentMode)
-					robot.testStart();
-				
-				robot.testLoop();
-				HAL.observeUserProgramTest();
+				try {
+					//Test
+					if (lastMode != currentMode)
+						robot.testStart();
+					
+					robot.testLoop();
+					HAL.observeUserProgramTest();
+				} catch (Exception e) {
+					CrashLogger.logCrash(new Crash("main", e));
+				}
 				break;
 			}
 			case Disabled: {
-				if (lastMode != currentMode)
-					switch (lastMode) {
-						case Auto: 	 { robot.autoStop(); break; }
-						case Teleop: { robot.teleopStop(); break; }
-						case Test: 	 { robot.testStop(); break; }
-						case Vision :{ robot.visionStop(); break; }
-						default: break;
-					}
-				
-				HAL.observeUserProgramDisabled();
+				try {
+					//Disabled
+					if (lastMode != currentMode)
+						switch (lastMode) {
+							case Auto: 	 { robot.autoStop(); break; }
+							case Teleop: { robot.teleopStop(); break; }
+							case Test: 	 { robot.testStop(); break; }
+							case Vision :{ robot.visionStop(); break; }
+							default: break;
+						}
+					
+					HAL.observeUserProgramDisabled();
+				} catch (Exception e) {
+					CrashLogger.logCrash(new Crash("main", e));
+				}
 				break;
 			}
 			default: break;
 		}
 		
 		//Handle Main Disabling
-		if (lastMode != currentMode) {
-			if (currentMode == RobotMode.Disabled) {
-				robot.mainDisabled();
-				BreakerRobot.enabled = false;
+		try {
+			if (lastMode != currentMode) {
+				if (currentMode == RobotMode.Disabled) {
+					robot.mainDisabled();
+					BreakerRobot.enabled = false;
+				}
+				else if (lastMode == RobotMode.Disabled) {
+					robot.mainEnabled();
+					BreakerRobot.enabled = true;
+				}
+				LiveWindow.setEnabled(currentMode == RobotMode.Disabled);
+				lastMode = currentMode;
 			}
-			else if (lastMode == RobotMode.Disabled) {
-				robot.mainEnabled();
-				BreakerRobot.enabled = true;
-			}
-			LiveWindow.setEnabled(currentMode == RobotMode.Disabled);
-			lastMode = currentMode;
+		} catch (Exception e) {
+			CrashLogger.logCrash(new Crash("main", e));
 		}
 		
 		//Update Main Robot Loop
-		robot.mainLoop();
+		try {
+			robot.mainLoop();
+		} catch (Exception e) {
+			CrashLogger.logCrash(new Crash("main", e));
+		}
 		
 		//Update Live Window
 		LiveWindow.updateValues();
