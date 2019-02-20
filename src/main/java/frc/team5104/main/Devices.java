@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.util.PneumaticFactory;
+import frc.team5104.util.SensorFactory;
 import frc.team5104.util.TalonFactory;
 import frc.team5104.util.PneumaticFactory.PCM;
 import frc.team5104.util.TalonFactory.TalonSettings;
@@ -26,7 +27,7 @@ public class Devices {
 		public static TalonSRX R1 = TalonFactory.getTalon(13, new TalonSettings(NeutralMode.Brake, false, _DriveConstants._currentLimit, true));
 		public static TalonSRX R2 = TalonFactory.getTalon(14, new TalonSettings(NeutralMode.Brake, false, _DriveConstants._currentLimit, true));
 		
-		public static PigeonIMU gyro = new PigeonIMU(L2);
+		public static PigeonIMU gyro = SensorFactory.getPigionImu(L2.getDeviceID());
 		
 		public static DoubleSolenoid shift = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 0, 1);
 	}
@@ -37,7 +38,8 @@ public class Devices {
 		public static TalonSRX rightArm = TalonFactory.getTalon(22);
 		
 		public static DoubleSolenoid trapdoor = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 2, 3);
-		public static DigitalInput photoelectricSensor = new DigitalInput(9); //0 for astro
+		
+		public static DigitalInput photoelectricSensor = SensorFactory.getDigitalInput(_RobotConstants._isCompBot ? 9 : 0);
 		
 		public static TalonSRX belt = TalonFactory.getTalon(31);
 	}
@@ -58,6 +60,6 @@ public class Devices {
 	//Other
 	public static class Other {
 		public static Compressor compressor = PneumaticFactory.getCompressor(PCM.Gold);
-		public static AnalogInput compressorReader = new AnalogInput(0); //3
+		public static AnalogInput compressorReader = SensorFactory.getAnalogInput(_RobotConstants._isCompBot ? 0 : 3);
 	}
 }
