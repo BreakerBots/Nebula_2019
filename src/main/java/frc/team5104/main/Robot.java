@@ -10,7 +10,6 @@ import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.hatch.HatchManager;
 import frc.team5104.util.console;
 import frc.team5104.util.CSV;
-import frc.team5104.util.Compressor;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.VisionManager;
 import frc.team5104.vision.VisionMovement;

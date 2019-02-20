@@ -7,7 +7,6 @@ import frc.team5104.main.Devices;
 import frc.team5104.util.Compressor;
 import frc.team5104.util.CrashLogger;
 import frc.team5104.util.CrashLogger.Crash;
-import frc.team5104.util.console;
 
 /**
  * Handles teleoperation control
