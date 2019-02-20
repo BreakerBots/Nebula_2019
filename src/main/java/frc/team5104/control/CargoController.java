@@ -6,7 +6,7 @@ import frc.team5104.subsystem.intake.IntakeSystems;
 import frc.team5104.superstructure.cargo.Cargo;
 
 class CargoController extends BreakerController {
-	static void update() {
+	void update() {
 		//Main Controls
 		if (_Controls.Main._idle.getPressed()) 
 			Cargo.idle();
@@ -30,7 +30,7 @@ class CargoController extends BreakerController {
 	}
 
 	//Stop The Subsystem
-	static void idle() {
+	void idle() {
 		Cargo.idle();
 		Chute.trapdoorUp();
 	}

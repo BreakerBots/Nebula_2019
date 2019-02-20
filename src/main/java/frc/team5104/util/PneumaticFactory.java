@@ -8,7 +8,7 @@ public class PneumaticFactory {
 	
 	//PCMs
 	public static enum PCM {
-		Red(0), 
+		Red(2), 
 		Gold(1);
 		int deviceId;
 		PCM(int deviceId) { this.deviceId = deviceId; }

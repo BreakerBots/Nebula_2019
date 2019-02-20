@@ -9,6 +9,7 @@ import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
 import frc.team5104.util.BezierCurve;
 import frc.team5104.util.BezierCurveInterpolator;
 import frc.team5104.util.Deadband;
+import frc.team5104.util.console;
 import frc.team5104.util.Deadband.deadbandType;
 
 /**
@@ -25,7 +26,7 @@ class DriveController extends BreakerController {
 	private static final double _turnCurveSpeedAdjust = 0.5;
 	
 	//Main Handle Function
-	static void update() {
+	void update() {
 		//Get inputs
 		double turn = _Controls.Drive._turn.getAxis();
 		double forward = _Controls.Drive._forward.getAxis() - _Controls.Drive._reverse.getAxis();
@@ -62,7 +63,7 @@ class DriveController extends BreakerController {
 	}
 
 	//Stop The Subsystem
-	static void idle() {
+	void idle() {
 		Drive.stop();
 		DriveSystems.shifters.set(true);
 	}

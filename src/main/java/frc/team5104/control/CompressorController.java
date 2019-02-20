@@ -4,7 +4,7 @@ import frc.team5104.control.BreakerMainController.BreakerController;
 import frc.team5104.util.Compressor;
 
 class CompressorController extends BreakerController {
-	static void update() {
+	void update() {
 		if (_Controls.Main._automaticCompressor) {
 			if (Compressor.shouldRun(0)) 
 				Compressor.run();

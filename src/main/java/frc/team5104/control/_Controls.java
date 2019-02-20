@@ -11,7 +11,7 @@ import frc.team5104.util.Controller.Rumble;
 public class _Controls {
 	//Main 
 	static class Main {
-		public static final Control _toggleVision = new Control(ControlList.DirectionPadDown);
+		//public static final Control _toggleVision = new Control(ControlList.DirectionPadDown);
 		public static final Control _toggleAuto = new Control(ControlList.Menu);
 		
 		public static final Control _idle = new Control(ControlList.List);
@@ -46,11 +46,12 @@ public class _Controls {
 		public static final Control _trapdoorDown = new Control(ControlList.A);
 		
 		public static final Control _armManual = new Control(ControlList.RightJoystickY);
-		public static final Control _beltManual = new Control(ControlList.DirectionPadRight);
 	}
 	
 	//Climb
 	static class Climb {
 		//public static final Control _climb = new Control(ControlList.?);
+		public static final Control _stage1 = new Control(ControlList.DirectionPadRight);
+		public static final Control _stage2 = new Control(ControlList.DirectionPadDown);
 	}
 }

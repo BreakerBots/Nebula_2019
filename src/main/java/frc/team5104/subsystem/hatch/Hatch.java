@@ -10,6 +10,7 @@ import frc.team5104.util.console.t;
 public class Hatch extends BreakerSubsystem.Actions {
 	//Actions
 	public static void intake() {
+		console.log(c.HATCH, t.INFO, "Intaking Hatch");
 		if (isBack()) {
 			HatchManager.intakeStartTime = System.currentTimeMillis();
 			HatchManager.currentState = HatchState.intake;

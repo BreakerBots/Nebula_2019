@@ -14,8 +14,8 @@ public class IntakeSystems extends BreakerSubsystem.Systems implements CSVLoggab
 	
 	public static class Arm {
 		public static void setVoltage(double voltage) {
-			Devices.Cargo.leftArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.leftArm.getBusVoltage());
-			Devices.Cargo.rightArm.set(ControlMode.PercentOutput, -voltage / Devices.Cargo.rightArm.getBusVoltage());
+			Devices.Cargo.leftArm.set(ControlMode.PercentOutput, -voltage / Devices.Cargo.leftArm.getBusVoltage());
+			Devices.Cargo.rightArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.rightArm.getBusVoltage());
 		}
 		
 		static void applyForce(double force) {

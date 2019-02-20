@@ -26,7 +26,7 @@ public class Devices {
 		
 //		public static PigeonIMU gyro = new PigeonIMU(L2);
 		
-		public static DoubleSolenoid shift = PneumaticFactory.getDoubleSolenoid(PCM.Red, 6, 7);
+		public static DoubleSolenoid shift = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 0, 1);
 	}
 	
 	//Cargo
@@ -34,7 +34,7 @@ public class Devices {
 		public static TalonSRX leftArm = TalonFactory.getTalon(21);
 		public static TalonSRX rightArm = TalonFactory.getTalon(22);
 		
-		public static DoubleSolenoid trapdoor = PneumaticFactory.getDoubleSolenoid(PCM.Red, 4, 5);
+		public static DoubleSolenoid trapdoor = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 2, 3);
 		public static DigitalInput photoelectricSensor = new DigitalInput(9); //0 for astro
 		
 		public static TalonSRX belt = TalonFactory.getTalon(31);
@@ -42,20 +42,20 @@ public class Devices {
 	
 	//Hatch
 	public static class Hatch {
-		public static DoubleSolenoid trap = PneumaticFactory.getDoubleSolenoid(PCM.Red, 3, 2);
-		public static DoubleSolenoid lazyBoy = PneumaticFactory.getDoubleSolenoid(PCM.Red, 1, 0);
-		//public static DoubleSolenoid ejector = PneumaticFactory.getDoubleSolenoid(PCM.Red, ?, ?);
+		public static DoubleSolenoid trap = PneumaticFactory.getDoubleSolenoid(PCM.Red, 2, 3);
+		public static DoubleSolenoid lazyBoy = PneumaticFactory.getDoubleSolenoid(PCM.Red, 4, 5);
+		public static DoubleSolenoid ejector = PneumaticFactory.getDoubleSolenoid(PCM.Red, 0, 1);
 	}
 	
 	//Climber
 	public static class Climber {
-		//public static DoubleSolenoid stage1 = PneumaticFactory.getDoubleSolenoid(PCM.?, ?, ?);
-		//public static DoubleSolenoid stage2 = PneumaticFactory.getDoubleSolenoid(PCM.?, ?, ?);
+		public static DoubleSolenoid stage1 = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 4, 5);
+		public static DoubleSolenoid stage2 = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 6, 7);
 	}
 	
 	//Other
 	public static class Other {
 		public static Compressor compressor = PneumaticFactory.getCompressor(PCM.Gold);
-		public static AnalogInput compressorReader = new AnalogInput(3);
+		public static AnalogInput compressorReader = new AnalogInput(0); //3
 	}
 }

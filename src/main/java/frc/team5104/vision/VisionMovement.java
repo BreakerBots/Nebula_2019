@@ -67,7 +67,7 @@ public class VisionMovement implements CSVLoggable {
 		double d = Math.abs(_targetY() - limelight.getY()) > _VisionConstants._toleranceY ? 
 				_targetY() - limelight.getY() : 0;
 		if (d == 0) return 0;
-		d = (2.0 / (d + 10)) + 0.8;
+		d = (1.3 / (d + 10)) + 0.77;
 		buffer.update(d);
 		
 		return buffer.getDoubleOutput(); 

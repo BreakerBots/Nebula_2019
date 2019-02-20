@@ -5,7 +5,7 @@ import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.subsystem.hatch.Hatch;
 
 public class HatchController extends BreakerController {
-	static void update() {
+	void update() {
 		if (_Controls.Hatch._eject.getPressed())
 			//HatchSystems.Trap.open();
 			Hatch.eject(false);
@@ -19,7 +19,7 @@ public class HatchController extends BreakerController {
 	}
 
 	//Stop The Subsystem
-	static void idle() {
+	void idle() {
 		Hatch.idle();
 		Hatch.foldBack();
 	}

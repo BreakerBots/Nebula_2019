@@ -2,44 +2,67 @@
 package frc.team5104.control;
 
 import frc.team5104.main.BreakerRobotController.RobotMode;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.team5104.main.Devices;
 import frc.team5104.util.Compressor;
 import frc.team5104.util.CrashLogger;
 import frc.team5104.util.CrashLogger.Crash;
+import frc.team5104.util.console;
 
 /**
  * Handles teleoperation control
  */
 public class BreakerMainController {
+	
+	static DriveController driveController = new DriveController();
+	static HatchController hatchController = new HatchController();
+	static CargoController cargoController = new CargoController();
+	static StateController stateController = new StateController();
+	static CompressorController compressorController = new CompressorController();
+	
 	private static void update(RobotMode currentMode) {
 		//Teleop
 		if (currentMode == RobotMode.Teleop) {
 			//Drive
-			DriveController.handle();
+			driveController.handle();
 			
 			//Cargo
-			CargoController.handle();
+			cargoController.handle();
 			
 			//Hatch
-			HatchController.handle();
+			hatchController.handle();
+			
+			if (_Controls.Climb._stage1.getPressed())
+				Devices.Climber.stage1.set(
+						Devices.Climber.stage1.get() == DoubleSolenoid.Value.kForward ? 
+								DoubleSolenoid.Value.kReverse : 
+									DoubleSolenoid.Value.kForward
+					);
+			if (_Controls.Climb._stage2.getPressed())
+				Devices.Climber.stage2.set(
+						Devices.Climber.stage2.get() == DoubleSolenoid.Value.kForward ? 
+								DoubleSolenoid.Value.kReverse : 
+									DoubleSolenoid.Value.kForward
+					);
 		}
 		
 		//Compressor
 		if (currentMode == RobotMode.Teleop || currentMode == RobotMode.Test)
-			CompressorController.handle();
+			compressorController.handle();
 		else
 			Compressor.stop();
 		
 		//Test Mode
 		if (currentMode == RobotMode.Test) {
-			DriveController.forceIdle();
-			CargoController.forceIdle();
-			HatchController.forceIdle();
+			driveController.forceIdle();
+			cargoController.forceIdle();
+			hatchController.forceIdle();
 		}
 		
 		//Disabled
 		if (currentMode != RobotMode.Disabled) {
 			//State Switching
-			StateController.handle();
+			stateController.handle();
 		}
 	}
 	
@@ -48,9 +71,9 @@ public class BreakerMainController {
 		try { update(currentMode); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); }
 	}
 	static abstract class BreakerController {
-		static void handle() { try { update(); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); } }
-		static void update() { }
-		static void forceIdle() { try { idle(); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); } }
-		static void idle() { }
+		void handle() { try { update(); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); } }
+		abstract void update();
+		void forceIdle() { try { idle(); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); } }
+		void idle() {  }
 	}
 }
