@@ -4,7 +4,7 @@ package frc.team5104.auto.actions;
 import frc.team5104.auto.BreakerPathAction;
 import frc.team5104.auto.BreakerTrajectoryFollower;
 import frc.team5104.auto.BreakerTrajectoryGenerator;
-import frc.team5104.auto.util.Waypoint;
+import frc.team5104.auto.util.TrajectoryWaypoint;
 import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
@@ -17,9 +17,9 @@ import frc.team5104.util.console.c;
 public class DriveTrajectoryAction extends BreakerPathAction {
 
 	private BreakerTrajectoryFollower follower;
-	private Waypoint[] waypoints;
+	private TrajectoryWaypoint[] waypoints;
 		
-    public DriveTrajectoryAction(Waypoint[] points) {
+    public DriveTrajectoryAction(TrajectoryWaypoint[] points) {
     	this.waypoints = points;
     }
 

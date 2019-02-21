@@ -32,83 +32,77 @@ public class TrajectoryGenerator {
 	/**
 	 * Generates a trajectory that hits all the waypoints with the specified configuration
 	 * @param waypoints The waypoints for the trajectory to hit
-	 * @param config The configuration for the trajectory/generator
+	 * @param maxVelocity The max velocity (ft/s) in the trajectory
+	 * @param maxAcceleration The max acceleration (ft/s/s) in the trajectory
+	 * @param maxJerk The max jerk (ft/s/s/s) in the trajectory
+	 * @param deltaTime The time between each loop. (1/loopHz)
 	 */
-	public static Trajectory generate(Waypoint[] waypoints, double max_vel, double max_acc, double max_jerk, double dt) {
+	public static Trajectory generate(TrajectoryWaypoint[] waypoints, double maxVelocity, double maxAcceleration, double maxJerk, double deltaTime) {
 		if (waypoints.length < 2) {
 			console.error("Not Enough Waypoints!");
 			return null;
 		}
 
 		//Creates splines between each pair of waypoints
-		Spline[] splines = new Spline[waypoints.length - 1];
-		double[] spline_lengths = new double[splines.length];
-		double total_distance = 0;
+		TrajectorySpline[] splines = new TrajectorySpline[waypoints.length - 1];
+		double[] splineLengths = new double[splines.length];
+		double totalDistance = 0;
 		for (int i = 0; i < splines.length; ++i) {
-			splines[i] = new Spline();
-			if (!Spline.reticulateSplines(waypoints[i], waypoints[i + 1], splines[i], Spline.CubicHermite)) {
+			splines[i] = new TrajectorySpline();
+			if (!TrajectorySpline.reticulateSplines(waypoints[i], waypoints[i + 1], splines[i], TrajectorySpline.CubicHermite)) {
 				console.error("Invalid Path!");
 				return null;
 			}
-			spline_lengths[i] = splines[i].calculateLength();
-			total_distance += spline_lengths[i];
+			splineLengths[i] = splines[i].calculateLength();
+			totalDistance += splineLengths[i];
 		}
 
 		//Combines all the splines and smoothes them out
-		Trajectory traj = generateFullTrajectory(max_vel, max_acc, max_jerk, dt, TrajectoryGenerator.SCurveProfile, 0.0, waypoints[0].theta, total_distance, 0.0, waypoints[0].theta);
+		Trajectory trajectory = generateFullTrajectory(maxVelocity, maxAcceleration, maxJerk, deltaTime, TrajectoryGenerator.SCurveProfile, 0.0, waypoints[0].theta, totalDistance, 0.0, waypoints[0].theta);
 
 		//Assings headings to segments
-		int cur_spline = 0;
-		double cur_spline_start_pos = 0;
-		double length_of_splines_finished = 0;
-		for (int i = 0; i < traj.length(); ++i) {
-			double cur_pos = traj.get(i).position;
+		int currentSpline = 0;
+		double currentSplineStartPosition = 0;
+		int currentSplineLength = 0;
+		for (int i = 0; i < trajectory.length(); ++i) {
+			double cur_pos = trajectory.get(i).position;
 
 			boolean found_spline = false;
 			while (!found_spline) {
-				double cur_pos_relative = cur_pos - cur_spline_start_pos;
-				if (cur_pos_relative <= spline_lengths[cur_spline]) {
-					double percentage = splines[cur_spline].getPercentageForDistance(
+				double cur_pos_relative = cur_pos - currentSplineStartPosition;
+				if (cur_pos_relative <= splineLengths[currentSpline]) {
+					double percentage = splines[currentSpline].getPercentageForDistance(
 									cur_pos_relative);
-					traj.get(i).heading = splines[cur_spline].angleAt(percentage);
-					double[] coords = splines[cur_spline].getXandY(percentage);
-					traj.get(i).x = coords[0];
-					traj.get(i).y = coords[1];
+					trajectory.get(i).heading = splines[currentSpline].angleAt(percentage);
+					double[] coords = splines[currentSpline].getXandY(percentage);
+					trajectory.get(i).x = coords[0];
+					trajectory.get(i).y = coords[1];
 					found_spline = true;
-				} else if (cur_spline < splines.length - 1) {
-					length_of_splines_finished += spline_lengths[cur_spline];
-					cur_spline_start_pos = length_of_splines_finished;
-					++cur_spline;
+				} else if (currentSpline < splines.length - 1) {
+					currentSplineLength += splineLengths[currentSpline];
+					currentSplineStartPosition = currentSplineLength;
+					++currentSpline;
 				} else {
-					traj.get(i).heading = splines[splines.length - 1].angleAt(1.0);
+					trajectory.get(i).heading = splines[splines.length - 1].angleAt(1.0);
 					double[] coords = splines[splines.length - 1].getXandY(1.0);
-					traj.get(i).x = coords[0];
-					traj.get(i).y = coords[1];
+					trajectory.get(i).x = coords[0];
+					trajectory.get(i).y = coords[1];
 					found_spline = true;
 				}
 			}
 		}
 
-		return traj;
+		return trajectory;
 	}
 	
-	/**
-	 * 
-	 * @param config
-	 * @param strategy
-	 * @param start_vel
-	 * @param start_heading
-	 * @param goal_pos
-	 * @param goal_vel
-	 * @param goal_heading
-	 * @return
-	 */
-	private static Trajectory generateFullTrajectory(double max_vel, double max_acc, double max_jerk, double dt, SpeedProfile strategy, double start_vel, double start_heading, double goal_pos, double goal_vel, double goal_heading) {
+	private static Trajectory generateFullTrajectory(double maxVelocity, double maxAcceleration, double maxJerk, double deltaTime, 
+													 SpeedProfile strategy, double startVelocity, double startHeading, double goalPosition, 
+													 double goalVelocity, double goalHeading) {
 		// Choose an automatic strategy.
 		if (strategy == AutomaticProfile) {
-			if (start_vel == goal_vel && start_vel == max_vel)
+			if (startVelocity == goalVelocity && startVelocity == maxVelocity)
 				strategy = StepProfile;
-			else if (start_vel == goal_vel && start_vel == 0)
+			else if (startVelocity == goalVelocity && startVelocity == 0)
 				strategy = SCurveProfile;
 			else
 				strategy = TrapezoidalProfile;
@@ -116,59 +110,59 @@ public class TrajectoryGenerator {
 
 		Trajectory traj;
 		if (strategy == StepProfile) {
-			double impulse = (goal_pos / max_vel) / dt;
+			double impulse = (goalPosition / maxVelocity) / deltaTime;
 
 			// Round down, meaning we may undershoot by less than max_vel*dt.
 			// This is due to discretization and avoids a strange final
 			// velocity.
 			int time = (int) (Math.floor(impulse));
-			traj = secondOrderFilter(1, 1, dt, max_vel, max_vel, impulse, time, TrapezoidalIntegration);
+			traj = secondOrderFilter(1, 1, deltaTime, maxVelocity, maxVelocity, impulse, time, TrapezoidalIntegration);
 
 		} else if (strategy == TrapezoidalProfile) {
 			// How fast can we go given maximum acceleration and deceleration?
-			double start_discount = .5 * start_vel * start_vel / max_acc;
-			double end_discount = .5 * goal_vel * goal_vel / max_acc;
+			double start_discount = .5 * startVelocity * startVelocity / maxAcceleration;
+			double end_discount = .5 * goalVelocity * goalVelocity / maxAcceleration;
 
-			double adjusted_max_vel = BreakerMath.min(max_vel,
-							Math.sqrt(max_acc * goal_pos - start_discount
+			double adjusted_max_vel = BreakerMath.min(maxVelocity,
+							Math.sqrt(maxAcceleration * goalPosition - start_discount
 											- end_discount));
-			double t_rampup = (adjusted_max_vel - start_vel) / max_acc;
-			double x_rampup = start_vel * t_rampup + .5 * max_acc
+			double t_rampup = (adjusted_max_vel - startVelocity) / maxAcceleration;
+			double x_rampup = startVelocity * t_rampup + .5 * maxAcceleration
 							* t_rampup * t_rampup;
-			double t_rampdown = (adjusted_max_vel - goal_vel) / max_acc;
+			double t_rampdown = (adjusted_max_vel - goalVelocity) / maxAcceleration;
 			double x_rampdown = adjusted_max_vel * t_rampdown - .5
-							* max_acc * t_rampdown * t_rampdown;
-			double x_cruise = goal_pos - x_rampdown - x_rampup;
+							* maxAcceleration * t_rampdown * t_rampdown;
+			double x_cruise = goalPosition - x_rampdown - x_rampup;
 
 			// The +.5 is to round to nearest
 			int time = (int) ((t_rampup + t_rampdown + x_cruise
-							/ adjusted_max_vel) / dt + .5);
+							/ adjusted_max_vel) / deltaTime + .5);
 
 			// Compute the length of the linear filters and impulse.
 			int f1_length = (int) Math.ceil((adjusted_max_vel
-							/ max_acc) / dt);
-			double impulse = (goal_pos / adjusted_max_vel) / dt
-							- start_vel / max_acc / dt
+							/ maxAcceleration) / deltaTime);
+			double impulse = (goalPosition / adjusted_max_vel) / deltaTime
+							- startVelocity / maxAcceleration / deltaTime
 							+ start_discount + end_discount;
-			traj = secondOrderFilter(f1_length, 1, dt, start_vel,
+			traj = secondOrderFilter(f1_length, 1, deltaTime, startVelocity,
 							adjusted_max_vel, impulse, time, TrapezoidalIntegration);
 
 		} else if (strategy == SCurveProfile) {
 			// How fast can we go given maximum acceleration and deceleration?
-			double adjusted_max_vel = Math.min(max_vel,
-							(-max_acc * max_acc + Math.sqrt(max_acc
-											* max_acc * max_acc * max_acc
-											+ 4 * max_jerk * max_jerk * max_acc
-											* goal_pos)) / (2 * max_jerk));
+			double adjusted_max_vel = Math.min(maxVelocity,
+							(-maxAcceleration * maxAcceleration + Math.sqrt(maxAcceleration
+											* maxAcceleration * maxAcceleration * maxAcceleration
+											+ 4 * maxJerk * maxJerk * maxAcceleration
+											* goalPosition)) / (2 * maxJerk));
 
 			// Compute the length of the linear filters and impulse.
 			int f1_length = (int) Math.ceil((adjusted_max_vel
-							/ max_acc) / dt);
-			int f2_length = (int) Math.ceil((max_acc
-							/ max_jerk) / dt);
-			double impulse = (goal_pos / adjusted_max_vel) / dt;
+							/ maxAcceleration) / deltaTime);
+			int f2_length = (int) Math.ceil((maxAcceleration
+							/ maxJerk) / deltaTime);
+			double impulse = (goalPosition / adjusted_max_vel) / deltaTime;
 			int time = (int) (Math.ceil(f1_length + f2_length + impulse));
-			traj = secondOrderFilter(f1_length, f2_length, dt, 0,
+			traj = secondOrderFilter(f1_length, f2_length, deltaTime, 0,
 							adjusted_max_vel, impulse, time, TrapezoidalIntegration);
 
 		} else {
@@ -177,9 +171,9 @@ public class TrajectoryGenerator {
 
 		// Now assign headings by interpolating along the path.
 		// Don't do any wrapping because we don't know units.
-		double total_heading_change = goal_heading - start_heading;
+		double total_heading_change = goalHeading - startHeading;
 		for (int i = 0; i < traj.length(); ++i) {
-			traj.segments_[i].heading = start_heading + total_heading_change
+			traj.segments_[i].heading = startHeading + total_heading_change
 							* (traj.segments_[i].position)
 							/ traj.segments_[traj.length() - 1].position;
 		}

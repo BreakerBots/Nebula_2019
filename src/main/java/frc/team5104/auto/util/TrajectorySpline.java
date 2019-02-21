@@ -6,7 +6,7 @@ import frc.team5104.util.BreakerMath;
 /**
  * A spline...
  */
-public class Spline {
+public class TrajectorySpline {
 	//Spline Types
 	public static class Type {
 		private final String value_;
@@ -33,7 +33,7 @@ public class Spline {
 	double theta_offset_;
 	double arc_length_;
 
-	Spline() {
+	TrajectorySpline() {
 		arc_length_ = -1;
 	}
 
@@ -42,10 +42,10 @@ public class Spline {
 		return Math.abs(x - y) < 1E-6;
 	}
 
-	public static boolean reticulateSplines(Waypoint start, Waypoint goal, Spline result, Type type) {
+	public static boolean reticulateSplines(TrajectoryWaypoint start, TrajectoryWaypoint goal, TrajectorySpline result, Type type) {
 		return reticulateSplines(start.x, start.y, start.theta, goal.x, goal.y, goal.theta, result, type);
 	}
-	public static boolean reticulateSplines(double x0, double y0, double theta0, double x1, double y1, double theta1, Spline result, Type type) {
+	public static boolean reticulateSplines(double x0, double y0, double theta0, double x1, double y1, double theta1, TrajectorySpline result, Type type) {
 		result.type_ = type;
 
 		//Move point 0 to origin
