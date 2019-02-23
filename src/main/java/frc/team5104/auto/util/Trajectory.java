@@ -41,16 +41,31 @@ public class Trajectory implements Serializable {
 			segments_[index] = segment;
 	}
 
-	//To String
+	//String Functions
 	public String toString() {
 		String str = "X, Y, Heading\n";
-		for (int i = 0; i < length(); ++i) {
+		for (int i = 0; i < length(); i++) {
 			TrajectorySegment segment = get(i);
 			str += segment.x + ", ";
 			str += segment.y + ", ";
 			str += segment.heading + ", ";
 			str += "\n";
 		}
+		return str;
+	}
+	
+	public String toJSON() {
+		String str = "[";
+		for (int i = 0; i < length(); i++) {
+			TrajectorySegment segment = get(i);
+			str += "{"
+				+  "\"x\": " + segment.x + ", "
+				+  "\"y\": " + segment.y + ", "
+				+  "\"heading\": " + segment.heading + ", "
+				+  "\"velocity\": " + segment.velocity
+				+  "}" + ((i == length()-1) ? "" : ",");
+		}
+		str += "]";
 		return str;
 	}
 }

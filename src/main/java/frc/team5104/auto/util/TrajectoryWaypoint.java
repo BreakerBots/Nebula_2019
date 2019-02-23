@@ -4,7 +4,7 @@ package frc.team5104.auto.util;
 /**
  * A waypoint to generate a trajectory from.
  */
-public class Waypoint {
+public class TrajectoryWaypoint {
 	public double x, y, theta;
 	
 	//Constructors
@@ -14,9 +14,15 @@ public class Waypoint {
 	 * @param y The y (sidways) position of the robot, relative to the start.
 	 * @param heading The angle of the robot in degrees
 	 */
-	public Waypoint(double x, double y, double heading) {
+	public TrajectoryWaypoint(double x, double y, double heading) {
 		this.x = x;
 		this.y = y;
 		this.theta = Math.toRadians(heading);
+	}
+	
+	public String toString() {
+		return "x: " + x + ", " +
+			   "y: " + y + ", " +
+			   "heading: " + Math.toDegrees(theta);
 	}
 }

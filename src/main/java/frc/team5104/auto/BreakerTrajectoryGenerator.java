@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 
 import frc.team5104.auto.util.Trajectory;
 import frc.team5104.auto.util.TrajectoryGenerator;
-import frc.team5104.auto.util.Waypoint;
+import frc.team5104.auto.util.TrajectoryWaypoint;
 import frc.team5104.main._RobotConstants;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
@@ -24,11 +24,11 @@ public class BreakerTrajectoryGenerator {
 	 * @param points Waypoints to generate the trajectory from
 	 * @return A Trajectory to follow those waypoints
 	 */
-	public static Trajectory getTrajectory(Waypoint[] points) {
+	public static Trajectory getTrajectory(TrajectoryWaypoint[] points) {
 //		try {
 			//Parse trajectory name
 			String s = "";
-	    	for (Waypoint p : points) {
+	    	for (TrajectoryWaypoint p : points) {
 	    		s += (Double.toString(p.x) + "/" + Double.toString(p.y) + "/" + Double.toString(p.theta));
 	    	}
 	    	s = "_" + s.hashCode();
