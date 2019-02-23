@@ -77,13 +77,13 @@ public class VisionMovement implements CSVLoggable {
 		turnController.reset();
 	}
 
-	public String[] getHeader() {
+	public String[] getCSVHeader() { 
 		return new String[] { "turnCurrent", "turnTarget", "forwardCurrent", "forwardTarget", "distance" };
 	}
-
-	public String[] getData() {
+	public String[] getCSVData() {
 		return new String[] { ""+VisionSystems.limelight.getX(), ""+turnController.target, 
 							  ""+VisionSystems.limelight.getY(), ""+_targetY(),
 							  ""+getScaleFactor()};
 	}
+	public String getCSVName() { return "VisionPID"; }
 }

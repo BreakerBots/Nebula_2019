@@ -3,28 +3,61 @@ package frc.team5104.util;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import frc.team5104.util.CrashLogger.Crash;
 
 /**
- * Generates a csv of specific data for tuning/debugging.
+ * Saves a csv file of specific data for tuning/debugging.
  */
 public class CSV {
 	public static interface CSVLoggable {
-		String[] getHeader();
-		String[] getData();
+		String[] getCSVHeader();
+		String[] getCSVData();
+		String getCSVName();
+	}
+	public static class CSVLoggableObject implements CSVLoggable {
+		private String[] header = null;
+		private String[] lastData = null;
+		public String name = null;
+		public CSVLoggableObject(String name, String[] header) { 
+			this.name = name; 
+			this.header = header;
+			init(this);
+		}
+		public void update(String[] data) { lastData = data; }
+		public String[] getCSVData() { return lastData; }
+		public String[] getCSVHeader() { return header; }
+		public String getCSVName() { return name; }
 	}
 	
-	private static String content;
-	private static CSVLoggable target;
+	private static class CSVRunner {
+		String content;
+		String fileName;
+		CSVLoggable target;
+		public CSVRunner(CSVLoggable target) { 
+			this.target = target;
+			content += stringArrayToString(target.getCSVHeader()) + '\n';
+			fileName = target.getCSVName();
+			if (fileName.indexOf(".") != -1)
+				fileName = fileName.substring(0, fileName.indexOf("."));
+			fileName += ".csv";
+		}
+		public void update() { 
+			String data = stringArrayToString(target.getCSVData());
+			if (data != null)
+				content += data + '\n'; 
+		}
+	}
+	private static ArrayList<CSVRunner> runnables = new ArrayList<CSVRunner>();
 	
 	/**
 	 * Initialized the CSV class with a specified CSV target
 	 * @param csvTarget A class that can be logged to a csv
 	 */
 	public static void init(CSVLoggable csvTarget) {
-		target = csvTarget;
-		content = stringArrayToString(target.getHeader()) + '\n';
+		if (csvTarget != null)
+			runnables.add(new CSVRunner(csvTarget));
 	}
 	
 	/**
@@ -34,22 +67,21 @@ public class CSV {
 		try { update(); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); }
 	}
 	private static void update() {
-		if (target != null)
-			content += stringArrayToString(target.getData()) + '\n';
+		for (CSVRunner runner : runnables) {
+			try {
+				runner.update();
+			} catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); }
+		}
 	}
 	
 	/**
-	 * Saves the file onto the roborio
+	 * Saves the files onto the roborio
 	 * @param folder The folder on the roborio
-	 * @param fileName The name of the file to save on the roboio
 	 */
-	public static void writeFile(String folder, String file) {
+	public static void writeFile(String folder) {
 		try {
 			//Anti dumb
 			String path = folder;
-			if (file.indexOf(".") != -1)
-				file = file.substring(0, file.indexOf("."));
-			file += ".csv";
 			if (path.indexOf("lvuser") != -1)
 				path = path.substring(path.indexOf("lvuser") + 6);
 			if (path.charAt(0) == '/')
@@ -63,10 +95,14 @@ public class CSV {
 			if (!directory.exists())
 				directory.mkdir();
 			
-			//Save the file
-			PrintWriter writer = new PrintWriter(path + file, "UTF-8");
-			writer.print(content);
-			writer.close();
+			//Save the files
+			for (CSVRunner runner : runnables) {
+				try {
+					PrintWriter writer = new PrintWriter(path + runner.fileName, "UTF-8");
+					writer.print(runner.content);
+					writer.close();
+				} catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); }
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,9 +110,12 @@ public class CSV {
 	
 	//Takes a string array and turns it into a string (separated by commas)
 	private static String stringArrayToString(String[] stringArray) {
-		String returnValue = "";
-		for(int i = 0; i < stringArray.length; i++) 
-			returnValue += stringArray[i] + (i < stringArray.length - 1 ? ", " : "");
-		return returnValue;
+		if (stringArray != null) {
+			String returnValue = "";
+			for(int i = 0; i < stringArray.length; i++) 
+				returnValue += stringArray[i] + (i < stringArray.length - 1 ? ", " : "");
+			return returnValue;
+		}
+		return null;
 	}
 }

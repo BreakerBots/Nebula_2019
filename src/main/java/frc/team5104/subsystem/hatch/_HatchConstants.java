@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 public class _HatchConstants {
 	//Dad
-	public static DoubleSolenoid.Value _trapOpen = DoubleSolenoid.Value.kReverse;
+	public static DoubleSolenoid.Value _trapOpen = DoubleSolenoid.Value.kForward;
 	
 	//Lazy Boy
-	public static DoubleSolenoid.Value _lazyBoyUp = DoubleSolenoid.Value.kReverse;
+	public static DoubleSolenoid.Value _lazyBoyUp = DoubleSolenoid.Value.kForward;
 	
 	//Modes
 	public static int _intakeModeLength = 1000;

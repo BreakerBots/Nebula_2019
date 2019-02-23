@@ -11,6 +11,7 @@ import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.util.CrashLogger;
 import frc.team5104.util.CrashLogger.Crash;
 import frc.team5104.util.console;
+import frc.team5104.util.CSV.CSVLoggableObject;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
 import frc.team5104.vision.VisionManager;

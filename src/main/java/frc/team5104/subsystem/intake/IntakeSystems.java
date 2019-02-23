@@ -57,11 +57,11 @@ public class IntakeSystems extends BreakerSubsystem.Systems implements CSVLoggab
 		static boolean isNotHit() { return !isHit(); }
 	}
 
-	public String[] getHeader() {
+	public String[] getCSVHeader() {
 		return new String[] { "current", "target" };
 	}
-
-	public String[] getData() {
+	public String[] getCSVData() {
 		return new String[] { ""+Encoder.getDegrees(), ""+armController.target };
 	}
+	public String getCSVName() { return "IntakePID"; }
 }

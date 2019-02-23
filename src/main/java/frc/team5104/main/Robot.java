@@ -42,11 +42,10 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 		console.log("Robot Disabled");
 		BreakerSubsystemManager.disabled();
 		console.logFile.end();
-		CSV.writeFile("temp", "csvData");
+		CSV.writeFile("temp");
 	}
 	
 	public void mainLoop() {
-//		console.log( Compressor.getPressure());
 		if (enabled) {
 			BreakerSubsystemManager.handle();
 			Controller.handle();
