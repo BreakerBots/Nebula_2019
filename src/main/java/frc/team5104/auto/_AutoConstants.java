@@ -9,6 +9,6 @@ public class _AutoConstants {
 	public static final double _maxJerk = 20;//0.297; 				  //(Feet) [Tune] in ft/s/s/s
 	
 	//Trajectory Folowing
-	public static final double _tfB    = 0.2; //(None) [Tune/Choose] (Range: Great Than Zero) Increases/Decreases Correction
-	public static final double _tfZeta = 0.5; //(None) [Tune/Choose] (Range: Zero to One) Increases/Decreases Dampening
+	public static final double _tfCorrection = 0.2; //(None) [Tune/Choose] (Range: Great Than Zero) Increases/Decreases Correction
+	public static final double _tfDampening  = 0.5; //(None) [Tune/Choose] (Range: Zero to One) Increases/Decreases Dampening
 }

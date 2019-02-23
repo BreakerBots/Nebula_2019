@@ -11,32 +11,31 @@ import frc.team5104.util.BreakerMath;
 import frc.team5104.util.Units;
 
 /**
- * Pathfinder Trajectory Follower (Ramsete Follower)
- * Based on UCLA's "Ramsete" follower... "https://www.dis.uniroma1.it/~labrob/pub/papers/Ramsete01.pdf"
- * Referenced from team 3863
- * Follows a trajectory through indexes and returns motor speeds (ft/s) every tick 
+ * <h1>Breaker Trajectory Follower</h1>
+ * Follows a pre-generated trajectory using non-linear feedback control (ramsete follower)
  */
 public class BreakerTrajectoryFollower {
 
-	private static final double b    = _AutoConstants._tfB;
-	private static final double zeta = _AutoConstants._tfZeta;
+	private static final double beta = _AutoConstants._tfCorrection;
+	private static final double zeta = _AutoConstants._tfDampening;
 	
-	private int i;
+	private int trajectoryIndex;
 	
 	private Trajectory trajectory;
 	private RobotPosition robotPosition;
 
 	public BreakerTrajectoryFollower(Trajectory trajectory) {
 		this.trajectory = trajectory;
-		i = 0;
+		trajectoryIndex = 0;
 	}
 	
 	/**
 	 * Get the current drive signal (Call Every Loop)
 	 * @param robotPosition The Robot's position on the field (get from Odometry.java)
-	 * @return The Motor Speeds to follow the trajector (IN FEET PER SECOND!!!)
+	 * @return The Motor Speeds to follow the trajectory
 	 */
 	public RobotDriveSignal getNextDriveSignal(RobotPosition currentRobotPosition) {
+		//Implements equation 5.12 from https://www.dis.uniroma1.it/~labrob/pub/papers/Ramsete01.pdf
 		this.robotPosition = currentRobotPosition;
 		
 		double left = 0;
@@ -46,7 +45,7 @@ public class BreakerTrajectoryFollower {
 			return new RobotDriveSignal(left, right, DriveUnit.feetPerSecond);
 		
 		//Get Current Segment from index
-		TrajectorySegment current = trajectory.get(i);
+		TrajectorySegment current = trajectory.get(trajectoryIndex);
 		
 		//Find wanted rate of change of the heading (angle)
 		double w_d = calcW_d();
@@ -64,7 +63,7 @@ public class BreakerTrajectoryFollower {
 		right = ((-_DriveConstants._wheelBaseWidth * w) / 2 + v);
 
 		//Go to the next index
-		i += 1;
+		trajectoryIndex += 1;
 	   
 		return new RobotDriveSignal(
 				left, right,
@@ -81,15 +80,15 @@ public class BreakerTrajectoryFollower {
 	}
 
 	public boolean isFinished() {
-		return i == trajectory.length();
+		return trajectoryIndex == trajectory.length();
 	}
 	
 	// -- Calculations -- \\
 	private double calcW_d() {
-		if (i < trajectory.length()-1) {
-			double lastTheta = trajectory.get(i).heading;
-			double nextTheta = trajectory.get(i + 1).heading; 
-			return (nextTheta - lastTheta) / trajectory.get(i).deltaTime;
+		if (trajectoryIndex < trajectory.length()-1) {
+			double lastTheta = trajectory.get(trajectoryIndex).heading;
+			double nextTheta = trajectory.get(trajectoryIndex + 1).heading; 
+			return (nextTheta - lastTheta) / trajectory.get(trajectoryIndex).deltaTime;
 		} 
 		else {
 			return 0;
@@ -114,14 +113,14 @@ public class BreakerTrajectoryFollower {
 		double sinThetaErrOverThetaErr;
 		
 		if (Math.abs(thetaError) < 0.00001)
-			sinThetaErrOverThetaErr = 1; //A limit when "sin(x)/x" gets close to zero
+			sinThetaErrOverThetaErr = 1; //sin catch (for sin(x)/x approaching 0)
 		else
 			sinThetaErrOverThetaErr = Math.sin(thetaError) / (thetaError);
 		
-		return w_d + b * v_d * (sinThetaErrOverThetaErr) * (Math.cos(robotPosition.getTheta()) * (y_d - robotPosition.y) - Math.sin(robotPosition.getTheta()) * (x_d - robotPosition.x)) + k * (thetaError); //from eq. 5.12
+		return w_d + beta * v_d * (sinThetaErrOverThetaErr) * (Math.cos(robotPosition.getTheta()) * (y_d - robotPosition.y) - Math.sin(robotPosition.getTheta()) * (x_d - robotPosition.x)) + k * (thetaError); //from eq. 5.12
 	}
 	
 	private double calcK(double v_d, double w_d) {
-		return 2 * zeta * Math.sqrt(Math.pow(w_d, 2) + b * Math.pow(v_d, 2));
+		return 2 * zeta * Math.sqrt(Math.pow(w_d, 2) + beta * Math.pow(v_d, 2));
 	}
 }
