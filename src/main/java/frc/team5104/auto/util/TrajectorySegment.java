@@ -9,16 +9,16 @@ import java.io.Serializable;
  */
 public class TrajectorySegment implements Serializable {
 	private static final long serialVersionUID = 1L;
-	public double position, velocity, acceleration, jerk, heading, deltaTime, x, y;
+	public double position, velocity, acceleration, jerk, theta, deltaTime, x, y;
 
 	//Constructors
 	public TrajectorySegment() { }
-	public TrajectorySegment(double position, double velocity, double acceleration, double jerk, double heading, double deltaTime, double x, double y) {
+	public TrajectorySegment(double position, double velocity, double acceleration, double jerk, double theta, double deltaTime, double x, double y) {
 		this.position = position;
 		this.velocity = velocity;
 		this.acceleration = acceleration;
 		this.jerk = jerk;
-		this.heading = heading;
+		this.theta = theta;
 		this.deltaTime = deltaTime;
 		this.x = x;
 		this.y = y;
@@ -29,6 +29,6 @@ public class TrajectorySegment implements Serializable {
 				"vel: " + velocity  + ", " + 
 				"acc: " + acceleration  + ", " + 
 				"jerk: "+ jerk + ", " + 
-				"heading: " + heading;
+				"theta: " + theta;
 	}
 }

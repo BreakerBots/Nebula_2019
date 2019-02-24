@@ -3,6 +3,8 @@ package frc.team5104.auto.util;
 
 import java.io.Serializable;
 
+import frc.team5104.util.console;
+
 /**
  * A generated or empty trajectory. 
  * Simply contains an array of segments.
@@ -22,9 +24,15 @@ public class Trajectory implements Serializable {
 	 * Creates a empty trajectory of a certain length.
 	 */
 	public Trajectory(int length) {
-		segments_ = new TrajectorySegment[length];
-		for (int i = 0; i < length; ++i) {
-			segments_[i] = new TrajectorySegment();
+		if (length < Integer.MAX_VALUE-6) {
+			segments_ = new TrajectorySegment[length];
+			for (int i = 0; i < length; ++i) {
+				segments_[i] = new TrajectorySegment();
+			}
+		}
+		else {
+			//Trajectory too big
+			segments_ = null;
 		}
 	}
 	
@@ -48,7 +56,7 @@ public class Trajectory implements Serializable {
 			TrajectorySegment segment = get(i);
 			str += segment.x + ", ";
 			str += segment.y + ", ";
-			str += segment.heading + ", ";
+			str += segment.theta + ", ";
 			str += "\n";
 		}
 		return str;
@@ -61,7 +69,7 @@ public class Trajectory implements Serializable {
 			str += "{"
 				+  "\"x\": " + segment.x + ", "
 				+  "\"y\": " + segment.y + ", "
-				+  "\"heading\": " + segment.heading + ", "
+				+  "\"heading\": " + Math.toDegrees(segment.theta) + ", "
 				+  "\"velocity\": " + segment.velocity
 				+  "}" + ((i == length()-1) ? "" : ",");
 		}

@@ -73,7 +73,7 @@ public class TrajectoryGenerator {
 				if (cur_pos_relative <= splineLengths[currentSpline]) {
 					double percentage = splines[currentSpline].getPercentageForDistance(
 									cur_pos_relative);
-					trajectory.get(i).heading = splines[currentSpline].angleAt(percentage);
+					trajectory.get(i).theta = splines[currentSpline].angleAt(percentage);
 					double[] coords = splines[currentSpline].getXandY(percentage);
 					trajectory.get(i).x = coords[0];
 					trajectory.get(i).y = coords[1];
@@ -83,7 +83,7 @@ public class TrajectoryGenerator {
 					currentSplineStartPosition = currentSplineLength;
 					++currentSpline;
 				} else {
-					trajectory.get(i).heading = splines[splines.length - 1].angleAt(1.0);
+					trajectory.get(i).theta = splines[splines.length - 1].angleAt(1.0);
 					double[] coords = splines[splines.length - 1].getXandY(1.0);
 					trajectory.get(i).x = coords[0];
 					trajectory.get(i).y = coords[1];
@@ -173,7 +173,7 @@ public class TrajectoryGenerator {
 		// Don't do any wrapping because we don't know units.
 		double total_heading_change = goalHeading - startHeading;
 		for (int i = 0; i < traj.length(); ++i) {
-			traj.segments_[i].heading = startHeading + total_heading_change
+			traj.segments_[i].theta = startHeading + total_heading_change
 							* (traj.segments_[i].position)
 							/ traj.segments_[traj.length() - 1].position;
 		}
@@ -182,7 +182,7 @@ public class TrajectoryGenerator {
 	}
 
 	private static Trajectory secondOrderFilter(int f1_length, int f2_length, double dt, double start_vel, double max_vel, double total_impulse, int length, IntegrationMethod integration) {
-		if (length <= 0)
+		if (length <= 0 || length > Integer.MAX_VALUE-6)
 			return null;
 		Trajectory traj = new Trajectory(length);
 
