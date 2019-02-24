@@ -12,6 +12,10 @@ public class Intake extends BreakerSubsystem.Actions {
 		IntakeSystems.Arm.down();
 	}
 	
+	public static void climb() {
+		IntakeSystems.Arm.climb();
+	}
+	
 	public static void zero() {
 		IntakeSystems.Encoder.zero();
 	}

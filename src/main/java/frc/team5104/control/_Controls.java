@@ -11,7 +11,7 @@ import frc.team5104.util.Controller.Rumble;
 public class _Controls {
 	//Main 
 	static class Main {
-		//public static final Control _toggleVision = new Control(ControlList.DirectionPadDown);
+		public static final Control _toggleVision = new Control(ControlList.DirectionPadUp);
 		public static final Control _toggleAuto = new Control(ControlList.Menu);
 		
 		public static final Control _idle = new Control(ControlList.List);

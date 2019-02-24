@@ -7,6 +7,7 @@ import frc.team5104.main.Devices;
 import frc.team5104.util.Compressor;
 import frc.team5104.util.CrashLogger;
 import frc.team5104.util.CrashLogger.Crash;
+import frc.team5104.vision.Vision;
 
 /**
  * Handles teleoperation control
@@ -16,6 +17,7 @@ public class BreakerMainController {
 	static DriveController driveController = new DriveController();
 	static HatchController hatchController = new HatchController();
 	static CargoController cargoController = new CargoController();
+	static ClimbController climbController = new ClimbController();
 	static StateController stateController = new StateController();
 	static CompressorController compressorController = new CompressorController();
 	
@@ -31,19 +33,13 @@ public class BreakerMainController {
 			//Hatch
 			hatchController.handle();
 			
-			if (_Controls.Climb._stage1.getPressed())
-				Devices.Climber.stage1.set(
-						Devices.Climber.stage1.get() == DoubleSolenoid.Value.kForward ? 
-								DoubleSolenoid.Value.kReverse : 
-									DoubleSolenoid.Value.kForward
-					);
-			if (_Controls.Climb._stage2.getPressed())
-				Devices.Climber.stage2.set(
-						Devices.Climber.stage2.get() == DoubleSolenoid.Value.kForward ? 
-								DoubleSolenoid.Value.kReverse : 
-									DoubleSolenoid.Value.kForward
-					);
+			//Climb 
+			climbController.handle();
 		}
+		
+		//Vision
+		if (_Controls.Main._toggleVision.getPressed())
+			Vision.toggleState();
 		
 		//Compressor
 		if (currentMode == RobotMode.Teleop || currentMode == RobotMode.Test)

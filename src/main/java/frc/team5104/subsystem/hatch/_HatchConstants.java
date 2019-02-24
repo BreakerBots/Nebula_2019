@@ -9,6 +9,9 @@ public class _HatchConstants {
 	//Lazy Boy
 	public static DoubleSolenoid.Value _lazyBoyUp = DoubleSolenoid.Value.kForward;
 	
+	//Ejector
+	public static DoubleSolenoid.Value _ejectorOut = DoubleSolenoid.Value.kForward;
+	
 	//Modes
 	public static int _intakeModeLength = 1000;
 	public static int _ejectModeLength = 1000;

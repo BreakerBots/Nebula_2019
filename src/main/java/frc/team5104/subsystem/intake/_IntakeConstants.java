@@ -14,4 +14,13 @@ public class _IntakeConstants {
 	//Setpoints
 	public static final double _upPos = _fullyUpDegrees;
 	public static final double _downPos = 90;
+	
+	//Climb
+	public static final double _cP = 1.0;
+	public static final double _cI = 0.0;
+	public static final double _cD = 0.0;
+	public static final double _ctolerance = 1;
+	public static final double _stage0Target = 0;
+	public static final double _stage1Target = 0;
+	public static final double _stage2Target = 0;
 }

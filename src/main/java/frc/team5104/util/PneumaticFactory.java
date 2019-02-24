@@ -1,6 +1,7 @@
 package frc.team5104.util;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Compressor;
 
@@ -39,5 +40,9 @@ public class PneumaticFactory {
 	 */
 	public static Compressor getCompressor(PCM pcm) {
 		return new Compressor(pcm.deviceId);
+	}
+	
+	public static Value getOppositeValue(Value value) {
+		return value == Value.kForward ? Value.kReverse : Value.kForward;
 	}
 }

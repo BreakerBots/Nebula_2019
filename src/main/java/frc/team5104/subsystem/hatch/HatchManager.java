@@ -21,20 +21,20 @@ public class HatchManager extends BreakerSubsystem.Manager {
 			case hold:
 				HatchSystems.Trap.close();
 				HatchSystems.Lazyboy.up();
-				HatchSystems.Ejector.pullOut();
+				HatchSystems.Ejector.retract();
 				break;
 			case idle:
 				HatchSystems.Trap.close();
-				HatchSystems.Ejector.pullOut();
+				HatchSystems.Ejector.retract();
 				break;
 			case eject:
 				HatchSystems.Trap.open();
 				HatchSystems.Lazyboy.up();
 				
 				if (ejectHard)
-					HatchSystems.Ejector.yeet();
+					HatchSystems.Ejector.eject();
 				else
-					HatchSystems.Ejector.pullOut();
+					HatchSystems.Ejector.retract();
 					
 				if (System.currentTimeMillis() > _HatchConstants._ejectModeLength + ejectStartTime)
 					currentState = HatchState.idle;
@@ -42,7 +42,7 @@ public class HatchManager extends BreakerSubsystem.Manager {
 			case intake:
 				HatchSystems.Trap.open();
 				HatchSystems.Lazyboy.up();
-				HatchSystems.Ejector.pullOut();
+				HatchSystems.Ejector.retract();
 				
 				if (System.currentTimeMillis() > _HatchConstants._intakeModeLength + intakeStartTime)
 					currentState = HatchState.idle;

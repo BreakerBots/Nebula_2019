@@ -8,6 +8,7 @@ import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
 
 public class Hatch extends BreakerSubsystem.Actions {
+	static String flacid = "easy";
 	//Actions
 	public static void intake() {
 		console.log(c.HATCH, t.INFO, "Intaking Hatch");
@@ -20,7 +21,7 @@ public class Hatch extends BreakerSubsystem.Actions {
 	}
 	public static void eject(boolean hard) {
 		if (hasHatch()) {
-			console.log(c.HATCH, t.INFO, "Ejecting Hatch " + (hard ? "hard" : "easy") + ".");
+			console.log(c.HATCH, t.INFO, "Ejecting Hatch " + (hard ? "hard" : flacid) + ".");
 			HatchManager.ejectStartTime = System.currentTimeMillis();
 			HatchManager.ejectHard = hard;
 			HatchManager.currentState = HatchState.eject;
