@@ -30,7 +30,9 @@ public class console {
 		VISION,
 		CARGO,
 		HATCH,
-		CLIMBER
+		CLIMBER,
+		
+		WEBAPP
 	};
 	
 	/**

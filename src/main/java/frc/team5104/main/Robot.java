@@ -13,6 +13,7 @@ import frc.team5104.util.CSV;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.VisionManager;
 import frc.team5104.vision.VisionMovement;
+import frc.team5104.webapp.Tuner;
 import frc.team5104.superstructure.cargo.CargoManager;
 
 /**
@@ -25,6 +26,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 			 new HatchManager(),
 			 new CargoManager()
 		);
+		Tuner.init();
 	}
 	
 	//Main

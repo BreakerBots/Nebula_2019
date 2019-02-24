@@ -15,6 +15,7 @@ import frc.team5104.util.CSV.CSVLoggableObject;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
 import frc.team5104.vision.VisionManager;
+import frc.team5104.webapp.Webapp;
 
 public class BreakerRobotController extends BreakerRobotControllerBase {
 	//Modes
@@ -39,6 +40,9 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 		robot = new Robot();
 		
 		HAL.observeUserProgramStarting();
+		
+		//Start Web App
+		Webapp.init();
 		
 		//Initialize Vision
 		VisionManager.init();
