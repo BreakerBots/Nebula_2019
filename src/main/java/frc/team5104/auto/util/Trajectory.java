@@ -69,7 +69,7 @@ public class Trajectory implements Serializable {
 			str += "{"
 				+  "\"x\": " + segment.x + ", "
 				+  "\"y\": " + segment.y + ", "
-				+  "\"heading\": " + Math.toDegrees(segment.theta) + ", "
+				+  "\"heading\": " + segment.heading() + ", "
 				+  "\"velocity\": " + segment.velocity
 				+  "}" + ((i == length()-1) ? "" : ",");
 		}

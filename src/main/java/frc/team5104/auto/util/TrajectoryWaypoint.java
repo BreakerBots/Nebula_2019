@@ -11,7 +11,7 @@ public class TrajectoryWaypoint {
 	/**
 	 * Creates a new waypoint from specific parameters.
 	 * @param x The x (forward) position of the robot, relative to the start.
-	 * @param y The y (sidways) position of the robot, relative to the start.
+	 * @param y The y (sideways) position of the robot, relative to the start.
 	 * @param heading The angle of the robot in degrees
 	 */
 	public TrajectoryWaypoint(double x, double y, double heading) {

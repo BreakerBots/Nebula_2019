@@ -51,8 +51,8 @@ public class BreakerTrajectoryFollower {
 		double w_d = calcW_d();
 
 		//Get Linear and Angular Velocities
-		double v = calcVel(current.x, current.y, current.heading, current.velocity, w_d);		   //Linear velocity
-		double w = calcAngleVel(current.x, current.y, current.heading, current.velocity, w_d);	  //Angular velocity
+		double v = calcVel(current.x, current.y, current.theta, current.velocity, w_d);
+		double w = calcAngleVel(current.x, current.y, current.theta, current.velocity, w_d);
 
 		//Clamp Angular and Linear Velocities
 		v = BreakerMath.clamp(v, -_AutoConstants._maxVelocity, _AutoConstants._maxVelocity);
@@ -76,7 +76,7 @@ public class BreakerTrajectoryFollower {
 	 * Get the starting robot position in a trajectory (should be 0, 0, 0)
 	 */
 	public RobotPosition getInitRobotPosition() {
-		return new RobotPosition(trajectory.get(0).x, trajectory.get(0).y, trajectory.get(0).heading);
+		return new RobotPosition(trajectory.get(0).x, trajectory.get(0).y, trajectory.get(0).theta);
 	}
 
 	public boolean isFinished() {
@@ -86,8 +86,8 @@ public class BreakerTrajectoryFollower {
 	// -- Calculations -- \\
 	private double calcW_d() {
 		if (trajectoryIndex < trajectory.length()-1) {
-			double lastTheta = trajectory.get(trajectoryIndex).heading;
-			double nextTheta = trajectory.get(trajectoryIndex + 1).heading; 
+			double lastTheta = trajectory.get(trajectoryIndex).theta;
+			double nextTheta = trajectory.get(trajectoryIndex + 1).theta; 
 			return (nextTheta - lastTheta) / trajectory.get(trajectoryIndex).deltaTime;
 		} 
 		else {

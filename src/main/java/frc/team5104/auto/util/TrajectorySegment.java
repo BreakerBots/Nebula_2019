@@ -31,4 +31,8 @@ public class TrajectorySegment implements Serializable {
 				"jerk: "+ jerk + ", " + 
 				"theta: " + theta;
 	}
+	
+	public double heading() {
+		return Math.toDegrees(theta);
+	}
 }
