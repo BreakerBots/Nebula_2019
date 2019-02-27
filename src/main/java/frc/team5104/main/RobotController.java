@@ -2,36 +2,32 @@
 package frc.team5104.main;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import frc.team5104.main.RobotState.RobotMode;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.util.CrashLogger;
 import frc.team5104.util.CrashLogger.Crash;
 import frc.team5104.util.console;
-import frc.team5104.util.CSV.CSVLoggableObject;
 import frc.team5104.util.console.c;
 import frc.team5104.util.console.t;
 import frc.team5104.vision.VisionManager;
 import frc.team5104.webapp.Webapp;
 
-public class BreakerRobotController extends BreakerRobotControllerBase {
+class RobotController extends RobotBase {
 	//Modes
-	public static enum RobotMode { Disabled, Auto, Teleop, Test, Vision; }
-	private static RobotMode currentMode = RobotMode.Disabled;
-	private static RobotMode lastMode = RobotMode.Disabled;
-	public static void setMode(RobotMode mode) { currentMode = mode; }
-	public static RobotMode getMode() { return currentMode; }
+	private RobotMode currentMode = RobotMode.Disabled;
+	private RobotMode lastMode = RobotMode.Disabled;
 	
-	private static BreakerRobot robot;
-	private static final double loopPeriod = 20;
+	private BreakerRobot robot;
+	private RobotState state = RobotState.getInstance();
+	private final double loopPeriod = 20;
 	
-	private static boolean isSandstorm;
-	public static boolean isSandstorm() { return isSandstorm; }
-	
-	//Init
+	//Initialization
 	public void startCompetition() {
 		HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_Iterative);
 		console.sets.create("RobotInit");
@@ -71,19 +67,19 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 	//Main Loop
 	private void loop() {
 		if (isDisabled())
-			setMode(RobotMode.Disabled);
+			state.currentMode = RobotMode.Disabled;
 		
 		if (isAutonomous())
-			isSandstorm = true;
+			state.isSandstorm = true;
 		
 		else if (isEnabled()) {
 			//Forced Through Driver Station
 			if (isTest())
-				setMode(RobotMode.Test);
+				state.currentMode = RobotMode.Test;
 			
 			//Default to Teleop
-			else if (currentMode == RobotMode.Disabled)
-				setMode(RobotMode.Teleop);
+			else if (state.currentMode == RobotMode.Disabled)
+				state.currentMode = RobotMode.Teleop;
 		}
 		
 		//Handle Modes
@@ -167,11 +163,9 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 			if (lastMode != currentMode) {
 				if (currentMode == RobotMode.Disabled) {
 					robot.mainDisabled();
-					BreakerRobot.enabled = false;
 				}
 				else if (lastMode == RobotMode.Disabled) {
 					robot.mainEnabled();
-					BreakerRobot.enabled = true;
 				}
 				LiveWindow.setEnabled(currentMode == RobotMode.Disabled);
 				lastMode = currentMode;
@@ -199,9 +193,7 @@ public class BreakerRobotController extends BreakerRobotControllerBase {
 	 * <br> - All Enable/Disable Functions are called before the corresponding loop function
 	 * <br> - Main Functions are called last (teleop, test, auto are before)
 	 */
-	public static abstract class BreakerRobot {
-		public static boolean enabled;
-		
+	static abstract class BreakerRobot {
 		public void mainLoop() { }
 		public void mainEnabled() { }
 		public void mainDisabled() { }

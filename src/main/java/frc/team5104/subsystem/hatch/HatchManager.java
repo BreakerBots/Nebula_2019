@@ -1,7 +1,6 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.subsystem.hatch;
 
-import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.BreakerSubsystem;
 
 public class HatchManager extends BreakerSubsystem.Manager {
@@ -52,6 +51,6 @@ public class HatchManager extends BreakerSubsystem.Manager {
 	}
 
 	public void disabled() { }
-	public void enabled(RobotMode mode) { }
+	public void enabled() { }
 	public HatchManager() { }
 }

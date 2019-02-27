@@ -8,8 +8,6 @@ import java.util.ArrayList;
 
 import frc.team5104.util.CrashLogger;
 import frc.team5104.util.CrashLogger.Crash;
-import frc.team5104.util.console;
-import frc.team5104.util.console.t;
 
 public class Tuner {
 	private static ArrayList<TunerRunnable> runnables = new ArrayList<TunerRunnable>();

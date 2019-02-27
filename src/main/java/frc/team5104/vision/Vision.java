@@ -1,8 +1,8 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.vision;
 
-import frc.team5104.main.BreakerRobotController;
-import frc.team5104.main.BreakerRobotController.RobotMode;
+import frc.team5104.main.RobotState;
+import frc.team5104.main.RobotState.RobotMode;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
 import frc.team5104.subsystem.hatch.Hatch;
 import frc.team5104.superstructure.cargo.Cargo;
@@ -38,7 +38,7 @@ public class Vision {
 	 * Runs vision
 	 */
 	public static void runVision(RobotMode exitState, ActionMode exitAction, VisionTarget target) {
-		BreakerRobotController.setMode(RobotMode.Vision);
+		RobotState.setMode(RobotMode.Vision);
 		VisionManager.exitState = exitState;
 		VisionManager.exitAction = exitAction;
 		VisionManager.target = target;

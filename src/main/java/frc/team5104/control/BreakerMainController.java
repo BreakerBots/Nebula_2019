@@ -1,9 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.control;
 
-import frc.team5104.main.BreakerRobotController.RobotMode;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import frc.team5104.main.Devices;
+import frc.team5104.main.RobotState.RobotMode;
 import frc.team5104.util.Compressor;
 import frc.team5104.util.CrashLogger;
 import frc.team5104.util.CrashLogger.Crash;

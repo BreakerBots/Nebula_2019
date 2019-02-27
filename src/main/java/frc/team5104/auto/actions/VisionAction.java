@@ -2,8 +2,8 @@
 package frc.team5104.auto.actions;
 
 import frc.team5104.auto.BreakerPathAction;
-import frc.team5104.main.BreakerRobotController;
-import frc.team5104.main.BreakerRobotController.RobotMode;
+import frc.team5104.main.RobotState;
+import frc.team5104.main.RobotState.RobotMode;
 import frc.team5104.vision.Vision;
 import frc.team5104.vision.VisionMovement;
 
@@ -15,7 +15,7 @@ public class VisionAction extends BreakerPathAction {
     }
 
     public boolean update() {
-    	return BreakerRobotController.getMode() == RobotMode.Auto;
+    	return RobotState.getMode() == RobotMode.Auto;
     }
 
     public void end() {

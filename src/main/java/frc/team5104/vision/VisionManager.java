@@ -1,8 +1,8 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.vision;
 
-import frc.team5104.main.BreakerRobotController;
-import frc.team5104.main.BreakerRobotController.RobotMode;
+import frc.team5104.main.RobotState;
+import frc.team5104.main.RobotState.RobotMode;
 import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.RobotDriveSignal;
 import frc.team5104.util.CrashLogger;
@@ -34,7 +34,7 @@ public class VisionManager {
 	}
 	private static void update() {
 		if (VisionMovement.isFinished()) {
-			BreakerRobotController.setMode(exitState);
+			RobotState.setMode(exitState);
 			Vision.action(exitAction);
 		}
 		else {

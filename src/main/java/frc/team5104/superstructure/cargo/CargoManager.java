@@ -1,7 +1,6 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.superstructure.cargo;
 
-import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.subsystem.chute.ChuteSystems;
@@ -68,7 +67,7 @@ public class CargoManager extends BreakerSubsystem.Manager {
 	}
 
 	public void disabled() { }
-	public void enabled(RobotMode mode) { 
+	public void enabled() { 
 		Chute.BeamAverage = new Buffer(3, false);
 	}
 	public CargoManager() { 

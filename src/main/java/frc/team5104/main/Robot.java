@@ -19,7 +19,7 @@ import frc.team5104.superstructure.cargo.CargoManager;
 /**
  * Fallthrough from <strong>Breaker Robot Controller</strong>
  */
-public class Robot extends BreakerRobotController.BreakerRobot {
+public class Robot extends RobotController.BreakerRobot {
 	public Robot() {
 		BreakerSubsystemManager.throwSubsystems(
 			 new DriveManager(),
@@ -34,7 +34,7 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 		//TODO: ignore enable/disable between sandstorm/teleop
 		console.logFile.start();
 		console.log("Robot Enabled");
-		BreakerSubsystemManager.enabled(BreakerRobotController.getMode());
+		BreakerSubsystemManager.enabled();
 		Odometry.reset();
 		BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
 		CSV.init(new VisionMovement());
@@ -48,11 +48,11 @@ public class Robot extends BreakerRobotController.BreakerRobot {
 	}
 	
 	public void mainLoop() {
-		if (enabled) {
+		if (RobotState.isEnabled()) {
 			BreakerSubsystemManager.handle();
 			Controller.handle();
 		}
-		BreakerMainController.handle(BreakerRobotController.getMode());
+		BreakerMainController.handle(RobotState.getMode());
 		CSV.handle();
 	}
 

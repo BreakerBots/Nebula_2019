@@ -1,7 +1,6 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.subsystem;
 
-import frc.team5104.main.BreakerRobotController.RobotMode;
 import frc.team5104.util.CrashLogger;
 import frc.team5104.util.CrashLogger.Crash;
 
@@ -22,10 +21,10 @@ public class BreakerSubsystemManager {
 	 * CALL when the robot becomes enabled
 	 * @param teleop
 	 */
-	public static void enabled(RobotMode mode) {
+	public static void enabled() {
 		for (BreakerSubsystem.Manager t : targets) {
 			try {
-				t.enabled(mode);
+				t.enabled();
 			} catch (Exception e) {
 				CrashLogger.logCrash(new Crash("main", e));
 			}

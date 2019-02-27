@@ -3,8 +3,6 @@ package frc.team5104.auto.util;
 
 import java.io.Serializable;
 
-import frc.team5104.util.console;
-
 /**
  * A generated or empty trajectory. 
  * Simply contains an array of segments.

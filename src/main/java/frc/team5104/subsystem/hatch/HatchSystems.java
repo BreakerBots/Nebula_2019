@@ -1,7 +1,6 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.subsystem.hatch;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.PneumaticFactory;
