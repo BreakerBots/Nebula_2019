@@ -8,14 +8,15 @@ package frc.team5104.util;
  */
 public class LatchedBoolean {
 	/**
-	 * always: False->True, and True->False activation,
-	 * falseToTrue: only False->True activation,
-	 * trueToFalse: only True->False activation
+	 * The mode for a latched boolean (affects when triggered)<br>
+	 *  - always: False->True, and True->False activation,<br>
+	 *  - rising: only False->True activation,<br>
+	 *  - falling: only True->False activation
 	 */
 	public static enum LatchedBooleanMode {
 		always,
-		falseToTrue,
-		trueToFalse
+		rising,
+		falling
 	}
 	
 	//Class Values
@@ -47,9 +48,9 @@ public class LatchedBoolean {
 		if (currentValue != lastValue) {
 			if (mode == LatchedBooleanMode.always)
 				return true;
-			if (mode == LatchedBooleanMode.falseToTrue && currentValue == true)
+			if (mode == LatchedBooleanMode.rising && currentValue == true)
 				return true;
-			if (mode == LatchedBooleanMode.trueToFalse && currentValue == false)
+			if (mode == LatchedBooleanMode.falling && currentValue == false)
 				return true;
 			lastValue = currentValue;
 		}

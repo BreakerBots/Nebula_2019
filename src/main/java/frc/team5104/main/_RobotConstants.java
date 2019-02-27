@@ -16,7 +16,7 @@ public class _RobotConstants {
 		public static final boolean _OverwriteMatchLogs = false;
 	}
 	
-	//Looper
+	//Loops
 	public static final class Loops {
 		public static final double _odometryHz = 100; //(hz) [Choose]
 		public static final double _robotHz    = 50;  //(hz) [Choose]
