@@ -31,7 +31,7 @@ public class Webapp {
 		try {
 			//Setup Server
 			server = HttpServer.create(new InetSocketAddress(5104), 0);
-			console.log("Hosting Web App");
+			console.log("Hosting Web App at " + server.getAddress());
 			
 			//Web App Urls
 			server.createContext("/", new PageRequestHandler("app.html")); 
