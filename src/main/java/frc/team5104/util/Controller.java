@@ -66,6 +66,10 @@ public class Controller {
 		public double deadzone;
 		private boolean val, lastVal, pressed, released;
 		private long time;
+		private boolean heldEventReturned = false;
+		private int heldEventLength = 600;
+		int doubleClickKilloff = 500, doubleClickIndex = 0;
+		long doubleClickTime;
 		
 		/**
 		 * Creates a control object that can be referenced later.
@@ -106,23 +110,31 @@ public class Controller {
 		public double getAxis() { return controller.handler.getRawAxis(control.slot); }
 		/**Returns true if button is down, Just The Default Button State*/
 		public boolean getHeld() { return val; }
-		/**Returns how long the button has been held down for, if not held down returns 0*/
-		public double getHeldTime() { return val ? ((double)(System.currentTimeMillis() - time))/1000 : 0; }
+		/**Returns how long the button has been held down for (milliseconds), if not held down returns 0*/
+		public double getHeldTime() { return val ? ((double)(System.currentTimeMillis() - time)) : 0; }
 		/**Returns true for one tick if button goes from up to down*/
 		public boolean getPressed() { return pressed; }
 		/**Returns true for one tick if button goes from down to up*/
 		public boolean getReleased() { return released; }
 		/**Returns the time the click lasted for, for one tick when button goes from down to up*/
-		public double getClickTime() { return released ? ((double)(System.currentTimeMillis() - time))/1000 : 0; }
+		public double getClickTime() { return released ? ((double)(System.currentTimeMillis() - time)) : 0; }
 		
-		//TODO: Make an actual listener
-		///**Returns true for one tick if the button has been held for the specified time*/
-		//public boolean getHeldEvent(double time) { return Math.abs(getHeldTime() - time) <= 0.01; }
+		public boolean getHeldEvent() { 
+			boolean temp = (getHeldTime() > heldEventLength) && (!heldEventReturned);
+			if (temp)
+				heldEventReturned = true;
+			return temp; 
+		}
+		
+		public int getDoubleClick() {
+			return doubleClickIndex;
+		}
 		
 		void update() {
 			pressed = false;
 			released = false;
 			
+			//Get Button Values
 			if (control.type == 1)
 				val = controller.handler.getRawButton(control.slot);
 			else if (control.type == 2)
@@ -130,6 +142,7 @@ public class Controller {
 			else if (control.type == 3)
 				val = controller.handler.getPOV() == control.slot;
 				
+			//Pressed/Released
 			if (val != lastVal) {
 				lastVal = val;
 				if (val == true) { 
@@ -137,6 +150,29 @@ public class Controller {
 					time = System.currentTimeMillis(); 
 				}
 				else released = true;
+			}
+			
+			//Held Event
+			if (val == false)
+				heldEventReturned = false;
+			
+			//Double Click
+			doubleClickIndex = 0;
+			if (doubleClickTime != -1 && System.currentTimeMillis() > doubleClickTime + doubleClickKilloff) {
+				//Killoff
+				doubleClickIndex = 1;
+				doubleClickTime = -1;
+			}
+			if (pressed) {
+				//First Click
+				if (doubleClickTime == -1) {
+					doubleClickTime = System.currentTimeMillis();
+				}
+				//Second Click
+				else {
+					doubleClickIndex = 2;
+					doubleClickTime = -1;
+				}
 			}
 		}
 	}
@@ -146,7 +182,7 @@ public class Controller {
 		private static boolean timerRunning = false;
 		public Controllers controller;
 		public boolean hard;
-		public int timeoutMs;
+		public long timeoutMs;
 		public double strength;
 		/**
 		 * Creates a saveable rumble object that can be referenced later.
@@ -160,14 +196,16 @@ public class Controller {
 		 * @param hard If the rumble should be hard (a deeper rumble) or soft (a lighter rumble)
 		 * @param controller The target controller for this rumble.
 		 */
-		public Rumble(double strength, boolean hard, Controllers controller) { this(strength, hard, Integer.MIN_VALUE, controller); }
+		public Rumble(double strength, boolean hard, Controllers controller) { 
+			this(strength, hard, Integer.MIN_VALUE, controller); 
+			}
 		/**
 		 * Creates a saveable rumble object that can be referenced later.
 		 * @param strength (0-1) Perecent strength of the rumble
 		 * @param hard If the rumble should be hard (a deeper rumble) or soft (a lighter rumble)
 		 * @param timeoutMs The time (milliseconds) in which the rumble should automatically stop.
 		 */
-		public Rumble(double strength, boolean hard, int timeoutMs) {
+		public Rumble(double strength, boolean hard, long timeoutMs) {
 			this(strength, hard, timeoutMs, Controllers.Main);
 		}
 		/**
@@ -177,7 +215,7 @@ public class Controller {
 		 * @param timeoutMs The time (milliseconds) in which the rumble should automatically stop.
 		 * @param controller The target controller for this rumble.
 		 */
-		public Rumble(double strength, boolean hard, int timeoutMs, Controllers controller) {
+		public Rumble(double strength, boolean hard, long timeoutMs, Controllers controller) {
 			this.strength = strength;
 			this.hard = hard;
 			this.timeoutMs = timeoutMs;
@@ -189,7 +227,7 @@ public class Controller {
 		 * Starts the rumble (specified in the constructor)
 		 */
 		public void start() {
-			controller.handler.setRumble(hard ? RumbleType.kRightRumble : RumbleType.kLeftRumble, strength);
+			controller.handler.setRumble(hard ? RumbleType.kLeftRumble : RumbleType.kRightRumble, strength);
 			if (timeoutMs != Integer.MIN_VALUE) {
 				timerTarget = System.currentTimeMillis() + timeoutMs; 
 				timerRunning = true;
@@ -197,8 +235,8 @@ public class Controller {
 		}
 		
 		void update() {
-			if (timerRunning && System.currentTimeMillis() >= timerTarget) { 
-				controller.handler.setRumble(hard ? RumbleType.kRightRumble : RumbleType.kLeftRumble, 0); 
+			if (timerRunning && System.currentTimeMillis() >= timerTarget) {
+				controller.handler.setRumble(hard ? RumbleType.kLeftRumble : RumbleType.kRightRumble, 0); 
 				timerRunning = false;
 			}
 		}

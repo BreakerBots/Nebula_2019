@@ -27,7 +27,7 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 	//Limit Switch (Talon Tach)
 	public static class LimitSwitch {
 		public static boolean isHit() { 
-			return Devices.Cargo.rightArm.getSensorCollection().isFwdLimitSwitchClosed(); 
+			return !Devices.Cargo.rightArm.getSensorCollection().isFwdLimitSwitchClosed(); 
 		}
 		static boolean isNotHit() { return !isHit(); }
 	}
