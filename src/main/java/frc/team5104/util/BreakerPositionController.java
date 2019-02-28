@@ -26,7 +26,7 @@ public class BreakerPositionController {
 	public void setTolerance(double tolerance) { this.tolerance = tolerance; }
 	
 	public double update(double current) {
-		if (lastPoint != Double.POSITIVE_INFINITY) {
+		if (lastPoint != Double.NaN) {
 			err = target - current;
 			deriv = current - lastPoint;
 			integ = integ + err;
@@ -44,6 +44,6 @@ public class BreakerPositionController {
 		err = 0;
 		deriv = 0;
 		integ = 0;
-		lastPoint = Double.POSITIVE_INFINITY;
+		lastPoint = Double.NaN;
 	}
 }

@@ -6,12 +6,12 @@ import frc.team5104.subsystem.climber.ClimberManager.ClimberStage;
 import frc.team5104.subsystem.climber.ClimberManager.ClimberState;
 
 public class Climber extends BreakerSubsystem.Actions {
-	public static void Climb() {
+	public static void climb() {
 		ClimberManager.currentState = ClimberState.climbing;
-		ClimberManager.currentStage = ClimberStage.stage0;
+		ClimberManager.currentStage = ClimberStage.initial;
 	}
 	
-	public static void StopClimb() {
+	public static void endClimb() {
 		ClimberManager.currentState = ClimberState.idle;
 	}
 	
@@ -21,11 +21,5 @@ public class Climber extends BreakerSubsystem.Actions {
 	
 	public static ClimberManager.ClimberStage getStage() {
 		return ClimberManager.currentStage;
-	}
-	
-	public static void nextStage() {
-		if(ClimberManager.currentStage == ClimberStage.stage0) ClimberManager.currentStage = ClimberStage.stage1;
-		else if(ClimberManager.currentStage == ClimberStage.stage1) ClimberManager.currentStage = ClimberStage.stage2;
-		else StopClimb();
 	}
 }

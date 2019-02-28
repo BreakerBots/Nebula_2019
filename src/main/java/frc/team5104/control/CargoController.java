@@ -1,8 +1,8 @@
 package frc.team5104.control;
 
 import frc.team5104.control.BreakerMainController.BreakerController;
+import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.chute.Chute;
-import frc.team5104.subsystem.intake.IntakeSystems;
 import frc.team5104.superstructure.cargo.Cargo;
 
 class CargoController extends BreakerController {
@@ -17,9 +17,11 @@ class CargoController extends BreakerController {
 			Cargo.eject();
 		
 		//Manual Arm
-		double _armVoltage = _Controls.Cargo._armManual.getAxis() * 10;
-		if(IntakeSystems.LimitSwitch.isHit() && _armVoltage < 0) _armVoltage = 0;
-		IntakeSystems.Arm.setVoltage(_armVoltage);
+		if (_Controls.Cargo._manualArm) {
+			double _armVoltage = _Controls.Cargo._armManual.getAxis() * 10;
+			if(ArmSystems.LimitSwitch.isHit() && _armVoltage < 0) _armVoltage = 0;
+			ArmSystems.setVoltage(_armVoltage);
+		}
 		
 		//Trapdoor
 		if (_Controls.Cargo._trapdoorUp.getPressed())

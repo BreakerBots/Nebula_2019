@@ -15,9 +15,9 @@ public class _Controls {
 		public static final Control _toggleAuto = new Control(ControlList.Menu);
 		
 		public static final Control _idle = new Control(ControlList.List);
-
-		public static final Control _toggleCompressor = new Control(ControlList.DirectionPadLeft );
-		public static final boolean _automaticCompressor = false;
+		
+		public static boolean _manualCompressor = true;
+		public static final Control _toggleCompressor = new Control(ControlList.DirectionPadLeft);
 	}
 	
 	//Drive
@@ -45,12 +45,15 @@ public class _Controls {
 		public static final Control _trapdoorUp = new Control(ControlList.Y);
 		public static final Control _trapdoorDown = new Control(ControlList.A);
 		
+		public static boolean _manualArm = true;
 		public static final Control _armManual = new Control(ControlList.RightJoystickY);
 	}
 	
 	//Climb
 	static class Climb {
-		//public static final Control _climb = new Control(ControlList.?);
+		public static final Control _climb = new Control(ControlList.DirectionPadRight);
+		
+		public static boolean _manualClimb = true;
 		public static final Control _stage1 = new Control(ControlList.DirectionPadRight);
 		public static final Control _stage2 = new Control(ControlList.DirectionPadDown);
 	}

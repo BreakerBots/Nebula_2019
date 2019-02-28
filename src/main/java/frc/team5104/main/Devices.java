@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.team5104.subsystem.arm._ArmConstants;
 import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.util.PneumaticFactory;
 import frc.team5104.util.SensorFactory;
@@ -34,8 +35,8 @@ public class Devices {
 	
 	//Cargo
 	public static class Cargo {
-		public static TalonSRX leftArm = TalonFactory.getTalon(21);
-		public static TalonSRX rightArm = TalonFactory.getTalon(22);
+		public static TalonSRX leftArm = TalonFactory.getTalon(21, new TalonSettings(NeutralMode.Brake, true, _ArmConstants._currentLimit, true));
+		public static TalonSRX rightArm = TalonFactory.getTalon(22, new TalonSettings(NeutralMode.Brake, false, _ArmConstants._currentLimit, true));
 		
 		public static DoubleSolenoid trapdoor = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 2, 3);
 		

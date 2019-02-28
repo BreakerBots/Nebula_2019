@@ -2,10 +2,10 @@
 package frc.team5104.superstructure.cargo;
 
 import frc.team5104.subsystem.BreakerSubsystem;
+import frc.team5104.subsystem.arm.Arm;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.subsystem.chute.ChuteSystems;
 import frc.team5104.subsystem.climber.Climber;
-import frc.team5104.subsystem.intake.Intake;
 import frc.team5104.util.BezierCurve;
 import frc.team5104.util.BezierCurveInterpolator;
 import frc.team5104.util.Buffer;
@@ -18,7 +18,7 @@ public class CargoManager extends BreakerSubsystem.Manager {
 	}
 	public static CargoState currentState = CargoState.idle;
 	static long ejectStart = System.currentTimeMillis();
-	BezierCurveInterpolator beltInterpolator = new BezierCurveInterpolator(0.05, new BezierCurve(0.4, 0.2, 0.0, 1));
+	public static BezierCurveInterpolator beltInterpolator = new BezierCurveInterpolator(0.05, new BezierCurve(0.4, 0.2, 0.0, 1));
 	
 	public void update() {
 		if(Climber.isClimbing()) currentState = CargoState.idle;
@@ -28,7 +28,7 @@ public class CargoManager extends BreakerSubsystem.Manager {
 		switch (currentState) {
 			//Eject Mode
 			case eject:
-				Intake.up();
+				Arm.idle();
 				
 				beltInterpolator.setSetpoint(_CargoConstants._ejectSpeed);
 				CargoSystems.Belt.set(beltInterpolator.update());
@@ -41,7 +41,7 @@ public class CargoManager extends BreakerSubsystem.Manager {
 				
 			//Intake Mode
 			case intake:
-				Intake.down();
+				Arm.intake();
 				
 				beltInterpolator.deltaTime = 0.05;
 				beltInterpolator.setSetpoint(_CargoConstants._intakeSpeed);
@@ -55,7 +55,7 @@ public class CargoManager extends BreakerSubsystem.Manager {
 			//Idle Mode
 			case idle:
 				if(!Climber.isClimbing()) {
-					Intake.up();
+					Arm.idle();
 					
 					beltInterpolator.deltaTime = 0.25;
 					beltInterpolator.setSetpoint(0);
