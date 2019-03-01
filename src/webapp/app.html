@@ -126,11 +126,15 @@
 
 				<!--Output (Right Side)-->
 				<div id="outputBox">
-					<div id="chart_div" style="height: 100%; width: 100%;"></div>
+					<div style="width: calc(100% - 10px); height: calc(100% - 30px); position: relative;">
+						<canvas id="tunerChart"></canvas>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<script src="resources/other/chart.js"></script>
 
 	<!--Javascript-->
 	<script>
@@ -139,7 +143,6 @@
 		var _error = "#e7880a";
 	</script>
 	<script>mdc.autoInit();</script>
-	<script type="text/javascript" src="resources/other/charts.js"></script>
 	<script src="resources/js/tab.js"></script>
 	<script src="resources/js/trajectory.js"></script>
 	<script src="resources/js/tuner.js"></script>

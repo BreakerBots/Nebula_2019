@@ -1,58 +1,59 @@
 //Tuner.js
 
 // -- Tuner UI -- \\
+const outputRefreshRateMs = 50;
+const chartMaxLengthMs = 10000;
+
 function clearTuner() {
 	document.querySelector("#tuner-container > #inputBox").innerHTML = "";
 	clearChart();
 }
-google.charts.load('current', { 'packages': ['corechart'] });
-google.charts.setOnLoadCallback(initChart);
-var chartData, chart, chartIndex = 0, chartDefaultValues;
-const chartMaxLengthMs = 10000;
-const outputRefreshRateMs = 50;
-const chartOptions = {
-	series: { 1: { curveType: 'function' } }
-};
-function initChart() {
-	chartData = new google.visualization.DataTable();
-	chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-}
+var chartIndex = 0;
+var chart, chartConfig;
 function clearChart() {
-	if (chart) {
-		chart.clearChart();
-		chartData = new google.visualization.DataTable();
-		chartData.addColumn('number', 'x');
-		chartIndex = 0;
-	}
-	else setTimeout(clearChart, 500);
-}
-function initTunerOutput(names, values) {
-	if (chart) {
-		for (var i = 0; i < names.length; i++) {
-			chartData.addColumn('number', names[i]);
+	chartConfig = {
+		type: 'line', data: { labels: [], datasets: [] },
+		options: {
+			responsive: true,
+			scales: {
+				xAxes: [{ display: true, scaleLabel: { display: true, labelString: 'Time' } }],
+				yAxes: [{ display: true, scaleLabel: { display: true, labelString: 'Value' } }]
+			},
+			cubicInterpolationMode: 'monotone',
+			elements: { point: { radius: 0 } },
+			animation: { duration: 50 }
 		}
-		chartData.addRow(values);
-		chart.draw(chartData, chartOptions);
-		chartDefaultValues = values;
-	}
-	else {
-		setTimeout(function () {
-			initTunerOutput(names, values);
-		}, 500);
+	};
+	chart = new Chart(document.querySelector("#tunerChart").getContext('2d'), chartConfig);
+} clearChart();
+function initTunerOutput(names, values) {
+	const colors = ['red', 'gold', 'green', 'blue', 'purple', 'orange', 'yellow', 'black', 'grey', 'pink'];
+	for (var t = 0; t < names.length; t++) {
+		var nd = {
+			label: names[t],
+			backgroundColor: colors[t],
+			borderColor: colors[t],
+			data: [],
+			fill: false
+		};
+
+		for (var i = 0; i < chartConfig.data.labels.length; i++) {
+			nd.data.push(values[t]);
+		}
+
+		chartConfig.data.datasets.push(nd);
+		chart.update();
 	}
 }
 function updateTunerOutput(values) {
-	try {
-		if (chart) {
-			chartData.addRow(values);
-
-			if (chartData.wg.length > (chartMaxLengthMs / outputRefreshRateMs))
-				chartData.removeRow(0);
-
-			chart.draw(chartData, chartOptions);
-		}
-	}
-	catch (e) { }
+	var rm = chartConfig.data.labels.length-1 > (chartMaxLengthMs / outputRefreshRateMs);
+	chartConfig.data.labels.push(chartIndex.toFixed(2));
+	if (rm) chartConfig.data.labels.shift();
+	chartConfig.data.datasets.forEach(function (dataset, i) {
+		dataset.data.push(values[i]);
+		if (rm) dataset.data.shift();
+	});
+	chart.update();
 }
 const tunerInputElementUI = `
 <div class="mdc-text-field mdc-text-field--outlined" data-mdc-auto-init="MDCTextField">
@@ -104,7 +105,7 @@ function tunerUpdate() {
 		//Data Recieved
 		if (this.status == 200) {
 			var data = JSON.parse(this.responseText);
-			var values = [chartIndex];
+			var values = [];
 			for (var i = 0; i < Object.keys(data).length; i++) {
 				values.push(data[Object.keys(data)[i]]);
 			}
