@@ -5,6 +5,7 @@ import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.control.BreakerMainController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
+import frc.team5104.subsystem.arm.ArmManager;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.hatch.HatchManager;
@@ -24,7 +25,8 @@ public class Robot extends RobotController.BreakerRobot {
 		BreakerSubsystemManager.throwSubsystems(
 			 new DriveManager(),
 			 new HatchManager(),
-			 new CargoManager()
+			 new CargoManager(), 
+			 new ArmManager()
 		);
 		Tuner.init();
 	}

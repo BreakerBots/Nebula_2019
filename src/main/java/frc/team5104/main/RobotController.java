@@ -185,6 +185,10 @@ class RobotController extends RobotBase {
 		LiveWindow.updateValues();
 	}
 	
+	public static void main(String[] args) {
+		RobotController.startRobot(RobotController::new);
+	}
+	
 	//Child Class
 	/**
 	 * The Main Robot Interface. Called by this, Breaker Robot Controller

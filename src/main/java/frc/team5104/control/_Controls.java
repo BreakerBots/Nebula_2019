@@ -45,7 +45,7 @@ public class _Controls {
 		public static final Control _trapdoorUp = new Control(ControlList.Y);
 		public static final Control _trapdoorDown = new Control(ControlList.A);
 		
-		public static boolean _manualArm = true;
+		public static boolean _manualArm = false;
 		public static final Control _armManual = new Control(ControlList.RightJoystickY);
 	}
 	

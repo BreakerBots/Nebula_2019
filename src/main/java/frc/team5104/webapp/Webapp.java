@@ -30,10 +30,10 @@ public class Webapp {
 	public static boolean init() {
 		try {
 			//Setup Server
-			server = HttpServer.create(new InetSocketAddress(5104), 0);
-			console.log("Hosting Web App at " + server.getAddress());
+			int port = 5804; //has to be between 5800-5810 (5800,5801 for limelight)
+			server = HttpServer.create(new InetSocketAddress(port), 0);
 			
-			//Web App Urls
+			//Web App URLs	
 			server.createContext("/", new PageRequestHandler("app.html")); 
 			server.createContext("/resources/", new FilesRequestHandler());
 			
@@ -44,6 +44,8 @@ public class Webapp {
 			//Start Server
 			server.setExecutor(null);
 			server.start();
+			
+			console.log("Hosting Web App at 10.51.4.2:" + port);
 			
 			return true;
 		} catch (Exception e) { 
@@ -56,7 +58,7 @@ public class Webapp {
 		public String fileUrl;
 		public String contentType;
 		String getBaseUrl() {
-			String u = System.getProperty("user.dir") + "\\src\\webapp\\";
+			String u = "/home/lvuser/webapp/";
 			return u;
 		}
 		
@@ -70,7 +72,7 @@ public class Webapp {
 		}
 		
 		void readSendFile(HttpExchange t, String fileUrl, String contentType) throws IOException {
-			String finalUrl = getBaseUrl() + '\\' + fileUrl;
+			String finalUrl = getBaseUrl() + fileUrl;
 			
 			//Header
 			Headers h = t.getResponseHeaders();

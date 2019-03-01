@@ -4,9 +4,11 @@ package frc.team5104.subsystem.arm;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
+import frc.team5104.util.console;
 
 public class ArmSystems extends BreakerSubsystem.Systems {
 	static void applyForce(double force) {
+		if (ArmSystems.LimitSwitch.isHit() && force < 0) force = 0;
 		setVoltage(force);
 	}
 	

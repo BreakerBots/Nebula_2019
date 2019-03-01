@@ -5,8 +5,9 @@ import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.climber.Climber;
 import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.util.BreakerPositionController;
+import frc.team5104.util.CSV.CSVLoggable;
 
-public class ArmManager extends BreakerSubsystem.Manager {
+public class ArmManager extends BreakerSubsystem.Manager  implements CSVLoggable {
 
 	public static enum ArmState {
 		idle,
@@ -85,4 +86,19 @@ public class ArmManager extends BreakerSubsystem.Manager {
 		climbController.reset();
 	}
 	public void disabled() { }
+
+	@Override
+	public String[] getCSVHeader() {
+		return new String[] {"Current", "Target"};
+	}
+
+	@Override
+	public String[] getCSVData() {
+		return new String[] {"" + ArmSystems.Encoder.getDegrees(), "" + armController.target};
+	}
+
+	@Override
+	public String getCSVName() {
+		return "Arm";
+	}
 }

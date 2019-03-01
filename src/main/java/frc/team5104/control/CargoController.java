@@ -4,6 +4,7 @@ import frc.team5104.control.BreakerMainController.BreakerController;
 import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.superstructure.cargo.Cargo;
+import frc.team5104.util.console;
 
 class CargoController extends BreakerController {
 	void update() {
@@ -18,8 +19,8 @@ class CargoController extends BreakerController {
 		
 		//Manual Arm
 		if (_Controls.Cargo._manualArm) {
-			double _armVoltage = _Controls.Cargo._armManual.getAxis() * 10;
-			if(ArmSystems.LimitSwitch.isHit() && _armVoltage < 0) _armVoltage = 0;
+			double _armVoltage = -_Controls.Cargo._armManual.getAxis() * 10;
+			if (ArmSystems.LimitSwitch.isHit() && _armVoltage < 0) _armVoltage = 0;
 			ArmSystems.setVoltage(_armVoltage);
 		}
 		

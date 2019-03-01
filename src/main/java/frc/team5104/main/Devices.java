@@ -35,12 +35,12 @@ public class Devices {
 	
 	//Cargo
 	public static class Cargo {
-		public static TalonSRX leftArm = TalonFactory.getTalon(21, new TalonSettings(NeutralMode.Brake, true, _ArmConstants._currentLimit, true));
-		public static TalonSRX rightArm = TalonFactory.getTalon(22, new TalonSettings(NeutralMode.Brake, false, _ArmConstants._currentLimit, true));
+		public static TalonSRX leftArm = TalonFactory.getTalon(21, new TalonSettings(NeutralMode.Brake, false, _ArmConstants._currentLimit, true));
+		public static TalonSRX rightArm = TalonFactory.getTalon(22, new TalonSettings(NeutralMode.Brake, true, _ArmConstants._currentLimit, true));
 		
 		public static DoubleSolenoid trapdoor = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 2, 3);
 		
-		public static DigitalInput photoelectricSensor = SensorFactory.getDigitalInput(_RobotConstants._isCompBot ? 9 : 0);
+		public static DigitalInput photoelectricSensor = SensorFactory.getDigitalInput(9);
 		
 		public static TalonSRX belt = TalonFactory.getTalon(31);
 	}

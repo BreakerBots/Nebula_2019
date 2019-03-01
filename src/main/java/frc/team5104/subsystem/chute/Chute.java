@@ -5,7 +5,7 @@ import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.Buffer;
 
 public class Chute extends BreakerSubsystem.Actions {
-	public static Buffer BeamAverage;
+	public static Buffer BeamAverage = new Buffer(3, false);
 
 	public static void trapdoorUp() {
 		ChuteSystems.Trapdoor.up();
