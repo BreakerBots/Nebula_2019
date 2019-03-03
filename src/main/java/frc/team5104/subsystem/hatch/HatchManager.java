@@ -5,10 +5,10 @@ import frc.team5104.subsystem.BreakerSubsystem;
 
 public class HatchManager extends BreakerSubsystem.Manager {
 	public static enum HatchState {
-		intake,//Trap: open, Lazyboy: up, Ejector: in
-		idle,  //Trap: open, Lazyboy: either, Ejector: in
-		hold,  //Trap: closed, Lazyboy: up, Ejector: in
-		eject  //Trap: open, Lazyboy: up, Ejector: either
+		intake,//Trap: in, Lazyboy: up, Ejector: in
+		idle,  //Trap: in, Lazyboy: either, Ejector: in
+		hold,  //Trap: out, Lazyboy: up, Ejector: in
+		eject  //Trap: in, Lazyboy: up, Ejector: either
 	}
 	static HatchState currentState = HatchState.idle;
 	static long ejectStartTime = System.currentTimeMillis();
@@ -18,16 +18,17 @@ public class HatchManager extends BreakerSubsystem.Manager {
 	public void update() {
 		switch (currentState) {
 			case hold:
-				HatchSystems.Trap.close();
+				HatchSystems.Trap.out();
 				HatchSystems.Lazyboy.up();
 				HatchSystems.Ejector.retract();
 				break;
 			case idle:
-				HatchSystems.Trap.close();
+				HatchSystems.Trap.in();
+				HatchSystems.Lazyboy.back();
 				HatchSystems.Ejector.retract();
 				break;
 			case eject:
-				HatchSystems.Trap.open();
+				HatchSystems.Trap.in();
 				HatchSystems.Lazyboy.up();
 				
 				if (ejectHard)
@@ -39,12 +40,12 @@ public class HatchManager extends BreakerSubsystem.Manager {
 					currentState = HatchState.idle;
 				break;
 			case intake:
-				HatchSystems.Trap.open();
+				HatchSystems.Trap.in();
 				HatchSystems.Lazyboy.up();
 				HatchSystems.Ejector.retract();
 				
 				if (System.currentTimeMillis() > _HatchConstants._intakeModeLength + intakeStartTime)
-					currentState = HatchState.idle;
+					currentState = HatchState.hold;
 			default:
 				break;
 		}

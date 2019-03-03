@@ -4,8 +4,9 @@ package frc.team5104.vision;
 import frc.team5104.main.RobotState;
 import frc.team5104.main.RobotState.RobotMode;
 import frc.team5104.subsystem.drive.Drive;
-import frc.team5104.subsystem.drive.RobotDriveSignal;
+import frc.team5104.subsystem.drive.DriveSignal;
 import frc.team5104.util.CrashLogger;
+import frc.team5104.util.console;
 import frc.team5104.util.CrashLogger.Crash;
 import frc.team5104.vision.VisionMovement.VisionTarget;
 
@@ -38,7 +39,7 @@ public class VisionManager {
 			Vision.action(exitAction);
 		}
 		else {
-			RobotDriveSignal signal = Vision.getNextSignal();
+			DriveSignal signal = Vision.getNextSignal();
 			Drive.applyMotorMinSpeedRough(signal);
 			Drive.set(signal);
 		}

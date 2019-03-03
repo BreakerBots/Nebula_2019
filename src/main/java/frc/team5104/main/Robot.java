@@ -1,21 +1,27 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.main;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.control.BreakerMainController;
+import frc.team5104.control.DriveController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.arm.ArmManager;
+import frc.team5104.subsystem.arm._ArmConstants;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
+import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.subsystem.hatch.HatchManager;
 import frc.team5104.util.console;
 import frc.team5104.util.CSV;
 import frc.team5104.util.Controller;
+import frc.team5104.vision.Vision;
 import frc.team5104.vision.VisionManager;
 import frc.team5104.vision.VisionMovement;
 import frc.team5104.webapp.Tuner;
 import frc.team5104.superstructure.cargo.CargoManager;
+import frc.team5104.superstructure.cargo._CargoConstants;
 
 /**
  * Fallthrough from <strong>Breaker Robot Controller</strong>
@@ -25,10 +31,11 @@ public class Robot extends RobotController.BreakerRobot {
 		BreakerSubsystemManager.throwSubsystems(
 			 new DriveManager(),
 			 new HatchManager(),
-			 new CargoManager(), 
+			 new CargoManager(),
 			 new ArmManager()
 		);
-		Tuner.init();
+		Tuner.init(_ArmConstants.class, _CargoConstants.class, DriveController.class, _DriveConstants.class);
+		CameraServer.getInstance().startAutomaticCapture();
 	}
 	
 	//Main
@@ -39,7 +46,8 @@ public class Robot extends RobotController.BreakerRobot {
 		BreakerSubsystemManager.enabled();
 		Odometry.reset();
 		BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
-		CSV.init(new VisionMovement());
+		CSV.init(null);
+		Vision.init();
 	}
 	public void mainDisabled() {
 		//TODO: ignore enable/disable between sandstorm/teleop

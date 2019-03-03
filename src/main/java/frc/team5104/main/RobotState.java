@@ -1,5 +1,7 @@
 package frc.team5104.main;
 
+import frc.team5104.util.console;
+
 public class RobotState {
 	
 	//State Machine

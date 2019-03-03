@@ -30,7 +30,7 @@ public class DriveCharacterization {
 		double motorVolts = battery * Math.abs(lastSpeed);
 
 		double speed = InputTable.getDouble(0);
-		Drive.set(new RobotDriveSignal(speed, speed));
+		Drive.set(new DriveSignal(speed, speed));
 		lastSpeed = speed;
 
 		data[0] = Timer.getFPGATimestamp();

@@ -2,6 +2,7 @@
 package frc.team5104.subsystem.drive;
 
 import frc.team5104.subsystem.BreakerSubsystem;
+import frc.team5104.webapp.Tuner.tunerInput;
 
 public class _DriveConstants extends BreakerSubsystem.Constants {
 	//Measurements
@@ -14,10 +15,10 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	public static final double _rightAccountReverse = 1.000; //(TalSpeed) [Measure] Multiple the right motor by (For Driving Straight)
 	public static final double _leftAccountForward  = 1.000; //(TalSpeed) [Measure] Multiple the left  motor by (For Driving Straight)
 	public static final double _leftAccountReverse  = 1.000; //(TalSpeed) [Measure] Multiple the left  motor by (For Driving Straight)
-	public static final double _minSpeedHighGearForward = 0.061;
-	public static final double _minSpeedHighGearTurn = 0.22;
-	public static final double _minSpeedLowGearForward = 0.065;
-	public static final double _minSpeedLowGearTurn = 0.225;
+	public static final double _minSpeedHighGearForward = 0.08;
+	public static final double _minSpeedHighGearTurn = 0.20;
+	public static final double _minSpeedLowGearForward = 0.04;
+	public static final double _minSpeedLowGearTurn = 0.10;
 	
 	//Gyro
 	public static final double _gyroAngle = 0;   //(Degrees) [Measure] Yaw Angle of Gyro (Athena is 65)
@@ -26,9 +27,12 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	public static final int _currentLimit = 60; //(Amps) [Measure (<250, or ~240/#ofmotorsinurdrivetrain)] The current limit of the drive motors
 	
 	//Speed Control (Regular)
-	public static final double _kP = 0.285;
-	public static final double _kI = 0;
-	public static final double _kD = 12.0;
+	@tunerInput
+	public static double _kP = 0.285;
+	@tunerInput
+	public static double _kI = 0;
+	@tunerInput
+	public static double _kD = 12.0;
 	
 	//Speed Control (Feed Forward)
 	public static final double _kF = 0;

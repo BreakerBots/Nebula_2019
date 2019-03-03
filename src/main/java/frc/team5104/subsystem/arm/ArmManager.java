@@ -1,21 +1,23 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.subsystem.arm;
 
+import frc.team5104.control._Controls;
+import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.climber.Climber;
 import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.util.BreakerPositionController;
-import frc.team5104.util.CSV.CSVLoggable;
 
-public class ArmManager extends BreakerSubsystem.Manager  implements CSVLoggable {
+public class ArmManager extends BreakerSubsystem.Manager {
 
 	public static enum ArmState {
+		calibrating,
 		idle,
 		intakeDown,
 		intakeHold,
 		climbing
 	}
-	static ArmState currentState = ArmState.idle;
+	static ArmState currentState = ArmState.calibrating;
 	
 	public static BreakerPositionController armController = new BreakerPositionController
 			(_ArmConstants._armP, _ArmConstants._armI, _ArmConstants._armD, _ArmConstants._armTolerance);
@@ -25,6 +27,12 @@ public class ArmManager extends BreakerSubsystem.Manager  implements CSVLoggable
 	public void update() {
 		if (Climber.isClimbing())
 			currentState = ArmState.climbing;
+		
+		if (ArmSystems.LimitSwitch.isHit())
+			ArmSystems.Encoder.zero();
+		
+		if (_Controls.Cargo._manualArm)
+			return;
 		
 		switch (currentState) {
 			//Idle
@@ -78,27 +86,21 @@ public class ArmManager extends BreakerSubsystem.Manager  implements CSVLoggable
 						break;
 				} 
 				break;
+			case calibrating:
+				if (ArmSystems.LimitSwitch.isHit()) {
+					currentState = ArmState.idle;
+					ArmSystems.Encoder.zero();
+				}
+				else {
+					ArmSystems.applyForce(-4);
+				}
 		}
 	}
 	
 	public void enabled() {
 		armController.reset();
 		climbController.reset();
+		currentState = ArmState.calibrating;
 	}
 	public void disabled() { }
-
-	@Override
-	public String[] getCSVHeader() {
-		return new String[] {"Current", "Target"};
-	}
-
-	@Override
-	public String[] getCSVData() {
-		return new String[] {"" + ArmSystems.Encoder.getDegrees(), "" + armController.target};
-	}
-
-	@Override
-	public String getCSVName() {
-		return "Arm";
-	}
 }

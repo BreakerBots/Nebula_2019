@@ -11,22 +11,22 @@ import frc.team5104.util.Controller.Rumble;
 public class _Controls {
 	//Main 
 	static class Main {
-		public static final Control _toggleVision = new Control(ControlList.DirectionPadUp);
-		public static final Control _toggleAuto = new Control(ControlList.Menu);
+		static final Control _toggleVision = new Control(ControlList.DirectionPadUp);
+		static final Control _toggleAuto = new Control(ControlList.Menu);
 		
-		public static final Control _idle = new Control(ControlList.List);
+		static final Control _idle = new Control(ControlList.List);
 		
-		public static boolean _manualCompressor = true;
-		public static final Control _toggleCompressor = new Control(ControlList.DirectionPadLeft);
+		static boolean _manualCompressor = true;
+		static final Control _toggleCompressor = new Control(ControlList.DirectionPadLeft);
 	}
 	
 	//Drive
 	public static class Drive {
-		public static final Control _turn = new Control(ControlList.LeftJoystickX);
-		public static final Control _forward = new Control(ControlList.RightTrigger);
-		public static final Control _reverse = new Control(ControlList.LeftTrigger);
+		static final Control _turn = new Control(ControlList.LeftJoystickX);
+		static final Control _forward = new Control(ControlList.RightTrigger);
+		static final Control _reverse = new Control(ControlList.LeftTrigger);
 		
-		public static final Control _shift = new Control(ControlList.LeftJoystickPress);
+		static final Control _shift = new Control(ControlList.LeftJoystickPress);
 		public static final Rumble _shiftRumbleLow = new Rumble(0.25, false, 200);
 		public static final Rumble _shiftRumbleHigh = new Rumble(0.75, false, 200);
 		//public static final double _switchDrive = ;
@@ -34,27 +34,27 @@ public class _Controls {
 	
 	//Hatch
 	static class Hatch {
-		public static final Control _intake = new Control(ControlList.LeftBumper);
-		public static final Control _eject = new Control(ControlList.RightBumper);
+		static final Control _intake = new Control(ControlList.LeftBumper);
+		static final Control _eject = new Control(ControlList.RightBumper);
 	}
 	
 	//Cargo
-	static class Cargo {
-		public static final Control _intake = new Control(ControlList.X);
-		public static final Control _eject = new Control(ControlList.B);
-		public static final Control _trapdoorUp = new Control(ControlList.Y);
-		public static final Control _trapdoorDown = new Control(ControlList.A);
+	public static class Cargo {
+		static final Control _intake = new Control(ControlList.X);
+		static final Control _eject = new Control(ControlList.B);
+		static final Control _trapdoorUp = new Control(ControlList.Y);
+		static final Control _trapdoorDown = new Control(ControlList.A);
 		
 		public static boolean _manualArm = false;
-		public static final Control _armManual = new Control(ControlList.RightJoystickY);
+		static final Control _armManual = new Control(ControlList.RightJoystickY);
 	}
 	
 	//Climb
 	static class Climb {
-		public static final Control _climb = new Control(ControlList.DirectionPadRight);
+		static final Control _climb = new Control(ControlList.DirectionPadRight);
 		
-		public static boolean _manualClimb = true;
-		public static final Control _stage1 = new Control(ControlList.DirectionPadRight);
-		public static final Control _stage2 = new Control(ControlList.DirectionPadDown);
+		static boolean _manualClimb = true;
+		static final Control _stage1 = new Control(ControlList.DirectionPadRight);
+		static final Control _stage2 = new Control(ControlList.DirectionPadDown);
 	}
 }

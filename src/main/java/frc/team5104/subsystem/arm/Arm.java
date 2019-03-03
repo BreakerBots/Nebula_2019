@@ -6,11 +6,13 @@ import frc.team5104.subsystem.arm.ArmManager.ArmState;
 
 public class Arm extends BreakerSubsystem.Actions {
 	public static void idle() {
-		ArmManager.currentState = ArmState.idle;
+		if(ArmManager.currentState != ArmState.calibrating)
+			ArmManager.currentState = ArmState.idle;
 	}
 	
 	public static void intake() {
-		ArmManager.currentState = ArmState.intakeDown;
+		if (ArmManager.currentState != ArmState.calibrating)
+			ArmManager.currentState = ArmState.intakeDown;
 	}
 	
 	public static void zero() {

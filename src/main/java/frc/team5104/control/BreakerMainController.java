@@ -1,11 +1,12 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.control;
 
+import frc.team5104.main.RobotState;
 import frc.team5104.main.RobotState.RobotMode;
 import frc.team5104.util.Compressor;
 import frc.team5104.util.CrashLogger;
+import frc.team5104.util.console;
 import frc.team5104.util.CrashLogger.Crash;
-import frc.team5104.vision.Vision;
 
 /**
  * Handles teleoperation control
@@ -36,8 +37,8 @@ public class BreakerMainController {
 		}
 		
 		//Vision
-		if (_Controls.Main._toggleVision.getPressed())
-			Vision.toggleState();
+//		if (_Controls.Main._toggleVision.getPressed())
+//			Vision.toggleState();
 		
 		//Compressor
 		if (currentMode == RobotMode.Teleop || currentMode == RobotMode.Test)
@@ -52,8 +53,8 @@ public class BreakerMainController {
 			hatchController.forceIdle();
 		}
 		
-		//Disabled
-		if (currentMode != RobotMode.Disabled) {
+		//Enabled
+		if (RobotState.isEnabled()) {
 			//State Switching
 			stateController.handle();
 		}

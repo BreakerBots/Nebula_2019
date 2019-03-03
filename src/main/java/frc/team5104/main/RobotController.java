@@ -20,9 +20,6 @@ import frc.team5104.webapp.Webapp;
 
 class RobotController extends RobotBase {
 	//Modes
-	private RobotMode currentMode = RobotMode.Disabled;
-	private RobotMode lastMode = RobotMode.Disabled;
-	
 	private BreakerRobot robot;
 	private RobotState state = RobotState.getInstance();
 	private final double loopPeriod = 20;
@@ -83,11 +80,11 @@ class RobotController extends RobotBase {
 		}
 		
 		//Handle Modes
-		switch(currentMode) {
+		switch(state.currentMode) {
 			case Auto: {
 				try {
 					//Auto
-					if (lastMode != currentMode)
+					if (state.lastMode != state.currentMode)
 						robot.autoStart();
 						
 					robot.autoLoop();
@@ -100,7 +97,7 @@ class RobotController extends RobotBase {
 			case Teleop: {
 				try {
 					//Teleop
-					if (lastMode != currentMode)
+					if (state.lastMode != state.currentMode)
 						robot.teleopStart();
 					
 					robot.teleopLoop();
@@ -114,7 +111,7 @@ class RobotController extends RobotBase {
 			case Vision: {
 				try {
 					//Vision
-					if (lastMode != currentMode)
+					if (state.lastMode != state.currentMode)
 						robot.visionStart();
 					
 					robot.visionLoop();
@@ -127,7 +124,7 @@ class RobotController extends RobotBase {
 			case Test: {
 				try {
 					//Test
-					if (lastMode != currentMode)
+					if (state.lastMode != state.currentMode)
 						robot.testStart();
 					
 					robot.testLoop();
@@ -140,8 +137,8 @@ class RobotController extends RobotBase {
 			case Disabled: {
 				try {
 					//Disabled
-					if (lastMode != currentMode)
-						switch (lastMode) {
+					if (state.lastMode != state.currentMode)
+						switch (state.lastMode) {
 							case Auto: 	 { robot.autoStop(); break; }
 							case Teleop: { robot.teleopStop(); break; }
 							case Test: 	 { robot.testStop(); break; }
@@ -160,15 +157,15 @@ class RobotController extends RobotBase {
 		
 		//Handle Main Disabling
 		try {
-			if (lastMode != currentMode) {
-				if (currentMode == RobotMode.Disabled) {
+			if (state.lastMode != state.currentMode) {
+				if (state.currentMode == RobotMode.Disabled) {
 					robot.mainDisabled();
 				}
-				else if (lastMode == RobotMode.Disabled) {
+				else if (state.lastMode == RobotMode.Disabled) {
 					robot.mainEnabled();
 				}
-				LiveWindow.setEnabled(currentMode == RobotMode.Disabled);
-				lastMode = currentMode;
+				LiveWindow.setEnabled(state.currentMode == RobotMode.Disabled);
+				state.lastMode = state.currentMode;
 			}
 		} catch (Exception e) {
 			CrashLogger.logCrash(new Crash("main", e));

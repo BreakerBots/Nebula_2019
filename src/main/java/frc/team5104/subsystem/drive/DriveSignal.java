@@ -4,7 +4,7 @@ package frc.team5104.subsystem.drive;
 /**
  * A simple class for sending/saving drivetrain movement signals.
  */
-public class RobotDriveSignal {
+public class DriveSignal {
 	/**
 	 * Unit that the left & right speeds can be in.
 	 * feetPerSecond: uses PID directly on the talons to achieve the specified velocity
@@ -27,7 +27,7 @@ public class RobotDriveSignal {
 	 * @param leftSpeed  Percent output (-1 to 1) for the left  motors of the drive train to run
 	 * @param rightSpeed Percent output (-1 to 1) for the right motors of the drive train to run
 	 */
-	public RobotDriveSignal(double leftSpeed, double rightSpeed) {
+	public DriveSignal(double leftSpeed, double rightSpeed) {
 		this(leftSpeed, rightSpeed, DriveUnit.percentOutput);
 	}
 	
@@ -37,7 +37,7 @@ public class RobotDriveSignal {
 	 * @param rightSpeed Speed for the right motors of the drive train to run
 	 * @param unit The unit for the left & right motor speeds to be in (percentOutput or feetPerSecond)
 	 */
-	public RobotDriveSignal(double leftSpeed, double rightSpeed, DriveUnit unit) {
+	public DriveSignal(double leftSpeed, double rightSpeed, DriveUnit unit) {
 		this.leftSpeed = leftSpeed;
 		this.rightSpeed = rightSpeed;
 		this.unit = unit;
@@ -49,7 +49,7 @@ public class RobotDriveSignal {
 	 * @param rightSpeed Speed for the right motors of the drive train to run
 	 * @param feedForward The specified feed forward value.
 	 */
-	public RobotDriveSignal(double leftSpeed, double rightSpeed, double feedForward) {
+	public DriveSignal(double leftSpeed, double rightSpeed, double feedForward) {
 		this.leftSpeed = leftSpeed;
 		this.rightSpeed = rightSpeed;
 		this.feedForward = feedForward;

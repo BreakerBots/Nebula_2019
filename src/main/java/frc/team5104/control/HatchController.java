@@ -6,12 +6,12 @@ import frc.team5104.subsystem.hatch.Hatch;
 
 public class HatchController extends BreakerController {
 	void update() {
-		if (_Controls.Hatch._eject.getPressed())
-			//HatchSystems.Trap.open();
+		if (_Controls.Hatch._eject.getDoubleClick() == 1)
 			Hatch.eject(false);
+		else if (_Controls.Hatch._eject.getDoubleClick() == 2)
+			Hatch.eject(true);
 			//Vision.runVision(RobotMode.Teleop, ActionMode.hatchEject, VisionTarget.standard);
 		if (_Controls.Hatch._intake.getPressed()) {
-			//HatchSystems.Trap.close();
 			Hatch.intake();
 			Chute.trapdoorUp();
 			//Vision.runVision(RobotMode.Teleop, ActionMode.hatchIntake, VisionTarget.standard);

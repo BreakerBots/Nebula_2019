@@ -7,7 +7,7 @@ import frc.team5104.auto.BreakerTrajectoryGenerator;
 import frc.team5104.auto.util.TrajectoryWaypoint;
 import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.Odometry;
-import frc.team5104.subsystem.drive.RobotDriveSignal;
+import frc.team5104.subsystem.drive.DriveSignal;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
 
@@ -36,7 +36,7 @@ public class DriveTrajectoryAction extends BreakerPathAction {
     }
 
     public boolean update() {
-    	RobotDriveSignal nextSignal = follower.getNextDriveSignal(Odometry.getPosition());
+    	DriveSignal nextSignal = follower.getNextDriveSignal(Odometry.getPosition());
 		nextSignal = Drive.applyDriveStraight(nextSignal);
     	Drive.set(nextSignal);
     	

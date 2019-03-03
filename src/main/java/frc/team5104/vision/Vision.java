@@ -3,7 +3,7 @@ package frc.team5104.vision;
 
 import frc.team5104.main.RobotState;
 import frc.team5104.main.RobotState.RobotMode;
-import frc.team5104.subsystem.drive.RobotDriveSignal;
+import frc.team5104.subsystem.drive.DriveSignal;
 import frc.team5104.subsystem.hatch.Hatch;
 import frc.team5104.superstructure.cargo.Cargo;
 import frc.team5104.util.console;
@@ -14,7 +14,7 @@ import frc.team5104.vision.VisionMovement.VisionTarget;
 
 public class Vision {
 	/** Gets the desired drivetrain output to aligh with the visible target */
-	public static RobotDriveSignal getNextSignal() { return VisionMovement.getNextSignal();  }
+	public static DriveSignal getNextSignal() { return VisionMovement.getNextSignal();  }
 	public static void reset() { VisionMovement.reset(); }
 	
 	/** Returns if there is a target currently visible to the limelight */
@@ -22,8 +22,11 @@ public class Vision {
 	
 	/** Changes the state of the leds (on, off...) */
 	public static void changeLEDState(int state) { VisionSystems.networkTable.setEntry("ledMode", (double)(state)); }
-	
 
+	public static void init() {
+		VisionSystems.networkTable.setEntry("camMode", 0);
+	}
+	
 	/** Toggle the state of the limelight */
 	public static void toggleState() {
 		boolean driverMode = VisionSystems.networkTable.getEntry("camMode").getDouble(-1) == 1;

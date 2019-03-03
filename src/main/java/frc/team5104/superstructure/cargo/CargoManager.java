@@ -3,6 +3,7 @@ package frc.team5104.superstructure.cargo;
 
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.arm.Arm;
+import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.subsystem.chute.ChuteSystems;
 import frc.team5104.subsystem.climber.Climber;
@@ -44,8 +45,11 @@ public class CargoManager extends BreakerSubsystem.Manager {
 				Arm.intake();
 				
 				beltInterpolator.deltaTime = 0.05;
-				beltInterpolator.setSetpoint(_CargoConstants._intakeSpeed);
-				CargoSystems.Belt.set(beltInterpolator.update());
+				if(ArmSystems.Encoder.getDegrees() > _CargoConstants._intakeStartPos) 
+					beltInterpolator.setSetpoint(_CargoConstants._intakeSpeed);
+				else 
+					beltInterpolator.setSetpoint(0);
+ 				CargoSystems.Belt.set(beltInterpolator.update());
 				
 				if (Chute.BeamAverage.getBooleanOutput())
 					Cargo.idle();

@@ -19,9 +19,9 @@ class CargoController extends BreakerController {
 		
 		//Manual Arm
 		if (_Controls.Cargo._manualArm) {
-			double _armVoltage = -_Controls.Cargo._armManual.getAxis() * 10;
-			if (ArmSystems.LimitSwitch.isHit() && _armVoltage < 0) _armVoltage = 0;
-			ArmSystems.setVoltage(_armVoltage);
+			double force = _Controls.Cargo._armManual.getAxis() * 10;
+//			console.log("voltage: " + force, "degrees: " + ArmSystems.Encoder.getDegrees());
+			ArmSystems.applyForce(force);
 		}
 		
 		//Trapdoor

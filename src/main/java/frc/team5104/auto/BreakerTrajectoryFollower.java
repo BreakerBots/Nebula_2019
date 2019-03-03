@@ -4,8 +4,8 @@ package frc.team5104.auto;
 import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.auto.util.Trajectory;
 import frc.team5104.auto.util.TrajectorySegment;
-import frc.team5104.subsystem.drive.RobotDriveSignal;
-import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
+import frc.team5104.subsystem.drive.DriveSignal;
+import frc.team5104.subsystem.drive.DriveSignal.DriveUnit;
 import frc.team5104.subsystem.drive.RobotPosition;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.Units;
@@ -34,7 +34,7 @@ public class BreakerTrajectoryFollower {
 	 * @param robotPosition The Robot's position on the field (get from Odometry.java)
 	 * @return The Motor Speeds to follow the trajectory
 	 */
-	public RobotDriveSignal getNextDriveSignal(RobotPosition currentRobotPosition) {
+	public DriveSignal getNextDriveSignal(RobotPosition currentRobotPosition) {
 		//Implements equation 5.12 from https://www.dis.uniroma1.it/~labrob/pub/papers/Ramsete01.pdf
 		this.robotPosition = currentRobotPosition;
 		
@@ -42,7 +42,7 @@ public class BreakerTrajectoryFollower {
 		double right = 0;
 		
 		if (isFinished())
-			return new RobotDriveSignal(left, right, DriveUnit.feetPerSecond);
+			return new DriveSignal(left, right, DriveUnit.feetPerSecond);
 		
 		//Get Current Segment from index
 		TrajectorySegment current = trajectory.get(trajectoryIndex);
@@ -65,7 +65,7 @@ public class BreakerTrajectoryFollower {
 		//Go to the next index
 		trajectoryIndex += 1;
 	   
-		return new RobotDriveSignal(
+		return new DriveSignal(
 				left, right,
 				(_DriveConstants._kC + (_DriveConstants._kV * current.velocity) + (_DriveConstants._kA * current.acceleration))
 			);

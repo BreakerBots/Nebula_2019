@@ -35,8 +35,8 @@ public class Devices {
 	
 	//Cargo
 	public static class Cargo {
-		public static TalonSRX leftArm = TalonFactory.getTalon(21, new TalonSettings(NeutralMode.Brake, false, _ArmConstants._currentLimit, true));
-		public static TalonSRX rightArm = TalonFactory.getTalon(22, new TalonSettings(NeutralMode.Brake, true, _ArmConstants._currentLimit, true));
+		public static TalonSRX leftArm = TalonFactory.getTalon(21, new TalonSettings(NeutralMode.Brake, true, _ArmConstants._currentLimit, true));
+		public static TalonSRX rightArm = TalonFactory.getTalon(22, new TalonSettings(NeutralMode.Brake, false, _ArmConstants._currentLimit, true));
 		
 		public static DoubleSolenoid trapdoor = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 2, 3);
 		
@@ -61,6 +61,6 @@ public class Devices {
 	//Other
 	public static class Other {
 		public static Compressor compressor = PneumaticFactory.getCompressor(PCM.Gold);
-		public static AnalogInput compressorReader = SensorFactory.getAnalogInput(_RobotConstants._isCompBot ? 0 : 3);
+		public static AnalogInput compressorReader = SensorFactory.getAnalogInput(3);
 	}
 }

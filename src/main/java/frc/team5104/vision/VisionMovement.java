@@ -1,8 +1,8 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.vision;
 
-import frc.team5104.subsystem.drive.RobotDriveSignal;
-import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
+import frc.team5104.subsystem.drive.DriveSignal;
+import frc.team5104.subsystem.drive.DriveSignal.DriveUnit;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.BreakerPositionController;
 import frc.team5104.util.Buffer;
@@ -38,8 +38,8 @@ public class VisionMovement implements CSVLoggable {
 	}
 	
 	//Main Movement Function
-	static RobotDriveSignal getNextSignal() {
-		return new RobotDriveSignal(
+	static DriveSignal getNextSignal() {
+		return new DriveSignal(
 				getForward() - getTurn(), 
 				getForward() + getTurn(), 
 				DriveUnit.voltage

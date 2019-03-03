@@ -4,14 +4,14 @@ package frc.team5104.subsystem.drive;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import frc.team5104.subsystem.BreakerSubsystem;
-import frc.team5104.subsystem.drive.RobotDriveSignal.DriveUnit;
+import frc.team5104.subsystem.drive.DriveSignal.DriveUnit;
 
 public class Drive extends BreakerSubsystem.Actions {
 	/**
 	 * Sets the speed of the drive motors to the corresponding speeds specified in the Drive Signal
 	 * @param signal
 	 */
-	public static void set(RobotDriveSignal signal) {
+	public static void set(DriveSignal signal) {
 		switch (signal.unit) {
 			case percentOutput: {
 				DriveSystems.motors.set(
@@ -48,7 +48,7 @@ public class Drive extends BreakerSubsystem.Actions {
 		}
 	}
 
-	public static RobotDriveSignal applyDriveStraight(RobotDriveSignal signal) {
+	public static DriveSignal applyDriveStraight(DriveSignal signal) {
 		double leftMult = (signal.leftSpeed > 0 ? 
 				_DriveConstants._leftAccountReverse : 
 				_DriveConstants._leftAccountForward
@@ -62,9 +62,9 @@ public class Drive extends BreakerSubsystem.Actions {
 		return signal;
 	}
 
-	public static RobotDriveSignal applyMotorMinSpeed(RobotDriveSignal signal) { return applyMotorMinSpeedBase(signal, 1); }
-	public static RobotDriveSignal applyMotorMinSpeedRough(RobotDriveSignal signal) { return applyMotorMinSpeedBase(signal, 0.8); }
-	private static RobotDriveSignal applyMotorMinSpeedBase(RobotDriveSignal signal, double percentAffect) {
+	public static DriveSignal applyMotorMinSpeed(DriveSignal signal) { return applyMotorMinSpeedBase(signal, 1); }
+	public static DriveSignal applyMotorMinSpeedRough(DriveSignal signal) { return applyMotorMinSpeedBase(signal, 0.8); }
+	private static DriveSignal applyMotorMinSpeedBase(DriveSignal signal, double percentAffect) {
 		double turn = Math.abs(signal.leftSpeed - signal.rightSpeed) / 2;
 		double biggerMax = (Math.abs(signal.leftSpeed) > Math.abs(signal.rightSpeed) ? Math.abs(signal.leftSpeed) : Math.abs(signal.rightSpeed));
 		if (biggerMax != 0)
@@ -91,7 +91,7 @@ public class Drive extends BreakerSubsystem.Actions {
 	 * Stops the drive motors
 	 */
 	public static void stop() {
-		set(new RobotDriveSignal(0, 0, DriveUnit.percentOutput));
+		set(new DriveSignal(0, 0, DriveUnit.percentOutput));
 	}
 	
 	

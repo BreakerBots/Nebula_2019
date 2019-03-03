@@ -23,15 +23,15 @@ class HatchSystems extends BreakerSubsystem.Systems {
 	
 	//Rose
 	public static class Trap {
-		public static void open() {
-			Devices.Hatch.trap.set(_HatchConstants._trapOpen);
+		public static void in() {
+			Devices.Hatch.trap.set(_HatchConstants._trapIn);
 		}
-		public static void close() {
-			Devices.Hatch.trap.set(PneumaticFactory.getOppositeValue(_HatchConstants._trapOpen));
+		public static void out() {
+			Devices.Hatch.trap.set(PneumaticFactory.getOppositeValue(_HatchConstants._trapIn));
 		}
 		
 		static boolean isOpen() {
-			return Devices.Hatch.trap.get() == _HatchConstants._trapOpen;
+			return Devices.Hatch.trap.get() == _HatchConstants._trapIn;
 		}
 		static boolean isClosed() { return !isOpen(); }
 	}
