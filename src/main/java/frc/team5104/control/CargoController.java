@@ -4,7 +4,6 @@ import frc.team5104.control.BreakerMainController.BreakerController;
 import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.superstructure.cargo.Cargo;
-import frc.team5104.util.console;
 
 class CargoController extends BreakerController {
 	void update() {

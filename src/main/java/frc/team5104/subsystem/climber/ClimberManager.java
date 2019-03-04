@@ -2,9 +2,12 @@
 package frc.team5104.subsystem.climber;
 
 import frc.team5104.subsystem.BreakerSubsystem;
+import frc.team5104.subsystem.arm.Arm;
 import frc.team5104.subsystem.arm.ArmManager;
+import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.superstructure.cargo.CargoManager;
 import frc.team5104.superstructure.cargo.CargoSystems;
+import frc.team5104.util.console;
 
 public class ClimberManager extends BreakerSubsystem.Manager {
 	static enum ClimberState { idle, climbing };
@@ -25,26 +28,26 @@ public class ClimberManager extends BreakerSubsystem.Manager {
 			case climbing: {
 				switch (currentStage) {
 					case initial:
-						if (ArmManager.armController.onTarget()) {
+						if (ArmSystems.Encoder.getDegrees() > ArmManager.climbInitController.target) {
 							currentStage = ClimberStage.lift1;
 							currentStageStart = System.currentTimeMillis();
 						}
 						break;
 					case lift1:
-						ClimberSystems.extendStage1();
-						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants.lift1Length) {
-							currentStage = ClimberStage.lift2;
-							currentStageStart = System.currentTimeMillis();
-						}
+						//ClimberSystems.extendStage1();
+//						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants.lift1Length) {
+//							currentStage = ClimberStage.lift2;
+//							currentStageStart = System.currentTimeMillis();
+//						}
 						break;
 					case lift2:
-						ClimberSystems.extendStage1();
-						ClimberSystems.extendStage2();
+						//ClimberSystems.extendStage1();
+						//ClimberSystems.extendStage2();
 						
-						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants.lift2Length) {
-							currentStage = ClimberStage.forward;
-							currentStageStart = System.currentTimeMillis();
-						}
+//						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants.lift2Length) {
+//							currentStage = ClimberStage.forward;
+//							currentStageStart = System.currentTimeMillis();
+//						}
 						break;
 					case forward:
 						ClimberSystems.extendStage1();
@@ -64,7 +67,7 @@ public class ClimberManager extends BreakerSubsystem.Manager {
 		}
 	}
 
-	public void enabled() { }
+	public void enabled() { currentState = ClimberState.idle; }
 	public void disabled() { }
 	public ClimberManager() { }
 }

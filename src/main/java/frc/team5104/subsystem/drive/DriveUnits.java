@@ -13,10 +13,10 @@ public class DriveUnits {
 	
 	// Feet and Wheel Revs
 	public static double feetToWheelRevolutions(double feet) {
-		return feet / Units.diameterToCircumfrance(_DriveConstants._wheelDiameter);
+		return feet / (_DriveConstants._wheelDiameter * Math.PI);
 	}
 	public static double wheelRevolutionsToFeet(double revs) {
-		return revs * Units.diameterToCircumfrance(_DriveConstants._wheelDiameter);
+		return revs * (_DriveConstants._wheelDiameter * Math.PI);
 	}
 	
 	// Feet and Ticks

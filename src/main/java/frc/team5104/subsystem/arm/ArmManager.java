@@ -2,11 +2,13 @@
 package frc.team5104.subsystem.arm;
 
 import frc.team5104.control._Controls;
-import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.climber.Climber;
 import frc.team5104.subsystem.drive.DriveSystems;
+import frc.team5104.util.BreakerMath;
 import frc.team5104.util.BreakerPositionController;
+import frc.team5104.util.console;
+import frc.team5104.webapp.Tuner.tunerOutput;
 
 public class ArmManager extends BreakerSubsystem.Manager {
 
@@ -19,17 +21,35 @@ public class ArmManager extends BreakerSubsystem.Manager {
 	}
 	static ArmState currentState = ArmState.calibrating;
 	
-	public static BreakerPositionController armController = new BreakerPositionController
+	static BreakerPositionController armController = new BreakerPositionController
 			(_ArmConstants._armP, _ArmConstants._armI, _ArmConstants._armD, _ArmConstants._armTolerance);
 	static BreakerPositionController climbController = new BreakerPositionController
 			(_ArmConstants._climbP, _ArmConstants._climbI, _ArmConstants._climbD, _ArmConstants._climbTolerance, 0);
+	public static BreakerPositionController climbInitController = new BreakerPositionController(
+			_ArmConstants._climbInitP, _ArmConstants._climbInitI, 0, _ArmConstants._climbInitTolerance
+			);
+	private static double upPosAdd = 0;
+	
+//	@tunerOutput
+//	public static double getCurrent() {
+//		return DriveSystems.gyro.getPitch();
+//	}
+//	@tunerOutput
+	public static double lastOutput = 0;
 	
 	public void update() {
+		climbController._kP = _ArmConstants._climbP;
+		climbController._kI = _ArmConstants._climbI;
+		climbController._kD = _ArmConstants._climbD;
+		climbController.tolerance = _ArmConstants._climbTolerance;
+		
 		if (Climber.isClimbing())
 			currentState = ArmState.climbing;
 		
-		if (ArmSystems.LimitSwitch.isHit())
+		if (ArmSystems.LimitSwitch.isHit()) {
 			ArmSystems.Encoder.zero();
+			upPosAdd = 0;
+		}
 		
 		if (_Controls.Cargo._manualArm)
 			return;
@@ -38,10 +58,19 @@ public class ArmManager extends BreakerSubsystem.Manager {
 			//Idle
 			case idle:
 				armController.setTarget(_ArmConstants._upPos);
-				if(!armController.onTarget()) 
-					ArmSystems.applyForce(armController.update(ArmSystems.Encoder.getDegrees()));
-				 else
+				double force = armController.update(ArmSystems.Encoder.getDegrees());
+				
+				if (ArmSystems.LimitSwitch.isHit() == false && force < 1) {
+					upPosAdd -= 0.5;
+					armController.setTarget(_ArmConstants._upPos + upPosAdd);
+					force = armController.update(ArmSystems.Encoder.getDegrees());
+				}
+				
+				if(armController.onTarget() == false) 
+					ArmSystems.applyForce(force);
+				else {
 					ArmSystems.applyForce(0);
+				}
 				break;
 				
 			//Intake Down
@@ -71,16 +100,19 @@ public class ArmManager extends BreakerSubsystem.Manager {
 				switch (Climber.getStage()) {
 					//Stage 0 (Move the arm to a level touching L3 but not yet lifting)
 					case initial:
-						armController.setTarget(_ArmConstants._stage0Target);
-						if(!armController.onTarget()) 
-							ArmSystems.applyForce(armController.update(ArmSystems.Encoder.getDegrees()));
+						climbInitController.setTarget(_ArmConstants._climbInitDegrees);
+						if(climbInitController.onTarget() == false) 
+							ArmSystems.applyForce(BreakerMath.clamp(climbInitController.update(ArmSystems.Encoder.getDegrees()), 0, _ArmConstants._climbInitMax));
 						else 
 							ArmSystems.applyForce(0);
 						break;
 					//Stage 1/2 (Move arm to level out the robot using PID referencing the pitch of the gyro)
 					default:
+						double f = climbController.update(-DriveSystems.gyro.getPitch());
+						lastOutput = f;
+						climbController.setTarget(0);
 						if(climbController.onTarget() == false) 
-							ArmSystems.applyForce(climbController.update(DriveSystems.gyro.getPitch()));
+							ArmSystems.applyForce(f);
 						else
 							ArmSystems.applyForce(0);
 						break;
@@ -100,6 +132,7 @@ public class ArmManager extends BreakerSubsystem.Manager {
 	public void enabled() {
 		armController.reset();
 		climbController.reset();
+		climbInitController.reset();
 		currentState = ArmState.calibrating;
 	}
 	public void disabled() { }

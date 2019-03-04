@@ -33,7 +33,6 @@ public class VisionMovement implements CSVLoggable {
 	static boolean isFinished() {
 		boolean onTarget = Math.abs(_targetY() - VisionSystems.limelight.getY()) 
 				<= _VisionConstants._toleranceY;
-		console.log(Vision.targetVisible() + " " + onTarget);
 		return Vision.targetVisible() && onTarget;
 	}
 	

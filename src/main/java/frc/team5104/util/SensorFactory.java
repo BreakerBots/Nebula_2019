@@ -21,12 +21,4 @@ public class SensorFactory {
 	public static AnalogInput getAnalogInput(int channel) {
 		return new AnalogInput(channel);
 	}
-	
-	/**
-	 * Creates a PigeonIMU object to handle the gyro plugged in through a talon
-	 * @param talonDeviceId The device id of the talon the gyro is plugged in to
-	 */
-	public static PigeonIMU getPigionImu(int talonDeviceId) {
-		return new PigeonIMU(talonDeviceId);
-	}
 }

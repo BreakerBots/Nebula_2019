@@ -4,11 +4,13 @@ package frc.team5104.main;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.sensors.PigeonIMU;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.SPI.Port;
 import frc.team5104.subsystem.arm._ArmConstants;
 import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.util.PneumaticFactory;
@@ -28,7 +30,8 @@ public class Devices {
 		public static TalonSRX R1 = TalonFactory.getTalon(13, new TalonSettings(NeutralMode.Brake, false, _DriveConstants._currentLimit, true));
 		public static TalonSRX R2 = TalonFactory.getTalon(14, new TalonSettings(NeutralMode.Brake, false, _DriveConstants._currentLimit, true));
 		
-		public static PigeonIMU gyro = SensorFactory.getPigionImu(L2.getDeviceID());
+		public static PigeonIMU gyro = new PigeonIMU(L2);
+		public static AHRS gyro2 = new AHRS(Port.kMXP);
 		
 		public static DoubleSolenoid shift = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 0, 1);
 	}

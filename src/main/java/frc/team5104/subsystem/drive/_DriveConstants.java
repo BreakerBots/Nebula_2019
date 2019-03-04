@@ -20,9 +20,6 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	public static final double _minSpeedLowGearForward = 0.04;
 	public static final double _minSpeedLowGearTurn = 0.10;
 	
-	//Gyro
-	public static final double _gyroAngle = 0;   //(Degrees) [Measure] Yaw Angle of Gyro (Athena is 65)
-	
 	//Current Limiting
 	public static final int _currentLimit = 60; //(Amps) [Measure (<250, or ~240/#ofmotorsinurdrivetrain)] The current limit of the drive motors
 	
@@ -35,8 +32,8 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	public static double _kD = 12.0;
 	
 	//Speed Control (Feed Forward)
-	public static final double _kF = 0;
-	public static final double _kC = 0;
-	public static final double _kV = 0;
-	public static final double _kA = 0;
+	public static final double _kV = 0.0608;//0.570275;
+	public static final double _kA = 0;//0.257666;
+	public static final double _kS = 1.4171;
+	//r-squared = 0.9439
 }

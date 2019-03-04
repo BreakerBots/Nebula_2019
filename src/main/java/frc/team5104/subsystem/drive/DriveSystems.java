@@ -6,12 +6,15 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import frc.team5104.auto._AutoConstants;
 import frc.team5104.control._Controls;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
+import frc.team5104.util.BreakerMath;
 import frc.team5104.util.Units;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
+import frc.team5104.webapp.Tuner.tunerOutput;
 
 public class DriveSystems extends BreakerSubsystem.Systems {
 	//Device References (d + Device)
@@ -20,6 +23,19 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 	static TalonSRX R1 = Devices.Drive.R1;
 	static TalonSRX R2 = Devices.Drive.R2;
 	
+	@tunerOutput
+	public static double leftTarget = 6.9;
+	@tunerOutput
+	public static double rightTarget = 0;
+	@tunerOutput
+	public static double leftCurrent() {
+		return encoders.getLeftVelocityFeet();
+	}
+	@tunerOutput
+	public static double rightCurrent() {
+		return encoders.getRightVelocityFeet();
+	}
+	
 	//Motors
 	static class motors {
 		public static void set(double leftSpeed, double rightSpeed, ControlMode mode) {
@@ -27,6 +43,8 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 			R1.set(mode, rightSpeed);
 		}
 		public static void setWithFeedforward(double leftSpeed, double rightSpeed, double feedForward) {
+			leftTarget = BreakerMath.clamp(leftSpeed, -_AutoConstants._maxVelocity, _AutoConstants._maxVelocity);
+			rightTarget = BreakerMath.clamp(rightSpeed, -_AutoConstants._maxVelocity, _AutoConstants._maxVelocity);
 			L1.set(ControlMode.Velocity, leftSpeed, DemandType.ArbitraryFeedForward, feedForward);
 			R1.set(ControlMode.Velocity, rightSpeed, DemandType.ArbitraryFeedForward, feedForward);
 		}
@@ -95,23 +113,24 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 
 	//Gyro
 	public static class gyro {
-		public static double getRawAngle() {
-			return 0; //Devices.Drive.gyro.getFusedHeading();
+		private static double gyroAccount = 0;
+		private static double getRawAngle() {
+			return Devices.Drive.gyro.getFusedHeading();
 		}
 		
 		public static double getAngle() {
-			double a = -getRawAngle();
-			a /= Math.cos(Units.degreesToRadians(_DriveConstants._gyroAngle));
-			return a;
+			return -(getRawAngle() - gyroAccount);
 		}
 		
 		public static double getPitch() {
-			return 0;
-//			Devices.Drive.gyro.get
+			return -(Devices.Drive.gyro2.getPitch() - 0.3);
+			//return Devices.Drive.gyro;
 		}
 		
 		public static void reset(int timeoutMs) {
 			//Devices.Drive.gyro.setFusedHeading(0, timeoutMs);
+			gyroAccount = getRawAngle();
+			Devices.Drive.gyro.configFactoryDefault(10);
 		}
 	}
 	
@@ -125,7 +144,7 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 		// Left Talons Config
 		L2.set(ControlMode.Follower, L1.getDeviceID());
         L1.configAllowableClosedloopError(0, 0, 10);
-        L1.config_kF(0, _DriveConstants._kF, 10);
+        //L1.config_kF(0, _DriveConstants._kF, 10);
         L1.config_kP(0, _DriveConstants._kP, 10);
         L1.config_kI(0, _DriveConstants._kI, 10);
         L1.config_kD(0, _DriveConstants._kD, 10);
@@ -133,7 +152,7 @@ public class DriveSystems extends BreakerSubsystem.Systems {
         // Right Talons Config
         R2.set(ControlMode.Follower, R1.getDeviceID());
         R1.configAllowableClosedloopError(0, 0, 10);
-        R1.config_kF(0, _DriveConstants._kF, 10);
+        //R1.config_kF(0, _DriveConstants._kF, 10);
         R1.config_kP(0, _DriveConstants._kP, 10);
         R1.config_kI(0, _DriveConstants._kI, 10);
         R1.config_kD(0, _DriveConstants._kD, 10);

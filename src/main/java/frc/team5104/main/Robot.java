@@ -8,8 +8,11 @@ import frc.team5104.control.BreakerMainController;
 import frc.team5104.control.DriveController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.arm.ArmManager;
+import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.arm._ArmConstants;
+import frc.team5104.subsystem.climber.ClimberManager;
 import frc.team5104.subsystem.drive.DriveManager;
+import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.subsystem.hatch.HatchManager;
@@ -18,8 +21,8 @@ import frc.team5104.util.CSV;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.Vision;
 import frc.team5104.vision.VisionManager;
-import frc.team5104.vision.VisionMovement;
 import frc.team5104.webapp.Tuner;
+import frc.team5104.webapp.Webapp;
 import frc.team5104.superstructure.cargo.CargoManager;
 import frc.team5104.superstructure.cargo._CargoConstants;
 
@@ -32,10 +35,14 @@ public class Robot extends RobotController.BreakerRobot {
 			 new DriveManager(),
 			 new HatchManager(),
 			 new CargoManager(),
-			 new ArmManager()
+			 new ArmManager(),
+			 new ClimberManager()
 		);
-		Tuner.init(_ArmConstants.class, _CargoConstants.class, DriveController.class, _DriveConstants.class);
+		Tuner.init(_ArmConstants.class, ArmManager.class, _CargoConstants.class, DriveSystems.class, _DriveConstants.class, DriveSystems.encoders.class);
 		CameraServer.getInstance().startAutomaticCapture();
+		Webapp.init();
+		VisionManager.init();
+		Odometry.run();
 	}
 	
 	//Main
@@ -45,9 +52,9 @@ public class Robot extends RobotController.BreakerRobot {
 		console.log("Robot Enabled");
 		BreakerSubsystemManager.enabled();
 		Odometry.reset();
-		BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
 		CSV.init(null);
 		Vision.init();
+		//DriveCharacterization.init();
 	}
 	public void mainDisabled() {
 		//TODO: ignore enable/disable between sandstorm/teleop
@@ -58,16 +65,20 @@ public class Robot extends RobotController.BreakerRobot {
 	}
 	
 	public void mainLoop() {
+		//console.log(DriveSystems.gyro.getPitch());
 		if (RobotState.isEnabled()) {
 			BreakerSubsystemManager.handle();
 			Controller.handle();
 		}
-		BreakerMainController.handle(RobotState.getMode());
+		BreakerMainController.handle();
 		CSV.handle();
 	}
 
 	//Auto
-	public void autoStart() { console.log("Autonomous Started"); }
+	public void autoStart() { 
+		console.log("Autonomous Started");
+		BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
+	}
 	public void autoLoop() { BreakerPathScheduler.handle(); }
 	public void autoStop() { console.log("Autonomous Stopped"); }
 	

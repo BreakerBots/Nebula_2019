@@ -2,7 +2,6 @@
 package frc.team5104.control;
 
 import frc.team5104.control.BreakerMainController.BreakerController;
-import frc.team5104.main.Devices;
 import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive._DriveConstants;
@@ -11,7 +10,6 @@ import frc.team5104.subsystem.drive.DriveSignal.DriveUnit;
 import frc.team5104.util.BezierCurve;
 import frc.team5104.util.BezierCurveInterpolator;
 import frc.team5104.util.Deadband;
-import frc.team5104.util.console;
 import frc.team5104.webapp.Tuner.tunerOutput;
 import frc.team5104.util.Deadband.deadbandType;
 
@@ -25,21 +23,8 @@ public class DriveController extends BreakerController {
 	private static final BezierCurveInterpolator vTeleopLeftSpeed  = new BezierCurveInterpolator(_driveCurveChange, _driveCurve);
 	private static final BezierCurveInterpolator vTeleopRightSpeed = new BezierCurveInterpolator(_driveCurveChange, _driveCurve);
 	
-	private static BezierCurve turnCurve = new BezierCurve(0.15, 0.66, 0.83, 0.40);//new BezierCurve(0.15, 0.7, 0.8, 0.225);
-	private static double _turnCurveSpeedAdjust = 0.5;
-	
-	@tunerOutput
-	public static double getTarget() {
-		return 3;
-	}
-	@tunerOutput
-	public static double getCurrentLeft() {
-		return DriveSystems.encoders.getLeftVelocityFeet();
-	}
-	@tunerOutput
-	public static double getCurrentRight() {
-		return DriveSystems.encoders.getRightVelocityFeet();
-	}
+	private static BezierCurve turnCurve = new BezierCurve(0, 0.4, 0.8, 0.4);//new BezierCurve(0.15, 0.7, 0.8, 0.225);
+	private static double _turnCurveSpeedAdjust = 0.2;
 	
 	//Main Handle Function
 	void update() {
@@ -71,18 +56,10 @@ public class DriveController extends BreakerController {
 		signal = Drive.applyMotorMinSpeed(signal);
 		
 		if (_Controls.Drive._shift.getHeld()) {
-			Devices.Drive.L1.config_kF(0, _DriveConstants._kF, 0);
-			Devices.Drive.L1.config_kP(0, _DriveConstants._kP, 0);
-			Devices.Drive.L1.config_kI(0, _DriveConstants._kI, 0);
-			Devices.Drive.L1.config_kD(0, _DriveConstants._kD, 0);
-			Devices.Drive.R1.config_kF(0, _DriveConstants._kF, 0);
-			Devices.Drive.R1.config_kP(0, _DriveConstants._kP, 0);
-			Devices.Drive.R1.config_kI(0, _DriveConstants._kI, 0);
-			Devices.Drive.R1.config_kD(0, _DriveConstants._kD, 0);
 			signal = new DriveSignal(
-					3, 3,
-					DriveUnit.feetPerSecond
-				);
+					4, 4,
+					(_DriveConstants._kS + (_DriveConstants._kV * 4) + (_DriveConstants._kA * 1))
+					);
 		}
 		
 		//Set talon speeds

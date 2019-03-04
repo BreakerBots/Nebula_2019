@@ -14,18 +14,18 @@ import edu.wpi.first.wpilibj.Timer;
  *  - Call the update function here in a main loop
  */
 public class DriveCharacterization {
-	NetworkTableEntry InputTable;
-	NetworkTableEntry OutputTable;
-	double lastSpeed = 0;
-	Number[] data = new Number[9];
+	private static NetworkTableEntry InputTable;
+	private static NetworkTableEntry OutputTable;
+	private static double lastSpeed = 0;
+	private static Number[] data = new Number[9];
 	
-	public void init() {
+	public static void init() {
 		NetworkTableInstance.getDefault().setUpdateRate(0.010);
 		InputTable = NetworkTableInstance.getDefault().getEntry("/robot/autospeed");
 		OutputTable = NetworkTableInstance.getDefault().getEntry("/robot/telemetry");
 	}
 	
-	public void update() {
+	public static void update() {
 		double battery = RobotController.getBatteryVoltage();
 		double motorVolts = battery * Math.abs(lastSpeed);
 

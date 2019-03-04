@@ -5,7 +5,6 @@ import frc.team5104.main.RobotState;
 import frc.team5104.main.RobotState.RobotMode;
 import frc.team5104.util.Compressor;
 import frc.team5104.util.CrashLogger;
-import frc.team5104.util.console;
 import frc.team5104.util.CrashLogger.Crash;
 
 /**
@@ -20,11 +19,14 @@ public class BreakerMainController {
 	static StateController stateController = new StateController();
 	static CompressorController compressorController = new CompressorController();
 	
-	private static void update(RobotMode currentMode) {
+	private static void update() {
+		RobotMode currentMode = RobotState.getMode();
+		
 		//Teleop
 		if (currentMode == RobotMode.Teleop) {
 			//Drive
 			driveController.handle();
+			//DriveCharacterization.update();
 			
 			//Cargo
 			cargoController.handle();
@@ -61,8 +63,8 @@ public class BreakerMainController {
 	}
 	
 	//Crash Trackers
-	public static void handle(RobotMode currentMode) {
-		try { update(currentMode); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); }
+	public static void handle() {
+		try { update(); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); }
 	}
 	static abstract class BreakerController {
 		void handle() { try { update(); } catch (Exception e) { CrashLogger.logCrash(new Crash("main", e)); } }

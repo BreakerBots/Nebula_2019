@@ -131,7 +131,7 @@ function tunerInit() {
 
 			clearTuner();
 			var outputNames = [];
-			var outputValues = [0];
+			var outputValues = [];
 
 			for (var i = 0; i < Object.keys(data).length; i++) {
 				var name = Object.keys(data)[i];

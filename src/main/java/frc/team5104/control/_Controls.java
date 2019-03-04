@@ -53,7 +53,7 @@ public class _Controls {
 	static class Climb {
 		static final Control _climb = new Control(ControlList.DirectionPadRight);
 		
-		static boolean _manualClimb = true;
+		static boolean _manualClimb = false;
 		static final Control _stage1 = new Control(ControlList.DirectionPadRight);
 		static final Control _stage2 = new Control(ControlList.DirectionPadDown);
 	}

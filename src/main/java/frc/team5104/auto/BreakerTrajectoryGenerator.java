@@ -18,6 +18,8 @@ import frc.team5104.util.console.c;
  * 
  */
 public class BreakerTrajectoryGenerator {
+	private static final String cacheDirectory = "/home/lvuser/TrajectoryCache/";
+	
 	/**
 	 * Will either return a cached version of a Trajectory under those points (~500ms)
 	 * or will Generate a Trajectory a cache it (~5000ms - ~15000ms)
@@ -63,7 +65,7 @@ public class BreakerTrajectoryGenerator {
 	 */
 	private static Trajectory readFile(String name) {
 		try {
-			File file = new File("/home/lvuser/MotionProfilingCache/" + name);
+			File file = new File(cacheDirectory + name);
 			FileInputStream fis = new FileInputStream(file);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			Trajectory t = (Trajectory) ois.readObject();
@@ -71,10 +73,7 @@ public class BreakerTrajectoryGenerator {
 			fis.close();
 			return t;
 		}
-		catch (Exception e) {
-			//Expected to have errors => no print
-			return null;
-		}
+		catch (Exception e) { return null; }
 	}
 	
 	/**
@@ -82,7 +81,14 @@ public class BreakerTrajectoryGenerator {
 	 */
 	private static void writeFile(String name, Trajectory t) {
 		try {
-			FileOutputStream fos = new FileOutputStream("/home/lvuser/MotionProfilingCache/" + name);
+			File directory = new File(cacheDirectory);
+			console.log("exists: " + directory.exists());
+			if (!directory.exists()) {
+				console.log("missing dir, making");
+				directory.mkdir();
+			}
+			
+			FileOutputStream fos = new FileOutputStream(cacheDirectory + name);
 		    ObjectOutputStream oos = new ObjectOutputStream(fos);
 		    oos.writeObject(t);
 		    oos.close();
