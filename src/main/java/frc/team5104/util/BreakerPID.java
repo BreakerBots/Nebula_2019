@@ -6,14 +6,14 @@ package frc.team5104.util;
  * This controller uses PID (Proportional, Integral, Derivative) to process the input into the desired output.
  * The constant values of P, I, and D are tuning values.
  */
-public class BreakerPositionController {
+public class BreakerPID {
 	public double _kP, _kI, _kD;
 	public double err, deriv, integ;
 	public double lastPoint, target, tolerance;
 
-	public BreakerPositionController(double P, double I, double D) { this(P, I, D, 0, .01); }
-	public BreakerPositionController(double P, double I, double D, double tolerance) { this(P, I, D, 0, tolerance); }
-	public BreakerPositionController(double P, double I, double D, double tolerance, double target) {
+	public BreakerPID(double P, double I, double D) { this(P, I, D, 0, .01); }
+	public BreakerPID(double P, double I, double D, double tolerance) { this(P, I, D, 0, tolerance); }
+	public BreakerPID(double P, double I, double D, double tolerance, double target) {
 		_kP = P;
 		_kI = I;
 		_kD = D;

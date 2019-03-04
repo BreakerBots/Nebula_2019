@@ -6,9 +6,8 @@ import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.climber.Climber;
 import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.util.BreakerMath;
-import frc.team5104.util.BreakerPositionController;
-import frc.team5104.util.console;
-import frc.team5104.webapp.Tuner.tunerOutput;
+import frc.team5104.util.BreakerPID;
+import frc.team5104.util.Buffer;
 
 public class ArmManager extends BreakerSubsystem.Manager {
 
@@ -21,21 +20,20 @@ public class ArmManager extends BreakerSubsystem.Manager {
 	}
 	static ArmState currentState = ArmState.calibrating;
 	
-	static BreakerPositionController armController = new BreakerPositionController
+	static BreakerPID armController = new BreakerPID
 			(_ArmConstants._armP, _ArmConstants._armI, _ArmConstants._armD, _ArmConstants._armTolerance);
-	static BreakerPositionController climbController = new BreakerPositionController
+	private static double upPosAdd = 0;
+	static BreakerPID climbController = new BreakerPID
 			(_ArmConstants._climbP, _ArmConstants._climbI, _ArmConstants._climbD, _ArmConstants._climbTolerance, 0);
-	public static BreakerPositionController climbInitController = new BreakerPositionController(
+	public static BreakerPID climbInitController = new BreakerPID(
 			_ArmConstants._climbInitP, _ArmConstants._climbInitI, 0, _ArmConstants._climbInitTolerance
 			);
-	private static double upPosAdd = 0;
+	private static Buffer climbBuffer = new Buffer(50, 0);
 	
 //	@tunerOutput
 //	public static double getCurrent() {
 //		return DriveSystems.gyro.getPitch();
 //	}
-//	@tunerOutput
-	public static double lastOutput = 0;
 	
 	public void update() {
 		climbController._kP = _ArmConstants._climbP;
@@ -108,11 +106,11 @@ public class ArmManager extends BreakerSubsystem.Manager {
 						break;
 					//Stage 1/2 (Move arm to level out the robot using PID referencing the pitch of the gyro)
 					default:
-						double f = climbController.update(-DriveSystems.gyro.getPitch());
-						lastOutput = f;
+						climbBuffer.update(climbController.update(-DriveSystems.gyro.getPitch()));
 						climbController.setTarget(0);
+						
 						if(climbController.onTarget() == false) 
-							ArmSystems.applyForce(f);
+							ArmSystems.applyForce(climbBuffer.getDoubleOutput());
 						else
 							ArmSystems.applyForce(0);
 						break;
@@ -132,6 +130,7 @@ public class ArmManager extends BreakerSubsystem.Manager {
 	public void enabled() {
 		armController.reset();
 		climbController.reset();
+		climbBuffer = new Buffer(50, 0);
 		climbInitController.reset();
 		currentState = ArmState.calibrating;
 	}

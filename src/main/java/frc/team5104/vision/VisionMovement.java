@@ -4,7 +4,7 @@ package frc.team5104.vision;
 import frc.team5104.subsystem.drive.DriveSignal;
 import frc.team5104.subsystem.drive.DriveSignal.DriveUnit;
 import frc.team5104.util.BreakerMath;
-import frc.team5104.util.BreakerPositionController;
+import frc.team5104.util.BreakerPID;
 import frc.team5104.util.Buffer;
 import frc.team5104.util.CSV.CSVLoggable;
 import frc.team5104.util.console;
@@ -17,7 +17,7 @@ public class VisionMovement implements CSVLoggable {
 	}
 	
 	//Movement Controllers
-	static BreakerPositionController turnController = new BreakerPositionController(
+	static BreakerPID turnController = new BreakerPID(
 			_VisionConstants._turnP, 0, _VisionConstants._turnD, 
 			_VisionConstants._toleranceX, _VisionConstants._targetX
 		);
