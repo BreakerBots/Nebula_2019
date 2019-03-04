@@ -30,11 +30,11 @@ public class ArmManager extends BreakerSubsystem.Manager {
 			);
 	private static double upPosAdd = 0;
 	
-//	@tunerOutput
-//	public static double getCurrent() {
-//		return DriveSystems.gyro.getPitch();
-//	}
-//	@tunerOutput
+	@tunerOutput
+	public static double getCurrent() {
+		return DriveSystems.gyro.getPitch();
+	}
+	@tunerOutput
 	public static double lastOutput = 0;
 	
 	public void update() {

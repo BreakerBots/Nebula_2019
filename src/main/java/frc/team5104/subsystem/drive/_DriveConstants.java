@@ -24,11 +24,8 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	public static final int _currentLimit = 60; //(Amps) [Measure (<250, or ~240/#ofmotorsinurdrivetrain)] The current limit of the drive motors
 	
 	//Speed Control (Regular)
-	@tunerInput
 	public static double _kP = 0.285;
-	@tunerInput
 	public static double _kI = 0;
-	@tunerInput
 	public static double _kD = 12.0;
 	
 	//Speed Control (Feed Forward)

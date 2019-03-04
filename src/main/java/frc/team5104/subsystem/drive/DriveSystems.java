@@ -23,15 +23,15 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 	static TalonSRX R1 = Devices.Drive.R1;
 	static TalonSRX R2 = Devices.Drive.R2;
 	
-	@tunerOutput
+	//@tunerOutput
 	public static double leftTarget = 6.9;
-	@tunerOutput
+	//@tunerOutput
 	public static double rightTarget = 0;
-	@tunerOutput
+	//@tunerOutput
 	public static double leftCurrent() {
 		return encoders.getLeftVelocityFeet();
 	}
-	@tunerOutput
+	//@tunerOutput
 	public static double rightCurrent() {
 		return encoders.getRightVelocityFeet();
 	}

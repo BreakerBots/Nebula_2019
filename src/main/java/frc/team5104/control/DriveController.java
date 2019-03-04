@@ -4,13 +4,11 @@ package frc.team5104.control;
 import frc.team5104.control.BreakerMainController.BreakerController;
 import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.DriveSystems;
-import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.subsystem.drive.DriveSignal;
 import frc.team5104.subsystem.drive.DriveSignal.DriveUnit;
 import frc.team5104.util.BezierCurve;
 import frc.team5104.util.BezierCurveInterpolator;
 import frc.team5104.util.Deadband;
-import frc.team5104.webapp.Tuner.tunerOutput;
 import frc.team5104.util.Deadband.deadbandType;
 
 /**
@@ -55,19 +53,12 @@ public class DriveController extends BreakerController {
 		//Apply min speed
 		signal = Drive.applyMotorMinSpeed(signal);
 		
-		if (_Controls.Drive._shift.getHeld()) {
-			signal = new DriveSignal(
-					4, 4,
-					(_DriveConstants._kS + (_DriveConstants._kV * 4) + (_DriveConstants._kA * 1))
-					);
-		}
-		
 		//Set talon speeds
 		Drive.set(signal);
 		
 		//Shifting
-//		if (_Controls.Drive._shift.getPressed())
-//			DriveSystems.shifters.toggle();
+		if (_Controls.Drive._shift.getPressed())
+			DriveSystems.shifters.toggle();
 	}
 
 	//Stop The Subsystem
