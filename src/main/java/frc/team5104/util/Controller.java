@@ -178,35 +178,22 @@ public class Controller {
 	}
 	
 	public static class Rumble extends ControllerElement {
-		private static long timerTarget; 
-		private static boolean timerRunning = false;
-		public Controllers controller;
-		public boolean hard;
-		public long timeoutMs;
-		public double strength;
-		/**
-		 * Creates a saveable rumble object that can be referenced later.
-		 * @param strength (0-1) Perecent strength of the rumble
-		 * @param hard If the rumble should be hard (a deeper rumble) or soft (a lighter rumble)
-		 */
-		public Rumble(double strength, boolean hard) { this(strength, hard, Controllers.Main); }
-		/**
-		 * Creates a saveable rumble object that can be referenced later.
-		 * @param strength (0-1) Perecent strength of the rumble
-		 * @param hard If the rumble should be hard (a deeper rumble) or soft (a lighter rumble)
-		 * @param controller The target controller for this rumble.
-		 */
-		public Rumble(double strength, boolean hard, Controllers controller) { 
-			this(strength, hard, Integer.MIN_VALUE, controller); 
-			}
+		private long timerStart;
+		private boolean timerRunning = false;
+		private Controllers controller;
+		private boolean bounce;
+		private long timeoutMs;
+		private double strength;
+		private RumbleType rumbleType;
+		
 		/**
 		 * Creates a saveable rumble object that can be referenced later.
 		 * @param strength (0-1) Perecent strength of the rumble
 		 * @param hard If the rumble should be hard (a deeper rumble) or soft (a lighter rumble)
 		 * @param timeoutMs The time (milliseconds) in which the rumble should automatically stop.
 		 */
-		public Rumble(double strength, boolean hard, long timeoutMs) {
-			this(strength, hard, timeoutMs, Controllers.Main);
+		public Rumble(double strength, boolean hard, boolean bounce, long timeoutMs) {
+			this(strength, hard, bounce, timeoutMs, Controllers.Main);
 		}
 		/**
 		 * Creates a saveable rumble object that can be referenced later.
@@ -215,11 +202,12 @@ public class Controller {
 		 * @param timeoutMs The time (milliseconds) in which the rumble should automatically stop.
 		 * @param controller The target controller for this rumble.
 		 */
-		public Rumble(double strength, boolean hard, long timeoutMs, Controllers controller) {
+		public Rumble(double strength, boolean hard, boolean bounce, long timeoutMs, Controllers controller) {
 			this.strength = strength;
-			this.hard = hard;
 			this.timeoutMs = timeoutMs;
 			this.controller = controller;
+			this.bounce = bounce;
+			rumbleType = hard ? RumbleType.kLeftRumble : RumbleType.kRightRumble;
 			register.add(this);
 		}
 		
@@ -227,17 +215,28 @@ public class Controller {
 		 * Starts the rumble (specified in the constructor)
 		 */
 		public void start() {
-			controller.handler.setRumble(hard ? RumbleType.kLeftRumble : RumbleType.kRightRumble, strength);
-			if (timeoutMs != Integer.MIN_VALUE) {
-				timerTarget = System.currentTimeMillis() + timeoutMs; 
-				timerRunning = true;
-			}
+			timerStart = System.currentTimeMillis(); 
+			timerRunning = true;
 		}
 		
 		void update() {
-			if (timerRunning && System.currentTimeMillis() >= timerTarget) {
-				controller.handler.setRumble(hard ? RumbleType.kLeftRumble : RumbleType.kRightRumble, 0); 
-				timerRunning = false;
+			if (timerRunning) {
+				if (System.currentTimeMillis() > timerStart + timeoutMs) {
+					controller.handler.setRumble(rumbleType, 0);
+					timerRunning = false;
+				}
+				else {
+					if (bounce) {
+						if (System.currentTimeMillis() > timerStart + (timeoutMs/3.0)) {
+							if (System.currentTimeMillis() > timerStart + (timeoutMs/3.0*2))
+								controller.handler.setRumble(rumbleType, strength);
+							else 
+								controller.handler.setRumble(rumbleType, 0);
+						}
+						else controller.handler.setRumble(rumbleType, strength);
+					}
+					else controller.handler.setRumble(rumbleType, strength);
+				}
 			}
 		}
 	}

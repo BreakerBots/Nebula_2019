@@ -27,8 +27,8 @@ public class _Controls {
 		static final Control _reverse = new Control(ControlList.LeftTrigger);
 		
 		static final Control _shift = new Control(ControlList.LeftJoystickPress);
-		public static final Rumble _shiftRumbleLow = new Rumble(0.25, false, 200);
-		public static final Rumble _shiftRumbleHigh = new Rumble(0.75, false, 200);
+		public static final Rumble _shiftRumbleLow = new Rumble(0.75, true, false, 200);
+		public static final Rumble _shiftRumbleHigh = new Rumble(0.75, false, false, 200);
 	}
 	
 	//Hatch
@@ -36,8 +36,8 @@ public class _Controls {
 		static final Control _intake = new Control(ControlList.LeftBumper);
 		static final Control _eject = new Control(ControlList.RightBumper);
 		
-		public static final Rumble _holdRumble = new Rumble(1.0, true, 500);
-		static final Rumble _ejectRumble = new Rumble(1.0, false, 500);
+		public static final Rumble _holdRumble = new Rumble(1.0, false, false, 200);
+		static final Rumble _ejectRumble = new Rumble(1.0, true, false, 150);
 	}
 	
 	//Cargo
@@ -47,12 +47,12 @@ public class _Controls {
 		static final Control _trapdoorUp = new Control(ControlList.Y);
 		static final Control _trapdoorDown = new Control(ControlList.A);
 		
-		public static final Rumble _intakeRumble = new Rumble(1.0, false, 500);
-		public static final Rumble _storedRumble = new Rumble(1.0, true, 500);
-		static final Rumble _ejectRumble = new Rumble(1.0, false, 500);
+		public static final Rumble _intakeRumble = new Rumble(1.0, false, true, 300);
+		public static final Rumble _storedRumble = new Rumble(1.0, true, true, 300);
+		static final Rumble _ejectRumble = new Rumble(0.25, true, false, 300);
 		
-		static final Rumble _trapdoorUpRumble = new Rumble(1.0, true, 200);
-		static final Rumble _trapdoorDownRumble = new Rumble(1.0, false, 200);
+		static final Rumble _trapdoorUpRumble = new Rumble(0.75, true, false, 200);
+		static final Rumble _trapdoorDownRumble = new Rumble(0.75, false, false, 200);
 		
 		public static boolean _manualArm = false;
 		static final Control _armManual = new Control(ControlList.RightJoystickY);
