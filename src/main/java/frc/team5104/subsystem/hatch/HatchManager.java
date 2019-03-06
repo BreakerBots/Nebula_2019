@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.subsystem.hatch;
 
+import frc.team5104.main.RobotState;
 import frc.team5104.subsystem.BreakerSubsystem;
 
 public class HatchManager extends BreakerSubsystem.Manager {
@@ -14,6 +15,7 @@ public class HatchManager extends BreakerSubsystem.Manager {
 	static long ejectStartTime = System.currentTimeMillis();
 	static boolean ejectHard = false;
 	static long intakeStartTime = System.currentTimeMillis();
+	static boolean fastIntake = false;
 	
 	public void update() {
 		switch (currentState) {
@@ -44,14 +46,26 @@ public class HatchManager extends BreakerSubsystem.Manager {
 				HatchSystems.Lazyboy.up();
 				HatchSystems.Ejector.retract();
 				
-				if (System.currentTimeMillis() > _HatchConstants._intakeModeLength + intakeStartTime)
-					currentState = HatchState.hold;
+				if (fastIntake) {
+					if (System.currentTimeMillis() > _HatchConstants._intakeModeFastLength + intakeStartTime) {
+						fastIntake = false;
+						currentState = HatchState.hold;
+					}
+				}
+				else if (System.currentTimeMillis() > _HatchConstants._intakeModeLength + intakeStartTime)
+						currentState = HatchState.hold;
 			default:
 				break;
 		}
 	}
 
 	public void disabled() { }
-	public void enabled() { }
+	public void enabled() {
+		if (RobotState.isSandstorm()) {
+			fastIntake = true;
+			intakeStartTime = System.currentTimeMillis();
+			currentState = HatchState.intake;
+		}
+	}
 	public HatchManager() { }
 }

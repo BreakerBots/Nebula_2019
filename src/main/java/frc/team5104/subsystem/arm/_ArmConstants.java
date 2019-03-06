@@ -17,14 +17,6 @@ public class _ArmConstants {
 	public static final double _climbInitTolerance = 1;
 	public static final double _climbInitMax = 8;
 	public static final double _climbInitDegrees = 70;
-//	@tunerInput
-	public static double _climbP = 1.0;
-//	@tunerInput
-	public static double _climbI = 0.0;
-//	@tunerInput
-	public static double _climbD = 0.0;
-//	@tunerInput
-	public static double _climbTolerance = 0;
 	
 	//Intake Hold Arm Movement
 	public static double _intakeHoldDownP = 0.1;
@@ -35,10 +27,11 @@ public class _ArmConstants {
 	public static final double _fullyUpDegrees = -48;
 	
 	//Current Limit
+	@tunerInput
 	public static final int _currentLimit = 60;
 	
 	//Setpoints
 	public static final double _upPos = _fullyUpDegrees;
 //	@tunerInput
-	public static double _downPos = 105;
+	public static double _downPos = 110;
 }

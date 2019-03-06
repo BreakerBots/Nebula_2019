@@ -15,7 +15,9 @@ public class _HatchConstants {
 	
 	//Modes
 	@tunerInput
-	public static int _intakeModeLength = 1000;
+	public static int _intakeModeLength = 500;
 	@tunerInput
-	public static int _ejectModeLength = 1000;
+	public static int _intakeModeFastLength = 400;
+	@tunerInput
+	public static int _ejectModeLength = 200;
 }

@@ -34,20 +34,20 @@ public class ClimberManager extends BreakerSubsystem.Manager {
 						}
 						break;
 					case lift1:
-						//ClimberSystems.extendStage1();
-//						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants.lift1Length) {
-//							currentStage = ClimberStage.lift2;
-//							currentStageStart = System.currentTimeMillis();
-//						}
+						ClimberSystems.extendStage1();
+						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants.lift1Length) {
+							currentStage = ClimberStage.lift2;
+							currentStageStart = System.currentTimeMillis();
+						}
 						break;
 					case lift2:
-						//ClimberSystems.extendStage1();
-						//ClimberSystems.extendStage2();
+						ClimberSystems.extendStage1();
+						ClimberSystems.extendStage2();
 						
-//						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants.lift2Length) {
-//							currentStage = ClimberStage.forward;
-//							currentStageStart = System.currentTimeMillis();
-//						}
+						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants.lift2Length) {
+							currentStage = ClimberStage.forward;
+							currentStageStart = System.currentTimeMillis();
+						}
 						break;
 					case forward:
 						ClimberSystems.extendStage1();

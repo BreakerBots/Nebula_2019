@@ -1,6 +1,7 @@
 package frc.team5104.control;
 
 import frc.team5104.control.BreakerMainController.BreakerController;
+import frc.team5104.subsystem.arm.Arm;
 import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.superstructure.cargo.Cargo;
@@ -17,9 +18,8 @@ class CargoController extends BreakerController {
 			Cargo.eject();
 		
 		//Manual Arm
-		if (_Controls.Cargo._manualArm) {
+		if (Arm.isManual()) {
 			double force = _Controls.Cargo._armManual.getAxis() * 10;
-//			console.log("voltage: " + force, "degrees: " + ArmSystems.Encoder.getDegrees());
 			ArmSystems.applyForce(force);
 		}
 		

@@ -12,7 +12,7 @@ class ClimberSystems extends BreakerSubsystem.Systems {
 	static DoubleSolenoid stage2 = Devices.Climber.stage2;
 	
 	static void extendStage1() {
-		stage1.set(_ClimberConstants._stage1In);
+		stage1.set(PneumaticFactory.getOppositeValue(_ClimberConstants._stage1In));
 	}
 	
 	static boolean extendedStage1() {
@@ -20,7 +20,7 @@ class ClimberSystems extends BreakerSubsystem.Systems {
 	}
 	
 	static void extendStage2() {
-		stage2.set(_ClimberConstants._stage2In);
+		stage2.set(PneumaticFactory.getOppositeValue(_ClimberConstants._stage2In));
 	}
 
 	static boolean extendedStage2() {
@@ -28,7 +28,7 @@ class ClimberSystems extends BreakerSubsystem.Systems {
 	}
 	
 	static void retractAll() {
-		stage1.set(PneumaticFactory.getOppositeValue(_ClimberConstants._stage1In));
-		stage2.set(PneumaticFactory.getOppositeValue(_ClimberConstants._stage2In));
+		stage1.set(_ClimberConstants._stage1In);
+		stage2.set(_ClimberConstants._stage2In);
 	}
 }

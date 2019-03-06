@@ -11,11 +11,13 @@ import frc.team5104.subsystem.arm.ArmManager;
 import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.arm._ArmConstants;
 import frc.team5104.subsystem.climber.ClimberManager;
+import frc.team5104.subsystem.climber._ClimberConstants;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.subsystem.hatch.HatchManager;
+import frc.team5104.subsystem.hatch._HatchConstants;
 import frc.team5104.util.console;
 import frc.team5104.util.CSV;
 import frc.team5104.util.Controller;
@@ -38,7 +40,7 @@ public class Robot extends RobotController.BreakerRobot {
 			 new ArmManager(),
 			 new ClimberManager()
 		);
-		Tuner.init(_ArmConstants.class, ArmManager.class, _CargoConstants.class, DriveSystems.class, _DriveConstants.class, DriveSystems.encoders.class);
+		Tuner.init(_ClimberConstants.class, _ArmConstants.class, _HatchConstants.class, _CargoConstants.class);
 		CameraServer.getInstance().startAutomaticCapture();
 		Webapp.init();
 		VisionManager.init();

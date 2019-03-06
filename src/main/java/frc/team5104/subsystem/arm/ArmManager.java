@@ -4,10 +4,10 @@ package frc.team5104.subsystem.arm;
 import frc.team5104.control._Controls;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.climber.Climber;
-import frc.team5104.subsystem.drive.DriveSystems;
+import frc.team5104.subsystem.climber.ClimberManager.ClimberStage;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.BreakerPID;
-import frc.team5104.util.Buffer;
+import frc.team5104.util.console;
 
 public class ArmManager extends BreakerSubsystem.Manager {
 
@@ -23,26 +23,11 @@ public class ArmManager extends BreakerSubsystem.Manager {
 	static BreakerPID armController = new BreakerPID
 			(_ArmConstants._armP, _ArmConstants._armI, _ArmConstants._armD, _ArmConstants._armTolerance);
 	private static double upPosAdd = 0;
-	static BreakerPID climbController = new BreakerPID
-			(_ArmConstants._climbP, _ArmConstants._climbI, _ArmConstants._climbD, _ArmConstants._climbTolerance, 0);
 	public static BreakerPID climbInitController = new BreakerPID(
 			_ArmConstants._climbInitP, _ArmConstants._climbInitI, 0, _ArmConstants._climbInitTolerance
 			);
-	private static Buffer climbBuffer = new Buffer(50, 0);
-	
-	@tunerOutput
-	public static double getCurrent() {
-		return DriveSystems.gyro.getPitch();
-	}
-	@tunerOutput
-	public static double lastOutput = 0;
 	
 	public void update() {
-		climbController._kP = _ArmConstants._climbP;
-		climbController._kI = _ArmConstants._climbI;
-		climbController._kD = _ArmConstants._climbD;
-		climbController.tolerance = _ArmConstants._climbTolerance;
-		
 		if (Climber.isClimbing())
 			currentState = ArmState.climbing;
 		
@@ -51,7 +36,7 @@ public class ArmManager extends BreakerSubsystem.Manager {
 			upPosAdd = 0;
 		}
 		
-		if (_Controls.Cargo._manualArm)
+		if (Arm.isManual())
 			return;
 		
 		switch (currentState) {
@@ -97,26 +82,12 @@ public class ArmManager extends BreakerSubsystem.Manager {
 				
 			//Climbing
 			case climbing:
-				switch (Climber.getStage()) {
-					//Stage 0 (Move the arm to a level touching L3 but not yet lifting)
-					case initial:
-						climbInitController.setTarget(_ArmConstants._climbInitDegrees);
-						if(climbInitController.onTarget() == false) 
-							ArmSystems.applyForce(BreakerMath.clamp(climbInitController.update(ArmSystems.Encoder.getDegrees()), 0, _ArmConstants._climbInitMax));
-						else 
-							ArmSystems.applyForce(0);
-						break;
-					//Stage 1/2 (Move arm to level out the robot using PID referencing the pitch of the gyro)
-					default:
-						climbBuffer.update(climbController.update(-DriveSystems.gyro.getPitch()));
-						climbController.setTarget(0);
-						
-						if(climbController.onTarget() == false) 
-							ArmSystems.applyForce(climbBuffer.getDoubleOutput());
-						else
-							ArmSystems.applyForce(0);
-						break;
-				} 
+				//Stage 0 (Move the arm to a level touching L3 but not yet lifting)
+				climbInitController.setTarget(_ArmConstants._climbInitDegrees);
+				if(climbInitController.onTarget() == false) 
+					ArmSystems.applyForce(BreakerMath.clamp(climbInitController.update(ArmSystems.Encoder.getDegrees()), 0, _ArmConstants._climbInitMax));
+				else 
+					ArmSystems.applyForce(0);
 				break;
 			case calibrating:
 				if (ArmSystems.LimitSwitch.isHit()) {
@@ -129,10 +100,9 @@ public class ArmManager extends BreakerSubsystem.Manager {
 		}
 	}
 	
+	
 	public void enabled() {
 		armController.reset();
-		climbController.reset();
-		climbBuffer = new Buffer(50, 0);
 		climbInitController.reset();
 		currentState = ArmState.calibrating;
 	}

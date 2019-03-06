@@ -13,6 +13,7 @@ public class Hatch extends BreakerSubsystem.Actions {
 	public static void intake() {
 		console.log(c.HATCH, t.INFO, "Intaking Hatch");
 		if (isBack()) {
+			HatchManager.fastIntake = false;
 			HatchManager.intakeStartTime = System.currentTimeMillis();
 			HatchManager.currentState = HatchState.intake;
 		}
