@@ -50,7 +50,7 @@ public class Devices {
 	
 	//Hatch
 	public static class Hatch {
-		public static DoubleSolenoid trap = PneumaticFactory.getDoubleSolenoid(PCM.Red, 2, 3);
+		public static DoubleSolenoid flaps = PneumaticFactory.getDoubleSolenoid(PCM.Red, 2, 3);
 		public static DoubleSolenoid lazyBoy = PneumaticFactory.getDoubleSolenoid(PCM.Red, 4, 5);
 		public static DoubleSolenoid ejector = PneumaticFactory.getDoubleSolenoid(PCM.Red, 0, 1);
 	}

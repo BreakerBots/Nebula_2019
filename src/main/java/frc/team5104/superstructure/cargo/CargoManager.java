@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.superstructure.cargo;
 
+import frc.team5104.control._Controls;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.arm.Arm;
 import frc.team5104.subsystem.arm.ArmSystems;
@@ -51,8 +52,10 @@ public class CargoManager extends BreakerSubsystem.Manager {
 					beltInterpolator.setSetpoint(0);
  				CargoSystems.Belt.set(beltInterpolator.update());
 				
-				if (Chute.BeamAverage.getBooleanOutput())
+				if (Chute.BeamAverage.getBooleanOutput()) {
+					_Controls.Cargo._storedRumble.start();
 					Cargo.idle();
+				}
 				
 				break;
 				

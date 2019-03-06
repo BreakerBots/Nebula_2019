@@ -63,8 +63,10 @@ public class ArmManager extends BreakerSubsystem.Manager {
 				armController.setTarget(_ArmConstants._downPos);
 				if(armController.onTarget() == false)
 					ArmSystems.applyForce(armController.update(ArmSystems.Encoder.getDegrees()));
-				else
+				else {
 					currentState = ArmState.intakeHold;
+					_Controls.Cargo._intakeRumble.start();
+				}
 				break;
 			//Intake Hold
 			case intakeHold:

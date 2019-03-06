@@ -13,9 +13,10 @@ class CargoController extends BreakerController {
 			Cargo.idle();
 		if (_Controls.Cargo._intake.getPressed()) 
 			Cargo.intake();
-		if (_Controls.Cargo._eject.getPressed())
-			//Vision.runVision(RobotMode.Teleop, ActionMode.cargo, Chute.isDown() ? VisionTarget.rocket : VisionTarget.standard);
+		if (_Controls.Cargo._eject.getPressed()) {
 			Cargo.eject();
+			_Controls.Cargo._ejectRumble.start();
+		}
 		
 		//Manual Arm
 		if (Arm.isManual()) {
@@ -24,10 +25,13 @@ class CargoController extends BreakerController {
 		}
 		
 		//Trapdoor
-		if (_Controls.Cargo._trapdoorUp.getPressed())
+		if (_Controls.Cargo._trapdoorUp.getPressed()) {
 			Chute.trapdoorUp();
+			_Controls.Cargo._trapdoorUpRumble.start();
+		}
 		if (_Controls.Cargo._trapdoorDown.getPressed()) {
 			Chute.trapdoorDown();
+			_Controls.Cargo._trapdoorDownRumble.start();
 		}
 	}
 

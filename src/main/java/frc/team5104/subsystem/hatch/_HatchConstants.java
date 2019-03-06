@@ -5,7 +5,7 @@ import frc.team5104.webapp.Tuner.tunerInput;
 
 public class _HatchConstants {
 	//Dad
-	public static DoubleSolenoid.Value _trapIn = DoubleSolenoid.Value.kReverse;
+	public static DoubleSolenoid.Value _flapsIn = DoubleSolenoid.Value.kReverse;
 	
 	//Lazy Boy
 	public static DoubleSolenoid.Value _lazyBoyUp = DoubleSolenoid.Value.kForward;

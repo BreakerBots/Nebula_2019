@@ -21,27 +21,27 @@ class HatchSystems extends BreakerSubsystem.Systems {
 		static boolean isBack() { return !isUp(); }
 	}
 	
-	//Rose
-	public static class Trap {
+	//Flaps
+	public static class Flaps {
 		public static void in() {
-			Devices.Hatch.trap.set(_HatchConstants._trapIn);
+			Devices.Hatch.flaps.set(_HatchConstants._flapsIn);
 		}
 		public static void out() {
-			Devices.Hatch.trap.set(PneumaticFactory.getOppositeValue(_HatchConstants._trapIn));
+			Devices.Hatch.flaps.set(PneumaticFactory.getOppositeValue(_HatchConstants._flapsIn));
 		}
 		
 		static boolean isOpen() {
-			return Devices.Hatch.trap.get() == _HatchConstants._trapIn;
+			return Devices.Hatch.flaps.get() == _HatchConstants._flapsIn;
 		}
 		static boolean isClosed() { return !isOpen(); }
 	}
 	
 	//Ejector (yeeter)
 	public static class Ejector {
-		public static void eject() {
+		public static void yeet() {
 			Devices.Hatch.ejector.set(_HatchConstants._ejectorOut);
 		}
-		public static void retract() {
+		public static void pullOut() {
 			Devices.Hatch.ejector.set(PneumaticFactory.getOppositeValue(_HatchConstants._ejectorOut));
 		}
 		

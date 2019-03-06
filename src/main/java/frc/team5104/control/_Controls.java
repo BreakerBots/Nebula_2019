@@ -12,7 +12,7 @@ public class _Controls {
 	//Main 
 	static class Main {
 		static final Control _toggleVision = new Control(ControlList.DirectionPadUp);
-		static final Control _toggleAuto = new Control(ControlList.Menu);
+		static final Control _toggleAuto = new Control(ControlList.DirectionPadDown);
 		
 		static final Control _idle = new Control(ControlList.List);
 		
@@ -29,13 +29,15 @@ public class _Controls {
 		static final Control _shift = new Control(ControlList.LeftJoystickPress);
 		public static final Rumble _shiftRumbleLow = new Rumble(0.25, false, 200);
 		public static final Rumble _shiftRumbleHigh = new Rumble(0.75, false, 200);
-		//public static final double _switchDrive = ;
 	}
 	
 	//Hatch
-	static class Hatch {
+	public static class Hatch {
 		static final Control _intake = new Control(ControlList.LeftBumper);
 		static final Control _eject = new Control(ControlList.RightBumper);
+		
+		public static final Rumble _holdRumble = new Rumble(1.0, true, 500);
+		static final Rumble _ejectRumble = new Rumble(1.0, false, 500);
 	}
 	
 	//Cargo
@@ -45,6 +47,13 @@ public class _Controls {
 		static final Control _trapdoorUp = new Control(ControlList.Y);
 		static final Control _trapdoorDown = new Control(ControlList.A);
 		
+		public static final Rumble _intakeRumble = new Rumble(1.0, false, 500);
+		public static final Rumble _storedRumble = new Rumble(1.0, true, 500);
+		static final Rumble _ejectRumble = new Rumble(1.0, false, 500);
+		
+		static final Rumble _trapdoorUpRumble = new Rumble(1.0, true, 200);
+		static final Rumble _trapdoorDownRumble = new Rumble(1.0, false, 200);
+		
 		public static boolean _manualArm = false;
 		static final Control _armManual = new Control(ControlList.RightJoystickY);
 	}
@@ -52,9 +61,5 @@ public class _Controls {
 	//Climb
 	static class Climb {
 		static final Control _climb = new Control(ControlList.DirectionPadRight);
-		
-		static boolean _manualClimb = false;
-		static final Control _stage1 = new Control(ControlList.DirectionPadRight);
-		static final Control _stage2 = new Control(ControlList.DirectionPadDown);
 	}
 }
