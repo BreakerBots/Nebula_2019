@@ -4,6 +4,8 @@ package frc.team5104.subsystem.hatch;
 import frc.team5104.control._Controls;
 import frc.team5104.main.RobotState;
 import frc.team5104.subsystem.BreakerSubsystem;
+import frc.team5104.util.console;
+import frc.team5104.util.console.c;
 
 public class HatchManager extends BreakerSubsystem.Manager {
 	public static enum HatchState {
@@ -34,8 +36,9 @@ public class HatchManager extends BreakerSubsystem.Manager {
 				HatchSystems.Flaps.in();
 				HatchSystems.Lazyboy.up();
 				
-				if (ejectHard)
+				if (ejectHard && System.currentTimeMillis() > _HatchConstants._ejectorDelay + ejectStartTime) {
 					HatchSystems.Ejector.yeet();
+				}
 				else
 					HatchSystems.Ejector.pullOut();
 					
@@ -52,6 +55,7 @@ public class HatchManager extends BreakerSubsystem.Manager {
 						fastIntake = false;
 						currentState = HatchState.hold;
 						_Controls.Hatch._holdRumble.start();
+						console.log(c.HATCH, "Finished Sandstorm/Fast Hatch Intake");
 					}
 				}
 				else if (System.currentTimeMillis() > _HatchConstants._intakeModeLength + intakeStartTime) {
@@ -69,6 +73,7 @@ public class HatchManager extends BreakerSubsystem.Manager {
 			fastIntake = true;
 			intakeStartTime = System.currentTimeMillis();
 			currentState = HatchState.intake;
+			console.log(c.HATCH, "Starting Sandstorm/Fast Hatch Intake");
 		}
 	}
 	public HatchManager() { }

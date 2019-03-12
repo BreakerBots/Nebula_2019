@@ -36,6 +36,9 @@ public class BreakerMainController {
 			
 			//Climb 
 			climbController.handle();
+			
+			//Compressor
+			compressorController.handle();
 		}
 		
 		//Vision
@@ -43,9 +46,7 @@ public class BreakerMainController {
 //			Vision.toggleState();
 		
 		//Compressor
-		if (currentMode == RobotMode.Teleop || currentMode == RobotMode.Test)
-			compressorController.handle();
-		else
+		if (currentMode != RobotMode.Teleop && currentMode != RobotMode.Test)
 			Compressor.stop();
 		
 		//Test Mode
@@ -53,6 +54,7 @@ public class BreakerMainController {
 			driveController.forceIdle();
 			cargoController.forceIdle();
 			hatchController.forceIdle();
+			Compressor.run();
 		}
 		
 		//Enabled

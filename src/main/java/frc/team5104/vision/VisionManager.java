@@ -27,6 +27,7 @@ public class VisionManager {
 	
 	public static void start() {
 		Vision.reset();
+		Vision.changeLEDState(0);
 	}
 	
 	public static void handle() {
@@ -35,7 +36,8 @@ public class VisionManager {
 	private static void update() {
 		if (VisionMovement.isFinished()) {
 			RobotState.setMode(exitState);
-			Vision.action(exitAction);
+			if (exitAction != null)
+				Vision.action(exitAction);
 		}
 		else {
 			DriveSignal signal = Vision.getNextSignal();
@@ -45,6 +47,6 @@ public class VisionManager {
 	}
 
 	public static void stop() {
-		
+		Vision.changeLEDState(1);
 	}
 }

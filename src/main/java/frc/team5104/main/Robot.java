@@ -20,6 +20,7 @@ import frc.team5104.subsystem.hatch.HatchManager;
 import frc.team5104.subsystem.hatch._HatchConstants;
 import frc.team5104.util.console;
 import frc.team5104.util.CSV;
+import frc.team5104.util.Compressor;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.Vision;
 import frc.team5104.vision.VisionManager;
@@ -40,7 +41,7 @@ public class Robot extends RobotController.BreakerRobot {
 			 new ArmManager(),
 			 new ClimberManager()
 		);
-		Tuner.init(_ClimberConstants.class, _ArmConstants.class, _HatchConstants.class, _CargoConstants.class);
+		Tuner.init(_ClimberConstants.class, _ArmConstants.class, _HatchConstants.class, _CargoConstants.class, Compressor.class);
 		CameraServer.getInstance().startAutomaticCapture();
 		Webapp.init();
 		VisionManager.init();
@@ -67,7 +68,8 @@ public class Robot extends RobotController.BreakerRobot {
 	}
 	
 	public void mainLoop() {
-		//console.log(DriveSystems.gyro.getPitch());
+//		console.log(ArmSystems.LimitSwitch.isHit());
+//		console.log(Compressor.getString());
 		if (RobotState.isEnabled()) {
 			BreakerSubsystemManager.handle();
 			Controller.handle();

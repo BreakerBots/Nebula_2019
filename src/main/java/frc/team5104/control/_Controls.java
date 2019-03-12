@@ -13,6 +13,7 @@ public class _Controls {
 	static class Main {
 		static final Control _toggleVision = new Control(ControlList.DirectionPadUp);
 		static final Control _toggleAuto = new Control(ControlList.DirectionPadDown);
+		static final Control _toggleCamera = new Control(ControlList.DirectionPadDown);
 		
 		static final Control _idle = new Control(ControlList.List);
 		

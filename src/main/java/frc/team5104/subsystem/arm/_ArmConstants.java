@@ -8,8 +8,9 @@ public class _ArmConstants {
 	public static final double _armI = 0.0;
 	public static final double _armD = 0.0;
 	public static final double _armTolerance = 1;
-	public static final double _upVLimit = 6;
-	public static final double _downVLimit = 12;
+	public static final double _upVLimit = 6;//6;
+	public static final double _downVLimit = 9;//12;
+	public static final double _calibrateSpeed = 4;//4;
 	
 	//Climb Arm Movement
 	public static final double _climbInitP = 0.16;
@@ -32,6 +33,6 @@ public class _ArmConstants {
 	
 	//Setpoints
 	public static final double _upPos = _fullyUpDegrees;
-//	@tunerInput
-	public static double _downPos = 110;
+	@tunerInput
+	public static double _downPos = 115; //105
 }

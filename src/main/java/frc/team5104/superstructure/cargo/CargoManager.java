@@ -26,7 +26,22 @@ public class CargoManager extends BreakerSubsystem.Manager {
 		if(Climber.isClimbing()) currentState = CargoState.idle;
 		
 		Chute.BeamAverage.update(ChuteSystems.BeamBreak.isHit());
-				
+		
+		if (Arm.isManual() && (currentState == CargoState.intake || currentState == CargoState.idle)) {
+			beltInterpolator.deltaTime = 0.05;
+			if(ArmSystems.Encoder.getDegrees() > _CargoConstants._intakeStartPos && !Chute.BeamAverage.getBooleanOutput()) 
+				beltInterpolator.setSetpoint(_CargoConstants._intakeSpeed);
+			else 
+				beltInterpolator.setSetpoint(0);
+			CargoSystems.Belt.set(beltInterpolator.update());
+			
+			if (Chute.BeamAverage.getBooleanOutput()) {
+				_Controls.Cargo._storedRumble.start();
+				Cargo.idle();
+			}
+			return;
+		}
+		
 		switch (currentState) {
 			//Eject Mode
 			case eject:

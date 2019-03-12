@@ -21,7 +21,7 @@ public class DriveController extends BreakerController {
 	private static final BezierCurveInterpolator vTeleopLeftSpeed  = new BezierCurveInterpolator(_driveCurveChange, _driveCurve);
 	private static final BezierCurveInterpolator vTeleopRightSpeed = new BezierCurveInterpolator(_driveCurveChange, _driveCurve);
 	
-	private static BezierCurve turnCurve = new BezierCurve(0, 0.4, 0.8, 0.4);//new BezierCurve(0.15, 0.7, 0.8, 0.225);
+	private static BezierCurve turnCurve = new BezierCurve(0.15, 0.7, 0.8, 0.225);//0, 0.4, 0.8, 0.4//0.15, 0.7, 0.8, 0.225
 	private static double _turnCurveSpeedAdjust = 0.2;
 	
 	//Main Handle Function

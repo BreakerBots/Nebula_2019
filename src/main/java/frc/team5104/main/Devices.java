@@ -64,6 +64,6 @@ public class Devices {
 	//Other
 	public static class Other {
 		public static Compressor compressor = PneumaticFactory.getCompressor(PCM.Gold);
-		public static AnalogInput compressorReader = SensorFactory.getAnalogInput(3);
+		public static AnalogInput compressorReader = SensorFactory.getAnalogInput(0); //3
 	}
 }

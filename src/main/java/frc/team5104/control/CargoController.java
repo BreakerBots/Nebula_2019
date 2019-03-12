@@ -5,12 +5,16 @@ import frc.team5104.subsystem.arm.Arm;
 import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.superstructure.cargo.Cargo;
+import frc.team5104.util.console;
 
 class CargoController extends BreakerController {
 	void update() {
 		//Main Controls
 		if (_Controls.Main._idle.getPressed()) 
 			Cargo.idle();
+		if (_Controls.Main._idle.getDoubleClick() == 2) {
+			_Controls.Cargo._manualArm = true;
+		}
 		if (_Controls.Cargo._intake.getPressed()) 
 			Cargo.intake();
 		if (_Controls.Cargo._eject.getPressed()) {
@@ -21,7 +25,12 @@ class CargoController extends BreakerController {
 		//Manual Arm
 		if (Arm.isManual()) {
 			double force = _Controls.Cargo._armManual.getAxis() * 10;
+//			console.log(force);
 			ArmSystems.applyForce(force);
+		}
+		else if (Arm.isIntaking()) {
+			double change = _Controls.Cargo._armManual.getAxis() * 0.5;
+			Arm.changeDownPosition(change);
 		}
 		
 		//Trapdoor

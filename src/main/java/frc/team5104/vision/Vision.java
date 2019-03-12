@@ -28,7 +28,7 @@ public class Vision {
 	}
 	
 	/** Toggle the state of the limelight */
-	public static void toggleState() {
+	public static void toggleDrivingMode() {
 		boolean driverMode = VisionSystems.networkTable.getEntry("camMode").getDouble(-1) == 1;
 		VisionSystems.networkTable.setEntry("camMode", driverMode ? 0 : 1);
 		changeLEDState(driverMode ? 1 : 0);
@@ -45,6 +45,7 @@ public class Vision {
 		VisionManager.exitState = exitState;
 		VisionManager.exitAction = exitAction;
 		VisionManager.target = target;
+		Vision.changeLEDState(0);
 		console.log(c.VISION, t.INFO, "Running Vision");
 	}
 	

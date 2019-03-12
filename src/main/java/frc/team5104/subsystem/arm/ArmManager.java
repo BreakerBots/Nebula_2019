@@ -46,7 +46,7 @@ public class ArmManager extends BreakerSubsystem.Manager {
 				double force = armController.update(ArmSystems.Encoder.getDegrees());
 				
 				if (ArmSystems.LimitSwitch.isHit() == false && force < 1) {
-					upPosAdd -= 0.5;
+					upPosAdd -= 0.2;
 					armController.setTarget(_ArmConstants._upPos + upPosAdd);
 					force = armController.update(ArmSystems.Encoder.getDegrees());
 				}
@@ -97,7 +97,7 @@ public class ArmManager extends BreakerSubsystem.Manager {
 					ArmSystems.Encoder.zero();
 				}
 				else {
-					ArmSystems.applyForce(-4);
+					ArmSystems.applyForce(-_ArmConstants._calibrateSpeed);
 				}
 		}
 	}

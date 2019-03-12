@@ -24,11 +24,14 @@ class StateController extends BreakerController {
 		}
 		
 		//Auto Switching
-		if (_Controls.Main._toggleAuto.getPressed() && RobotState.isSandstorm()) {
-			if (RobotState.getMode() == RobotMode.Auto)
-				RobotState.setMode(RobotMode.Teleop);
-			else 
-				RobotState.setMode(RobotMode.Auto);
+//		if (_Controls.Main._toggleAuto.getPressed() && RobotState.isSandstorm()) {
+//			if (RobotState.getMode() == RobotMode.Auto)
+//				RobotState.setMode(RobotMode.Teleop);
+//			else 
+//				RobotState.setMode(RobotMode.Auto);
+//		}
+		if (_Controls.Main._toggleCamera.getPressed()) {
+			Vision.toggleDrivingMode();
 		}
 	}
 }

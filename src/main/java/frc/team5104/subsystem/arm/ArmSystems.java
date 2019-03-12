@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.BreakerMath;
+import frc.team5104.util.console;
 import frc.team5104.webapp.Tuner.tunerOutput;
 
 public class ArmSystems extends BreakerSubsystem.Systems {
@@ -21,7 +22,7 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 	
 	//Encoder (Vex Integrated Mag Encoder)
 	public static class Encoder {
-		public static int getRawRotation() { return -Devices.Cargo.leftArm.getSelectedSensorPosition(); }
+		public static int getRawRotation() { return Devices.Cargo.leftArm.getSelectedSensorPosition(); }
 		@tunerOutput
 		public static double getDegrees() { 
 			return getRawRotation() / _ArmConstants._ticksPerRevolution * 360 + _ArmConstants._fullyUpDegrees; 

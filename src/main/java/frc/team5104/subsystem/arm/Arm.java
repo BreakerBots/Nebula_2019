@@ -6,6 +6,7 @@ import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.arm.ArmManager.ArmState;
 import frc.team5104.subsystem.climber.Climber;
 import frc.team5104.subsystem.climber.ClimberManager.ClimberStage;
+import frc.team5104.util.BreakerMath;
 import frc.team5104.util.console;
 
 public class Arm extends BreakerSubsystem.Actions {
@@ -28,5 +29,14 @@ public class Arm extends BreakerSubsystem.Actions {
 			return true;
 		else
 			return Climber.isClimbing() && Climber.getStage() != ClimberStage.initial;
+	}
+	
+	public static boolean isIntaking() {
+		return ArmManager.currentState == ArmState.intakeDown || ArmManager.currentState == ArmState.intakeHold;
+	}
+	
+	public static void changeDownPosition(double change) {
+		_ArmConstants._downPos = BreakerMath.clamp(_ArmConstants._downPos + change, 90, 125);
+		intake();
 	}
 }

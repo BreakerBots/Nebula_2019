@@ -11,6 +11,7 @@ import frc.team5104.control._Controls;
 import frc.team5104.main.Devices;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.BreakerMath;
+import frc.team5104.util.PneumaticFactory;
 import frc.team5104.util.Units;
 import frc.team5104.util.console;
 import frc.team5104.util.console.c;
@@ -90,7 +91,7 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 	//Shifters
 	public static class shifters {
 		public static boolean inLowGear() {
-			return Devices.Drive.shift.get() == DoubleSolenoid.Value.kReverse;
+			return Devices.Drive.shift.get() == _DriveConstants._shiftLow;
 		}
 		
 		/**
@@ -99,7 +100,7 @@ public class DriveSystems extends BreakerSubsystem.Systems {
 		public static void set(boolean high) {
 			if (high ? inLowGear() : !inLowGear()) {
 				console.log(c.DRIVE, high ? "Shifting High" : "Shifting Low");
-				Devices.Drive.shift.set(high ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse);
+				Devices.Drive.shift.set(high ? PneumaticFactory.getOppositeValue(_DriveConstants._shiftLow) : _DriveConstants._shiftLow);
 				if (high) _Controls.Drive._shiftRumbleHigh.start();
 				else _Controls.Drive._shiftRumbleLow.start();
 			}

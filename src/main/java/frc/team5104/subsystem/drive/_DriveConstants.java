@@ -1,6 +1,9 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.subsystem.drive;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import frc.team5104.main._RobotConstants;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.webapp.Tuner.tunerInput;
 
@@ -22,6 +25,9 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	
 	//Current Limiting
 	public static final int _currentLimit = 60; //(Amps) [Measure (<250, or ~240/#ofmotorsinurdrivetrain)] The current limit of the drive motors
+	
+	//Shifting
+	public static final Value _shiftLow = _RobotConstants._isCompBot ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse;
 	
 	//Speed Control (Regular)
 	public static double _kP = 0.285;
