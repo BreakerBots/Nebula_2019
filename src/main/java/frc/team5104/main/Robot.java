@@ -5,29 +5,23 @@ import edu.wpi.first.cameraserver.CameraServer;
 import frc.team5104.auto.AutoSelector;
 import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.control.BreakerMainController;
-import frc.team5104.control.DriveController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.arm.ArmManager;
-import frc.team5104.subsystem.arm.ArmSystems;
-import frc.team5104.subsystem.arm._ArmConstants;
 import frc.team5104.subsystem.climber.ClimberManager;
-import frc.team5104.subsystem.climber._ClimberConstants;
 import frc.team5104.subsystem.drive.DriveManager;
-import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
-import frc.team5104.subsystem.drive._DriveConstants;
 import frc.team5104.subsystem.hatch.HatchManager;
 import frc.team5104.subsystem.hatch._HatchConstants;
 import frc.team5104.util.console;
 import frc.team5104.util.CSV;
-import frc.team5104.util.Compressor;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.Vision;
 import frc.team5104.vision.VisionManager;
+import frc.team5104.vision.VisionMovement;
+import frc.team5104.vision._VisionConstants;
 import frc.team5104.webapp.Tuner;
 import frc.team5104.webapp.Webapp;
 import frc.team5104.superstructure.cargo.CargoManager;
-import frc.team5104.superstructure.cargo._CargoConstants;
 
 /**
  * Fallthrough from <strong>Breaker Robot Controller</strong>
@@ -41,9 +35,9 @@ public class Robot extends RobotController.BreakerRobot {
 			 new ArmManager(),
 			 new ClimberManager()
 		);
-		Tuner.init(_ClimberConstants.class, _ArmConstants.class, _HatchConstants.class, _CargoConstants.class, Compressor.class);
-		CameraServer.getInstance().startAutomaticCapture();
 		Webapp.init();
+		Tuner.init(_HatchConstants.class);// _CargoConstants.class);
+		CameraServer.getInstance().startAutomaticCapture();
 		VisionManager.init();
 		Odometry.run();
 	}
@@ -68,6 +62,7 @@ public class Robot extends RobotController.BreakerRobot {
 	}
 	
 	public void mainLoop() {
+//		console.log(ArmSystems.Encoder.getDegrees(), ArmSystems.LimitSwitch.isHit());
 //		console.log(ArmSystems.LimitSwitch.isHit());
 //		console.log(Compressor.getString());
 		if (RobotState.isEnabled()) {

@@ -25,9 +25,9 @@ public class ChuteSystems extends BreakerSubsystem.Systems {
 	//Beam Break (Photoelectric) Sensor
 	public static class BeamBreak {
 		public static boolean isHit() {
-			if (Devices.Cargo.photoelectricSensor == null)
+			if (Devices.Cargo.beamBreak == null)
 				return false;
-			return !Devices.Cargo.photoelectricSensor.get();
+			return !Devices.Cargo.beamBreak.get();
 		}
 		public static boolean isNotHit() { return !isHit(); }
 	}

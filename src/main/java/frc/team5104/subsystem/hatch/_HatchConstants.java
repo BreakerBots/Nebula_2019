@@ -5,7 +5,8 @@ import frc.team5104.main._RobotConstants;
 import frc.team5104.webapp.Tuner.tunerInput;
 
 public class _HatchConstants {
-	public static int _ejectorDelay = 100;
+	@tunerInput
+	public static int _ejectorDelay = 110;
 
 	//Dad
 	public static DoubleSolenoid.Value _flapsIn = _RobotConstants._isCompBot ? DoubleSolenoid.Value.kForward 
@@ -18,11 +19,11 @@ public class _HatchConstants {
 	public static DoubleSolenoid.Value _ejectorOut = // _RobotConstants._isCompBot ? DoubleSolenoid.Value.kReverse 
 		 DoubleSolenoid.Value.kForward;
 	
-	//Modes
+	//Modes 
 	@tunerInput
-	public static int _intakeModeLength = 700;
+	public static int _intakeModeLength = 600;
 	@tunerInput
-	public static int _intakeModeFastLength = 300;
+	public static int _intakeModeFastLength = 200;
 	@tunerInput
 	public static int _ejectModeLength = _ejectorDelay + 200;
 }

@@ -6,11 +6,11 @@ import frc.team5104.subsystem.drive.DriveSignal.DriveUnit;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.BreakerPID;
 import frc.team5104.util.Buffer;
-import frc.team5104.util.CSV.CSVLoggable;
 import frc.team5104.util.console;
 import frc.team5104.vision.VisionSystems.limelight;
+import frc.team5104.webapp.Tuner.tunerOutput;
 
-public class VisionMovement implements CSVLoggable {
+public class VisionMovement {
 	public static enum VisionTarget {
 		rocket,
 		standard
@@ -21,12 +21,14 @@ public class VisionMovement implements CSVLoggable {
 			_VisionConstants._turnP, 0, _VisionConstants._turnD, 
 			_VisionConstants._toleranceX, _VisionConstants._targetX
 		);
-	static Buffer buffer = new Buffer(10, 45);
+	static Buffer scaleFactorBuffer = new Buffer(10, 45);
+	static Buffer turnBuffer = new Buffer(10, 0);
+	static Buffer forwardBuffer = new Buffer(10, 0);
 	
 	//Is Finished
 	public static double _targetY() {
-		return VisionManager.target == VisionTarget.rocket ? _VisionConstants._targetRocketY : 
-			_VisionConstants._targetStandardY;
+		//return VisionManager.target == VisionTarget.rocket ? _VisionConstants._targetRocketY : 
+		return _VisionConstants._targetStandardY;
 	}
 
 	
@@ -48,41 +50,73 @@ public class VisionMovement implements CSVLoggable {
 	//Turn Movement Function
 	private static double getTurn() {
 		if(!isFinished()) {
+			turnController._kP = _VisionConstants._turnP;
+			turnController._kD = _VisionConstants._turnD;
 			double x = VisionSystems.limelight.getX() * getScaleFactor();
 			x += x < _VisionConstants._targetX ? _VisionConstants._leftOffset : _VisionConstants._rightOffset;
-			return BreakerMath.clamp(
-					turnController.update(x), -4, 4);
+			turnBuffer.update(
+					BreakerMath.clamp(turnController.update(x), -4, 4)
+				);
+			return turnBuffer.getDoubleOutput();
 		}
 		return 0;
 	}
 	
 	//Forward Movement Function
 	private static double getForward() {
-		return (Math.abs(_targetY() - VisionSystems.limelight.getY()) 
-				<= _VisionConstants._toleranceY) ? 0 : 2;
+		double distance = -(_targetY() - VisionSystems.limelight.getY()) + _VisionConstants._forwardF;
+		boolean on_target;
+		if (Vision.targetVisible())
+			on_target = distance <= _VisionConstants._toleranceY;
+		else {
+			distance = 0;
+			on_target = false; 
+		}
+		forwardBuffer.update(on_target ? 0 : _VisionConstants._forwardP * distance);
+		return forwardBuffer.getDoubleOutput();
 	}
 	
 	public static double getScaleFactor() {
-		double d = Math.abs(_targetY() - limelight.getY()) > _VisionConstants._toleranceY ? 
+		double distance = Math.abs(_targetY() - limelight.getY()) > _VisionConstants._toleranceY ? 
 				_targetY() - limelight.getY() : 0;
-		if (d == 0) return 0;
-		d = (1.3 / (d + 10)) + 0.77;
-		buffer.update(d);
+				
+		//on target
+		if (distance == 0) return 0;
 		
-		return buffer.getDoubleOutput(); 
+		if (Vision.targetVisible())
+			distance = (1.3 / (distance + 10)) + 0.77;
+		else
+			distance = 0;
+		scaleFactorBuffer.update(distance);
+		
+		return scaleFactorBuffer.getDoubleOutput(); 
 	}
 	
 	static void reset() {
 		turnController.reset();
+		scaleFactorBuffer = new Buffer(10, 45);
+		turnBuffer = new Buffer(10, 0);
+		forwardBuffer = new Buffer(10, 0);
 	}
 
-	public String[] getCSVHeader() { 
-		return new String[] { "turnCurrent", "turnTarget", "forwardCurrent", "forwardTarget", "distance" };
+	@tunerOutput
+	private static double turnCurrent() {
+		return VisionSystems.limelight.getX();
 	}
-	public String[] getCSVData() {
-		return new String[] { ""+VisionSystems.limelight.getX(), ""+turnController.target, 
-							  ""+VisionSystems.limelight.getY(), ""+_targetY(),
-							  ""+getScaleFactor()};
+	@tunerOutput
+	private static double turnTarget() {
+		return turnController.target;
 	}
-	public String getCSVName() { return "VisionPID"; }
+	@tunerOutput
+	private static double forwardCurrent() {
+		return VisionSystems.limelight.getY();
+	}
+	@tunerOutput
+	private static double forwardTarget() {
+		return _targetY();
+	}
+	@tunerOutput
+	private static double distance() {
+		return getScaleFactor();
+	}
 }

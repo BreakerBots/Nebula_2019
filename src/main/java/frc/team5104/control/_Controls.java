@@ -55,7 +55,7 @@ public class _Controls {
 		static final Rumble _trapdoorUpRumble = new Rumble(0.75, true, false, 200);
 		static final Rumble _trapdoorDownRumble = new Rumble(0.75, false, false, 200);
 		
-		public static boolean _manualArm = false;
+		public static boolean _manualArm = true;
 		static final Control _armManual = new Control(ControlList.RightJoystickY);
 	}
 	

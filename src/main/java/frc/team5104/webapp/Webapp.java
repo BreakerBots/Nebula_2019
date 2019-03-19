@@ -29,6 +29,13 @@ public class Webapp {
 
 	public static boolean init() {
 		try {
+			
+			File dir = new File(getBaseUrl());
+			if (dir.exists() == false) {
+				console.log(c.WEBAPP, "Webapp not on roboRio. Please deploy the webapp using `webapp deploy`");
+				return false;
+			}
+						
 			//Setup Server
 			int port = 5804; //has to be between 5800-5810 (5800,5801 for limelight)
 			server = HttpServer.create(new InetSocketAddress(port), 0);
@@ -45,7 +52,7 @@ public class Webapp {
 			server.setExecutor(null);
 			server.start();
 			
-			console.log("Hosting Web App at 10.51.4.2:" + port);
+			console.log(c.WEBAPP, "Hosting Web App at 10.51.4.2:" + port);
 			
 			return true;
 		} catch (Exception e) { 
@@ -54,13 +61,14 @@ public class Webapp {
 		}
 	}
 	
+	private static String getBaseUrl() {
+		String u = "/home/lvuser/webapp/";
+		return u;
+	}
+	
 	private static class RequestHandler implements HttpHandler {
 		public String fileUrl;
 		public String contentType;
-		String getBaseUrl() {
-			String u = "/home/lvuser/webapp/";
-			return u;
-		}
 		
 		public RequestHandler(String fileUrl, String contentType) {
 			this.fileUrl = fileUrl;
@@ -78,7 +86,7 @@ public class Webapp {
 			Headers h = t.getResponseHeaders();
 			h.add("Content-Type", contentType);
 
-			//File
+			//Read
 			File file = new File(finalUrl);
 			FileInputStream input = new FileInputStream(file);
 			BufferedInputStream bis = new BufferedInputStream(input);

@@ -21,7 +21,9 @@ public class Vision {
 	public static boolean targetVisible() { return VisionSystems.limelight.getA() != 0; }
 	
 	/** Changes the state of the leds (on, off...) */
-	public static void changeLEDState(int state) { VisionSystems.networkTable.setEntry("ledMode", (double)(state)); }
+	public static void changeLEDState(boolean state) { 
+		//VisionSystems.networkTable.setEntry("ledMode", state ? 0 : 1); 
+	}
 
 	public static void init() {
 		VisionSystems.networkTable.setEntry("camMode", 0);
@@ -29,9 +31,9 @@ public class Vision {
 	
 	/** Toggle the state of the limelight */
 	public static void toggleDrivingMode() {
-		boolean driverMode = VisionSystems.networkTable.getEntry("camMode").getDouble(-1) == 1;
-		VisionSystems.networkTable.setEntry("camMode", driverMode ? 0 : 1);
-		changeLEDState(driverMode ? 1 : 0);
+//		boolean driverMode = VisionSystems.networkTable.getEntry("camMode").getDouble(-1) == 1;
+//		VisionSystems.networkTable.setEntry("camMode", driverMode ? 0 : 1);
+//		changeLEDState(driverMode ? 1 : 0);
 //		changeLEDState(0);
 //		boolean driverMode = VisionSystems.networkTable.getEntry("pipeline").getDouble(-1) == 1;
 //		VisionSystems.networkTable.setEntry("pipeline", driverMode ? 0 : 1);
@@ -45,7 +47,6 @@ public class Vision {
 		VisionManager.exitState = exitState;
 		VisionManager.exitAction = exitAction;
 		VisionManager.target = target;
-		Vision.changeLEDState(0);
 		console.log(c.VISION, t.INFO, "Running Vision");
 	}
 	

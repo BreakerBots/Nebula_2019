@@ -3,6 +3,7 @@ package frc.team5104.subsystem.arm;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import frc.team5104.main.Devices;
+import frc.team5104.main._RobotConstants;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.console;
@@ -22,7 +23,9 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 	
 	//Encoder (Vex Integrated Mag Encoder)
 	public static class Encoder {
-		public static int getRawRotation() { return Devices.Cargo.leftArm.getSelectedSensorPosition(); }
+		public static int getRawRotation() { 
+			return Devices.Cargo.leftArm.getSelectedSensorPosition() * (_RobotConstants._isCompBot ? 1 : -1); 
+		}
 		@tunerOutput
 		public static double getDegrees() { 
 			return getRawRotation() / _ArmConstants._ticksPerRevolution * 360 + _ArmConstants._fullyUpDegrees; 
@@ -33,7 +36,8 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 	//Limit Switch (Talon Tach)
 	public static class LimitSwitch {
 		public static boolean isHit() { 
-			return !Devices.Cargo.rightArm.getSensorCollection().isFwdLimitSwitchClosed(); 
+			return Devices.Cargo.limitSwitch.get();
+			//return !Devices.Cargo.rightArm.getSensorCollection().isFwdLimitSwitchClosed(); 
 		}
 		static boolean isNotHit() { return !isHit(); }
 	}

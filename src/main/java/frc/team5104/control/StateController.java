@@ -23,6 +23,10 @@ class StateController extends BreakerController {
 						VisionTarget.rocket : VisionTarget.standard);
 		}
 		
+		if ((_Controls.Drive._forward.getAxis() > 0.1 || _Controls.Drive._reverse.getAxis() > 0.1)&& RobotState.getMode() == RobotMode.Vision) {
+			RobotState.setMode(RobotMode.Teleop);
+		}
+		
 		//Auto Switching
 //		if (_Controls.Main._toggleAuto.getPressed() && RobotState.isSandstorm()) {
 //			if (RobotState.getMode() == RobotMode.Auto)

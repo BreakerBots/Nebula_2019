@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SPI.Port;
 import frc.team5104.subsystem.arm._ArmConstants;
 import frc.team5104.subsystem.drive._DriveConstants;
+import frc.team5104.util.BannerPhotoelectric;
 import frc.team5104.util.PneumaticFactory;
 import frc.team5104.util.SensorFactory;
 import frc.team5104.util.TalonFactory;
@@ -43,7 +44,8 @@ public class Devices {
 		
 		public static DoubleSolenoid trapdoor = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 2, 3);
 		
-		public static DigitalInput photoelectricSensor = SensorFactory.getDigitalInput(9);
+		public static DigitalInput beamBreak = SensorFactory.getDigitalInput(9);
+		public static BannerPhotoelectric limitSwitch = new BannerPhotoelectric(_RobotConstants._isCompBot ? 3 : 0);
 		
 		public static TalonSRX belt = TalonFactory.getTalon(31);
 	}
@@ -64,6 +66,6 @@ public class Devices {
 	//Other
 	public static class Other {
 		public static Compressor compressor = PneumaticFactory.getCompressor(PCM.Gold);
-		public static AnalogInput compressorReader = SensorFactory.getAnalogInput(0); //3
+		public static AnalogInput compressorReader = SensorFactory.getAnalogInput(_RobotConstants._isCompBot ? 0 : 3); //3
 	}
 }

@@ -23,11 +23,12 @@ public class VisionManager {
 	public static void init() {
 		VisionSystems.init();
 		VisionSystems.networkTable.setEntry("pipeline", 0);
+		Vision.changeLEDState(false);
 	}
 	
 	public static void start() {
 		Vision.reset();
-		Vision.changeLEDState(0);
+		Vision.changeLEDState(true);
 	}
 	
 	public static void handle() {
@@ -35,9 +36,11 @@ public class VisionManager {
 	}
 	private static void update() {
 		if (VisionMovement.isFinished()) {
-			RobotState.setMode(exitState);
-			if (exitAction != null)
-				Vision.action(exitAction);
+//			RobotState.setMode(exitState);
+//			if (exitAction != null)
+//				Vision.action(exitAction);
+			//Drive.set
+			Drive.stop();
 		}
 		else {
 			DriveSignal signal = Vision.getNextSignal();
@@ -47,6 +50,6 @@ public class VisionManager {
 	}
 
 	public static void stop() {
-		Vision.changeLEDState(1);
+		Vision.changeLEDState(false);
 	}
 }
