@@ -8,6 +8,7 @@ import frc.team5104.subsystem.climber.Climber;
 import frc.team5104.subsystem.climber.ClimberManager.ClimberStage;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.console;
+import frc.team5104.util.console.c;
 
 public class Arm extends BreakerSubsystem.Actions {
 	public static void idle() {
@@ -26,7 +27,11 @@ public class Arm extends BreakerSubsystem.Actions {
 
 	public static boolean isManual() {
 		if (_Controls.Cargo._manualArm)
+			return true; 
+		else if (ArmSystems.Encoder.disconnected()) {
+			console.error(c.CARGO, "Encoder Disconnected!");
 			return true;
+		}
 		else
 			return Climber.isClimbing() && Climber.getStage() != ClimberStage.initial;
 	}

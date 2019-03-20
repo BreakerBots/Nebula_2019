@@ -7,6 +7,7 @@ import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.control.BreakerMainController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.arm.ArmManager;
+import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.climber.ClimberManager;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
@@ -62,7 +63,7 @@ public class Robot extends RobotController.BreakerRobot {
 	}
 	
 	public void mainLoop() {
-//		console.log(ArmSystems.Encoder.getDegrees(), ArmSystems.LimitSwitch.isHit());
+//		console.log(ArmSystems.Encoder.getDegrees(), ArmSystems.Encoder.disconnected());
 //		console.log(ArmSystems.LimitSwitch.isHit());
 //		console.log(Compressor.getString());
 		if (RobotState.isEnabled()) {

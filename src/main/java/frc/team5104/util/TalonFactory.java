@@ -93,4 +93,8 @@ public class TalonFactory {
 		
 		return talon;
 	}
+
+	public static boolean magEncoderDisconnected(TalonSRX talon) {
+		return talon.getSensorCollection().getPulseWidthRiseToRiseUs() == 0;
+	}
  }

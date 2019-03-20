@@ -6,6 +6,7 @@ import frc.team5104.main.Devices;
 import frc.team5104.main._RobotConstants;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.BreakerMath;
+import frc.team5104.util.TalonFactory;
 import frc.team5104.util.console;
 import frc.team5104.webapp.Tuner.tunerOutput;
 
@@ -31,6 +32,9 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 			return getRawRotation() / _ArmConstants._ticksPerRevolution * 360 + _ArmConstants._fullyUpDegrees; 
 		}
 		static void zero() { Devices.Cargo.leftArm.setSelectedSensorPosition(0, 0, 10); }
+		public static boolean disconnected() {
+			return TalonFactory.magEncoderDisconnected(Devices.Cargo.leftArm);
+		}
 	}
 	
 	//Limit Switch (Talon Tach)

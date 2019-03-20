@@ -4,7 +4,6 @@ package frc.team5104.subsystem.arm;
 import frc.team5104.control._Controls;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.climber.Climber;
-import frc.team5104.subsystem.climber.ClimberManager.ClimberStage;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.BreakerPID;
 import frc.team5104.util.console;
@@ -22,7 +21,7 @@ public class ArmManager extends BreakerSubsystem.Manager {
 	
 	static BreakerPID armController = new BreakerPID
 			(_ArmConstants._armP, _ArmConstants._armI, _ArmConstants._armD, _ArmConstants._armTolerance);
-	private static double upPosAdd = 0;
+	private static double upPosAdj = 0;
 	public static BreakerPID climbInitController = new BreakerPID(
 			_ArmConstants._climbInitP, _ArmConstants._climbInitI, 0, _ArmConstants._climbInitTolerance
 			);
@@ -33,7 +32,7 @@ public class ArmManager extends BreakerSubsystem.Manager {
 		
 		if (ArmSystems.LimitSwitch.isHit()) {
 			ArmSystems.Encoder.zero();
-			upPosAdd = 0;
+			upPosAdj = 0;
 		}
 		
 		if (Arm.isManual())
@@ -42,12 +41,13 @@ public class ArmManager extends BreakerSubsystem.Manager {
 		switch (currentState) {
 			//Idle
 			case idle:
-				armController.setTarget(_ArmConstants._upPos);
+				armController.setTarget(_ArmConstants._upPos + upPosAdj);
 				double force = armController.update(ArmSystems.Encoder.getDegrees());
 				
 				if (ArmSystems.LimitSwitch.isHit() == false && force < 1) {
-					upPosAdd -= 0.2;
-					armController.setTarget(_ArmConstants._upPos + upPosAdd);
+					upPosAdj -= 0.2;
+					console.log(upPosAdj);
+					armController.setTarget(_ArmConstants._upPos + upPosAdj);
 					force = armController.update(ArmSystems.Encoder.getDegrees());
 				}
 				
