@@ -37,7 +37,7 @@ public class Robot extends RobotController.BreakerRobot {
 			 new ClimberManager()
 		);
 		Webapp.init();
-		Tuner.init(_HatchConstants.class);// _CargoConstants.class);
+		Tuner.init(_VisionConstants.class);// _CargoConstants.class);
 		CameraServer.getInstance().startAutomaticCapture();
 		VisionManager.init();
 		Odometry.run();
@@ -63,6 +63,7 @@ public class Robot extends RobotController.BreakerRobot {
 	}
 	
 	public void mainLoop() {
+		console.log(VisionMovement.getScaleFactor());
 //		console.log(ArmSystems.Encoder.getDegrees(), ArmSystems.Encoder.disconnected());
 //		console.log(ArmSystems.LimitSwitch.isHit());
 //		console.log(Compressor.getString());

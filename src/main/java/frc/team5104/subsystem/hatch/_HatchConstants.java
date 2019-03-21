@@ -23,7 +23,7 @@ public class _HatchConstants {
 	@tunerInput
 	public static int _intakeModeLength = 600;
 	@tunerInput
-	public static int _intakeModeFastLength = 200;
+	public static int _intakeModeFastLength = 225;
 	@tunerInput
 	public static int _ejectModeLength = _ejectorDelay + 200;
 }

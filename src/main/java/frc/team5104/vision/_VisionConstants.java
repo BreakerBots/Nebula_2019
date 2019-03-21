@@ -23,5 +23,5 @@ public class _VisionConstants {
 	@tunerInput
 	public static double _forwardP = 1.0;
 	@tunerInput
-	public static double _forwardF = -2.5;
+	public static double _forwardF = -2;
 }

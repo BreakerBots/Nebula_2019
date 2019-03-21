@@ -46,7 +46,6 @@ public class ArmManager extends BreakerSubsystem.Manager {
 				
 				if (ArmSystems.LimitSwitch.isHit() == false && force < 1) {
 					upPosAdj -= 0.2;
-					console.log(upPosAdj);
 					armController.setTarget(_ArmConstants._upPos + upPosAdj);
 					force = armController.update(ArmSystems.Encoder.getDegrees());
 				}

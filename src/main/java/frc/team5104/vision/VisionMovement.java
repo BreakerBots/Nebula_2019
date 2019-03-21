@@ -30,7 +30,10 @@ public class VisionMovement {
 		//return VisionManager.target == VisionTarget.rocket ? _VisionConstants._targetRocketY : 
 		return _VisionConstants._targetStandardY;
 	}
-
+	private static double targetX() {
+		return getScaleFactor()*getScaleFactor()*341.697 + getScaleFactor()*-762.138 + 433.147 + 7;
+//		return _VisionConstants._targetX;
+	}
 	
 	static boolean isFinished() {
 		boolean onTarget = Math.abs(_targetY() - VisionSystems.limelight.getY()) 
@@ -52,8 +55,9 @@ public class VisionMovement {
 		if(!isFinished()) {
 			turnController._kP = _VisionConstants._turnP;
 			turnController._kD = _VisionConstants._turnD;
+			turnController.target = targetX();
 			double x = VisionSystems.limelight.getX() * getScaleFactor();
-			x += x < _VisionConstants._targetX ? _VisionConstants._leftOffset : _VisionConstants._rightOffset;
+			x += x < targetX() ? _VisionConstants._leftOffset : _VisionConstants._rightOffset;
 			turnBuffer.update(
 					BreakerMath.clamp(turnController.update(x), -4, 4)
 				);
