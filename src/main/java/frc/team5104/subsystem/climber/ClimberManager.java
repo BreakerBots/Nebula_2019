@@ -1,6 +1,7 @@
 /*BreakerBots Robotics Team 2019*/
 package frc.team5104.subsystem.climber;
 
+import frc.team5104.control._Controls;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.subsystem.arm.Arm;
 import frc.team5104.subsystem.arm.ArmManager;
@@ -75,6 +76,7 @@ public class ClimberManager extends BreakerSubsystem.Manager {
 						
 						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants._retractLength) {
 							currentState = ClimberState.idle;
+							_Controls.Cargo._manualArm = true;
 						}
 						
 						CargoManager.beltInterpolator.deltaTime = 0.25;
