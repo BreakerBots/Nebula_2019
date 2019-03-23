@@ -13,12 +13,12 @@ public class Hatch extends BreakerSubsystem.Actions {
 	public static void intake() {
 		console.log(c.HATCH, t.INFO, "Intaking Hatch");
 		if (isBack()) {
-			HatchManager.fastIntake = false;
 			HatchManager.intakeStartTime = System.currentTimeMillis();
 			HatchManager.currentState = HatchState.intake;
 		}
 		else
 			HatchManager.currentState = HatchState.hold;
+		HatchManager.isSandTrapping = false;
 	}
 	public static void eject(boolean hard) {
 		if (hasHatch()) {
@@ -29,9 +29,11 @@ public class Hatch extends BreakerSubsystem.Actions {
 		}
 		else
 			console.log(c.HATCH, t.WARNING, "Can't Eject Hatch (Not holding hatch)!");
+		HatchManager.isSandTrapping = false;
 	}
 	public static void idle() {
 		HatchManager.currentState = HatchState.idle;
+		HatchManager.isSandTrapping = false;
 	}
 	
 	//Other

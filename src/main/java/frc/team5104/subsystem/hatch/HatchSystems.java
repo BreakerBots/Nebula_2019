@@ -50,4 +50,11 @@ class HatchSystems extends BreakerSubsystem.Systems {
 		}
 		static boolean isIn() { return !isOut(); }
 	}
+	
+	//Limit Switch
+	public static class LimitSwitch {
+		public static boolean isHit() {
+			return !Devices.Hatch.limitSwitch.get();
+		}
+	}
 }
