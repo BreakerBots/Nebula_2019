@@ -17,7 +17,8 @@ public class ClimberManager extends BreakerSubsystem.Manager {
 		initial, //Moves the arm down to touch L3
 		lift1,   //Fire first pistons and moves arm to keep the robot level
 		lift2, 	 //Fire second pistons and moves arm  to keep the robot level
-		forward	 //Runs intake wheels and user drives drive motors
+		forward,	 //Runs intake wheels and user drives drive motors
+		end
 	};
 	static ClimberStage currentStage = ClimberStage.initial;
 	static long currentStageStart = System.currentTimeMillis();
@@ -32,22 +33,34 @@ public class ClimberManager extends BreakerSubsystem.Manager {
 							currentStage = ClimberStage.lift1;
 							currentStageStart = System.currentTimeMillis();
 						}
+						
+						CargoManager.beltInterpolator.deltaTime = 0.25;
+						CargoManager.beltInterpolator.setSetpoint(0);
+						CargoSystems.Belt.set(CargoManager.beltInterpolator.update());
 						break;
 					case lift1:
 						ClimberSystems.extendStage1();
-						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants.lift1Length) {
+						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants._lift1Length) {
 							currentStage = ClimberStage.lift2;
 							currentStageStart = System.currentTimeMillis();
 						}
+						
+						CargoManager.beltInterpolator.deltaTime = 0.25;
+						CargoManager.beltInterpolator.setSetpoint(0);
+						CargoSystems.Belt.set(CargoManager.beltInterpolator.update());
 						break;
 					case lift2:
 						ClimberSystems.extendStage1();
 						ClimberSystems.extendStage2();
 						
-						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants.lift2Length) {
+						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants._lift2Length) {
 							currentStage = ClimberStage.forward;
 							currentStageStart = System.currentTimeMillis();
 						}
+						
+						CargoManager.beltInterpolator.deltaTime = 0.25;
+						CargoManager.beltInterpolator.setSetpoint(0);
+						CargoSystems.Belt.set(CargoManager.beltInterpolator.update());
 						break;
 					case forward:
 						ClimberSystems.extendStage1();
@@ -55,6 +68,17 @@ public class ClimberManager extends BreakerSubsystem.Manager {
 						
 						CargoManager.beltInterpolator.deltaTime = 0.25;
 						CargoManager.beltInterpolator.setSetpoint(_ClimberConstants._forwardWheelSpeed);
+						CargoSystems.Belt.set(CargoManager.beltInterpolator.update());
+						break;
+					case end:
+						ClimberSystems.retractAll();
+						
+						if (System.currentTimeMillis() > currentStageStart + _ClimberConstants._retractLength) {
+							currentState = ClimberState.idle;
+						}
+						
+						CargoManager.beltInterpolator.deltaTime = 0.25;
+						CargoManager.beltInterpolator.setSetpoint(0);
 						CargoSystems.Belt.set(CargoManager.beltInterpolator.update());
 						break;
 				}

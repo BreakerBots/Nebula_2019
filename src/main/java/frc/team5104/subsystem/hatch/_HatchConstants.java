@@ -23,7 +23,7 @@ public class _HatchConstants {
 	@tunerInput
 	public static int _intakeModeLength = 600;
 	@tunerInput
-	public static int _intakeModeFastLength = 225;
+	public static int _intakeModeFastLength = _RobotConstants._isCompBot ? 260 : 225;
 	@tunerInput
 	public static int _ejectModeLength = _ejectorDelay + 200;
 }

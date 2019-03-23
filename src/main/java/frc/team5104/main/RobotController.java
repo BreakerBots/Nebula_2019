@@ -120,8 +120,9 @@ class RobotController extends RobotBase {
 						robot.teleopStart();
 					
 					robot.teleopLoop();
+					
 					HAL.observeUserProgramTeleop();
-					DriverStation.getInstance().waitForData(0.2);
+					DriverStation.getInstance().waitForData(0.01);
 				} catch (Exception e) {
 					CrashLogger.logCrash(new Crash("main", e));
 				}

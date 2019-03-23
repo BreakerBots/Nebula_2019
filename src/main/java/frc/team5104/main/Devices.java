@@ -45,7 +45,7 @@ public class Devices {
 		public static DoubleSolenoid trapdoor = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 2, 3);
 		
 		public static DigitalInput beamBreak = SensorFactory.getDigitalInput(_RobotConstants._isCompBot ? 9 : 6);
-		public static BannerPhotoelectric limitSwitch = new BannerPhotoelectric(_RobotConstants._isCompBot ? 3 : 0);
+		public static BannerPhotoelectric limitSwitch = new BannerPhotoelectric(_RobotConstants._isCompBot ? 3 : 3);
 		
 		public static TalonSRX belt = TalonFactory.getTalon(31);
 	}

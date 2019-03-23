@@ -27,7 +27,7 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	public static final int _currentLimit = 60; //(Amps) [Measure (<250, or ~240/#ofmotorsinurdrivetrain)] The current limit of the drive motors
 	
 	//Shifting
-	public static final Value _shiftLow = _RobotConstants._isCompBot ? DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse;
+	public static final Value _shiftLow = _RobotConstants._isCompBot ? DoubleSolenoid.Value.kReverse : DoubleSolenoid.Value.kReverse;
 	
 	//Speed Control (Regular)
 	public static double _kP = 0.285;

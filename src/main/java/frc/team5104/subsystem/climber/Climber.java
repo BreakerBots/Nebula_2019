@@ -14,7 +14,9 @@ public class Climber extends BreakerSubsystem.Actions {
 	}
 	
 	public static void endClimb() {
-		ClimberManager.currentState = ClimberState.idle;
+		ClimberManager.currentState = ClimberState.climbing;
+		ClimberManager.currentStage = ClimberStage.end;
+		ClimberManager.currentStageStart = System.currentTimeMillis();
 	}
 	
 	public static boolean isClimbing() {

@@ -13,7 +13,9 @@ public class _ClimberConstants {
 	@tunerInput
 	public static double _forwardWheelSpeed = 0.3; //percent
 	@tunerInput
-	public static long lift1Length = 2000; //ms
+	public static long _lift1Length = 2000; //ms
 	@tunerInput
-	public static long lift2Length = 2000; //ms
+	public static long _lift2Length = 2000; //ms
+	@tunerInput
+	public static long _retractLength = 3000; //ms
 }

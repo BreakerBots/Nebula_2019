@@ -7,7 +7,7 @@ public class _RobotConstants {
 	public static final double _robotLength = Units.inchesToFeet(32.0 + 4.0);
 	public static final double _robotWidth = Units.inchesToFeet(28.0 + 4.0);
 
-	public static final boolean _isCompBot = false;
+	public static final boolean _isCompBot = true;
 	public static final String _robotName = _isCompBot ? "Nebula" : "Astro";
 	
 	//Logging
