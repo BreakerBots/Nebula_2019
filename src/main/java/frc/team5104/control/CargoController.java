@@ -6,6 +6,7 @@ import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.superstructure.cargo.Cargo;
 import frc.team5104.util.console;
+import frc.team5104.util.console.c;
 
 class CargoController extends BreakerController {
 	void update() {
@@ -13,7 +14,8 @@ class CargoController extends BreakerController {
 		if (_Controls.Main._idle.getPressed()) 
 			Cargo.idle();
 		if (_Controls.Main._idle.getDoubleClick() == 2) {
-			_Controls.Cargo._manualArm = true;
+			_Controls.Cargo._manualArm = !_Controls.Cargo._manualArm;
+			console.log(c.CARGO, "Set arm to " + (_Controls.Cargo._manualArm ? "manual" : "automatic"));
 		}
 		if (_Controls.Cargo._intake.getPressed()) 
 			Cargo.intake();

@@ -7,11 +7,13 @@ import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.control.BreakerMainController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.arm.ArmManager;
+import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.climber.ClimberManager;
 import frc.team5104.subsystem.drive.DriveManager;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.hatch.HatchManager;
 import frc.team5104.util.console;
+import frc.team5104.util.console.c;
 import frc.team5104.util.CSV;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.Vision;
@@ -38,6 +40,7 @@ public class Robot extends RobotController.BreakerRobot {
 		CameraServer.getInstance().startAutomaticCapture();
 		VisionManager.init();
 		Odometry.run();
+		console.log(c.CARGO, "arm limit switch: " + ArmSystems.LimitSwitch.isHit());
 	}
 	
 	//Main
@@ -61,7 +64,7 @@ public class Robot extends RobotController.BreakerRobot {
 	
 	public void mainLoop() {
 //		console.log(VisionMovement.getScaleFactor());
-//		console.log(ArmSystems.LimitSwitch.isHit(), ArmSystems.Encoder.getDegrees(), ArmSystems.Encoder.disconnected());
+//		console.log(ArmSystems.LimitSwitch.isHit(), ArmSystems.Encoder.getDegrees(), ArmSystems.Encoder.getRawRotation(), ArmSystems.Encoder.disconnected());
 //		console.log(Compressor.getString());
 		if (RobotState.isEnabled()) {
 			BreakerSubsystemManager.handle();

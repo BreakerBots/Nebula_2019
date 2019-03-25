@@ -27,12 +27,15 @@ public class CargoManager extends BreakerSubsystem.Manager {
 		
 		Chute.BeamAverage.update(ChuteSystems.BeamBreak.isHit());
 		
-		if (Arm.isManual() && (currentState == CargoState.intake || currentState == CargoState.idle)) {
+		if (Arm.isManual()) {
 			beltInterpolator.deltaTime = 0.05;
-			if(ArmSystems.Encoder.getDegrees() > _CargoConstants._intakeStartPos && !Chute.BeamAverage.getBooleanOutput()) 
+			
+			if (currentState == CargoState.intake)
+			//if(ArmSystems.Encoder.getDegrees() > _CargoConstants._intakeStartPos && !Chute.BeamAverage.getBooleanOutput()) 
 				beltInterpolator.setSetpoint(_CargoConstants._intakeSpeed);
 			else 
 				beltInterpolator.setSetpoint(0);
+			
 			CargoSystems.Belt.set(beltInterpolator.update());
 			
 			if (Chute.BeamAverage.getBooleanOutput()) {
