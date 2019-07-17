@@ -9,7 +9,9 @@ public class DriveManager extends BreakerSubsystem.Manager {
 		DriveSystems.setup();
 	}
 	
-	public void enabled() { }
+	public void enabled() {
+		DriveSystems.shifters.set(true);
+	}
 	public void update() { 
 		Devices.Drive.L1.config_kP(0, _DriveConstants._kP, 0);
 		Devices.Drive.L1.config_kI(0, _DriveConstants._kI, 0);

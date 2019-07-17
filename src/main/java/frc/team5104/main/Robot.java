@@ -8,8 +8,11 @@ import frc.team5104.control.BreakerMainController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.arm.ArmManager;
 import frc.team5104.subsystem.arm.ArmSystems;
+import frc.team5104.subsystem.arm._ArmConstants;
 import frc.team5104.subsystem.climber.ClimberManager;
+import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.DriveManager;
+import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.hatch.HatchManager;
 import frc.team5104.util.console;
@@ -36,11 +39,11 @@ public class Robot extends RobotController.BreakerRobot {
 			 new ClimberManager()
 		);
 		Webapp.init();
-		Tuner.init(_CargoConstants.class);
+		Tuner.init(_ArmConstants.class, ArmManager.class);
 		CameraServer.getInstance().startAutomaticCapture();
 		VisionManager.init();
 		Odometry.run();
-		console.log(c.CARGO, "arm limit switch: " + ArmSystems.LimitSwitch.isHit());
+		console.log(c.CARGO, "Arm limit switch: " + ArmSystems.LimitSwitch.isHit());
 	}
 	
 	//Main
@@ -49,6 +52,7 @@ public class Robot extends RobotController.BreakerRobot {
 		console.logFile.start();
 		console.log("Robot Enabled");
 		BreakerSubsystemManager.enabled();
+		BreakerMainController.init();
 		Odometry.reset();
 		CSV.init(null);
 		Vision.init();
@@ -77,10 +81,13 @@ public class Robot extends RobotController.BreakerRobot {
 	//Auto
 	public void autoStart() { 
 		console.log("Autonomous Started");
-		BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
+		//BreakerPathScheduler.set( AutoSelector.Paths.Curve.getPath() );
 	}
-	public void autoLoop() { BreakerPathScheduler.handle(); }
-	public void autoStop() { console.log("Autonomous Stopped"); }
+	public void autoLoop() { //BreakerPathScheduler.handle(); 
+	}
+	public void autoStop() { 
+		console.log("Autonomous Stopped"); 
+	}
 	
 	//Teleop
 	public void teleopStart() { console.log("Teleoperation Started"); }

@@ -7,6 +7,8 @@ import frc.team5104.subsystem.climber.Climber;
 import frc.team5104.util.BreakerMath;
 import frc.team5104.util.BreakerPID;
 import frc.team5104.util.console;
+import frc.team5104.util.console.c;
+import frc.team5104.webapp.Tuner.tunerOutput;
 
 public class ArmManager extends BreakerSubsystem.Manager {
 
@@ -19,14 +21,36 @@ public class ArmManager extends BreakerSubsystem.Manager {
 	}
 	static ArmState currentState = ArmState.calibrating;
 	
-	static BreakerPID armController = new BreakerPID
-			(_ArmConstants._armP, _ArmConstants._armI, _ArmConstants._armD, _ArmConstants._armTolerance);
+	static BreakerPID downController = new BreakerPID
+			(_ArmConstants._downP, 0, 0, _ArmConstants._downTolerance);
+	static BreakerPID upController = new BreakerPID
+			(_ArmConstants._upP, 0, 0, _ArmConstants._upTolerance);
 	private static double upPosAdj = 0;
 	public static BreakerPID climbInitController = new BreakerPID(
 			_ArmConstants._climbInitP, _ArmConstants._climbInitI, 0, _ArmConstants._climbInitTolerance
 			);
 	
+	@tunerOutput
+	public static double getLeftCurrentDraw() {
+		return ArmSystems.getLeftCurrentDraw();
+	}
+	@tunerOutput
+	public static double getRightCurrentDraw() {
+		return ArmSystems.getRightCurrentDraw();
+	}
+//	@tunerOutput
+//	public static double getTarget() {
+//		return _ArmConstants._upPos + upPosAdj;
+//	}
+//	@tunerOutput
+//	public static double getCurrent() {
+//		return ArmSystems.Encoder.getDegrees();
+//	}
+	
 	public void update() {
+		upController._kP = _ArmConstants._upP;
+		downController._kP = _ArmConstants._downP;
+		
 		if (Climber.isClimbing())
 			currentState = ArmState.climbing;
 		
@@ -35,22 +59,27 @@ public class ArmManager extends BreakerSubsystem.Manager {
 			upPosAdj = 0;
 		}
 		
+		if (ArmSystems.getLeftCurrentDraw() > 26 || ArmSystems.getRightCurrentDraw() > 26) {
+			console.log(c.CARGO, "Hit Amp Max, Setting to Manual");
+			_Controls.Cargo._manualArm = true;
+		}
+		
 		if (Arm.isManual())
 			return;
 		
 		switch (currentState) {
 			//Idle
 			case idle:
-				armController.setTarget(_ArmConstants._upPos + upPosAdj);
-				double force = armController.update(ArmSystems.Encoder.getDegrees());
+				upController.setTarget(_ArmConstants._upPos + upPosAdj);
+				double force = upController.update(ArmSystems.Encoder.getDegrees());
 				
 				if (ArmSystems.LimitSwitch.isHit() == false && force < 1) {
 					upPosAdj -= 0.8;
-					armController.setTarget(_ArmConstants._upPos + upPosAdj);
-					force = armController.update(ArmSystems.Encoder.getDegrees());
+					upController.setTarget(_ArmConstants._upPos + upPosAdj);
+					force = upController.update(ArmSystems.Encoder.getDegrees());
 				}
 				
-				if(armController.onTarget() == false) 
+				if(upController.onTarget() == false) 
 					ArmSystems.applyForce(force);
 				else {
 					ArmSystems.applyForce(0);
@@ -59,9 +88,9 @@ public class ArmManager extends BreakerSubsystem.Manager {
 				
 			//Intake Down
 			case intakeDown:
-				armController.setTarget(_ArmConstants._downPos);
-				if(armController.onTarget() == false)
-					ArmSystems.applyForce(armController.update(ArmSystems.Encoder.getDegrees()));
+				downController.setTarget(_ArmConstants._downPos);
+				if(downController.onTarget() == false)
+					ArmSystems.applyForce(downController.update(ArmSystems.Encoder.getDegrees()));
 				else {
 					currentState = ArmState.intakeHold;
 					_Controls.Cargo._intakeRumble.start();
@@ -103,7 +132,8 @@ public class ArmManager extends BreakerSubsystem.Manager {
 	
 	
 	public void enabled() {
-		armController.reset();
+		upController.reset();
+		downController.reset();
 		climbInitController.reset();
 		currentState = ArmState.calibrating;
 	}

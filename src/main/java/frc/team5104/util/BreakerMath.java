@@ -20,6 +20,12 @@ public class BreakerMath {
 		return Math.abs(a - b) <= tolerance;
 	}
 	
+	//Rounding
+	public static double round(double a, int places) {
+		double b = Math.pow(10, places);
+		return Math.round(a * b) / b;
+	}
+	
 	//Angle Difference
 	/** Find the difference between two angles (in radians). Accounts for overflow. */
 	public static double radianDiff(double from, double to) {

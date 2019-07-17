@@ -45,7 +45,7 @@ public class Devices {
 		public static DoubleSolenoid trapdoor = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 2, 3);
 		
 		public static DigitalInput beamBreak = SensorFactory.getDigitalInput(_RobotConstants._isCompBot ? 9 : 6);
-		public static BannerPhotoelectric limitSwitch = new BannerPhotoelectric(_RobotConstants._isCompBot ? 3 : 3);
+		public static BannerPhotoelectric limitSwitch = new BannerPhotoelectric(_RobotConstants._isCompBot ? 3 : 1);
 		
 		public static TalonSRX belt = TalonFactory.getTalon(31);
 	}
@@ -56,7 +56,7 @@ public class Devices {
 		public static DoubleSolenoid lazyBoy = PneumaticFactory.getDoubleSolenoid(PCM.Red, 4, 5);
 		public static DoubleSolenoid ejector = PneumaticFactory.getDoubleSolenoid(PCM.Red, 0, 1);
 		
-		public static BannerPhotoelectric limitSwitch = new BannerPhotoelectric(1);
+		public static BannerPhotoelectric limitSwitch = new BannerPhotoelectric(_RobotConstants._isCompBot ? 1 : 2);
 	}
 	
 	//Climber

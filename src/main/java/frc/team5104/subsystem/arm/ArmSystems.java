@@ -22,10 +22,17 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 		Devices.Cargo.rightArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.rightArm.getBusVoltage());
 	}
 	
+	public static double getLeftCurrentDraw() {
+		return Devices.Cargo.leftArm.getOutputCurrent();
+	}
+	public static double getRightCurrentDraw() {
+		return Devices.Cargo.rightArm.getOutputCurrent();
+	}
+	
 	//Encoder (Vex Integrated Mag Encoder)
 	public static class Encoder {
-		public static int getRawRotation() { 
-			return Devices.Cargo.leftArm.getSelectedSensorPosition() * (_RobotConstants._isCompBot ? 1 : -1); 
+		public static double getRawRotation() { 
+			return Devices.Cargo.leftArm.getSelectedSensorPosition() / (_RobotConstants._isCompBot ? 1 : -(7.0*7.0*5.0)); 
 		}
 		@tunerOutput
 		public static double getDegrees() { 

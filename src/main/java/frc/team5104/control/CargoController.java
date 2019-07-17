@@ -31,7 +31,7 @@ class CargoController extends BreakerController {
 			ArmSystems.applyForce(force);
 		}
 		else if (Arm.isIntaking()) {
-			double change = _Controls.Cargo._armManual.getAxis() * 0.5;
+			double change = _Controls.Cargo._armManual.getAxis() * 1.0;
 			Arm.changeDownPosition(change);
 		}
 		

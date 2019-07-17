@@ -73,9 +73,9 @@ public class Drive extends BreakerSubsystem.Actions {
 		
 		double minSpeed;
 		if (DriveSystems.shifters.inLowGear())
-			minSpeed = forward * _DriveConstants._minSpeedLowGearForward + turn * _DriveConstants._minSpeedLowGearTurn;
+			minSpeed = forward * (_DriveConstants._minSpeedLowGearForward/12.0) + turn * (_DriveConstants._minSpeedLowGearTurn/12.0);
 		else
-			minSpeed = forward * _DriveConstants._minSpeedHighGearForward + turn * _DriveConstants._minSpeedHighGearTurn;
+			minSpeed = forward * (_DriveConstants._minSpeedHighGearForward/12.0) + turn * (_DriveConstants._minSpeedHighGearTurn/12.0);
 		
 		minSpeed *= percentAffect;
 		
