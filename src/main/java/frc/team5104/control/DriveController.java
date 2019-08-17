@@ -42,9 +42,9 @@ public class DriveController extends BreakerController {
 		vTeleopLeftSpeed.setSetpoint(forward - turn);
 		vTeleopRightSpeed.setSetpoint(forward + turn);
 		DriveSignal signal = new DriveSignal(
-			vTeleopLeftSpeed.update(), 
-			vTeleopRightSpeed.update(), 
-			DriveUnit.percentOutput
+			vTeleopLeftSpeed.update() * 12, 
+			vTeleopRightSpeed.update() * 12, 
+			DriveUnit.voltage
 		);
 		
 		//Apply drive straight effects

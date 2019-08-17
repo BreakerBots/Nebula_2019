@@ -1,14 +1,15 @@
 package frc.team5104.subsystem.arm;
 
+import frc.team5104.main._RobotConstants;
 import frc.team5104.webapp.Tuner.tunerInput;
 
 public class _ArmConstants {
 	//General Arm Movement
-	public static final double _armP = 0.3;
-	public static final double _armI = 0.0;
-	public static final double _armD = 0.0;
-	public static final double _armTolerance = 1;
-	public static final double _upVLimit = 6;//6;
+	public static final double _upP = 0.1;
+	public static final double _upTolerance = 1;
+	public static final double _downP = 0.2;
+	public static final double _downTolerance = 1;
+	public static final double _upVLimit = 7;//6;
 	public static final double _downVLimit = 9;//12;
 	public static final double _calibrateSpeed = 4;//4;
 	
@@ -24,7 +25,7 @@ public class _ArmConstants {
 	public static double _intakeHoldUpP = 0.3;
 	
 	//Encoder
-	public static final double _ticksPerRevolution = 4096 * (50.0 / 34.0); // * (48.0 / 36.0);
+	public static final double _ticksPerRevolution = 4096 * (50.0 / 34.0) * (_RobotConstants._isCompBot ? 400 : 1); // * (48.0 / 36.0);
 	public static final double _fullyUpDegrees = -48;
 	
 	//Current Limit

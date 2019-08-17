@@ -23,6 +23,13 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 		Devices.Cargo.rightArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.rightArm.getBusVoltage());
 	}
 	
+	public static double getLeftCurrentDraw() {
+		return Devices.Cargo.leftArm.getOutputCurrent();
+	}
+	public static double getRightCurrentDraw() {
+		return Devices.Cargo.rightArm.getOutputCurrent();
+	}
+	
 	//Encoder (Vex Integrated Mag Encoder)
 	public static class Encoder {
 		public static int getRawRotation() { 

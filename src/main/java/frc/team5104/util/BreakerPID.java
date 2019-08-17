@@ -33,6 +33,8 @@ public class BreakerPID {
 		}
 		
 		lastPoint = current;
+		
+		//Should be (deriv * _kD / deltaTime)
 		return (err * _kP) + (integ * _kI) - (deriv * _kD);
 	}
 	

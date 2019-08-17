@@ -18,10 +18,10 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	public static final double _rightAccountReverse = 1.000; //(TalSpeed) [Measure] Multiple the right motor by (For Driving Straight)
 	public static final double _leftAccountForward  = 1.000; //(TalSpeed) [Measure] Multiple the left  motor by (For Driving Straight)
 	public static final double _leftAccountReverse  = 1.000; //(TalSpeed) [Measure] Multiple the left  motor by (For Driving Straight)
-	public static final double _minSpeedHighGearForward = 0.08;
-	public static final double _minSpeedHighGearTurn = 0.12;
-	public static final double _minSpeedLowGearForward = 0.04;
-	public static final double _minSpeedLowGearTurn = 0.10;
+	public static final double _minSpeedHighGearForward = 1.75;//0.08;
+	public static final double _minSpeedHighGearTurn = 3.3;//0.12;
+	public static final double _minSpeedLowGearForward = 0;//0.04;
+	public static final double _minSpeedLowGearTurn = 0;//0.10;
 	
 	//Current Limiting
 	public static final int _currentLimit = 60; //(Amps) [Measure (<250, or ~240/#ofmotorsinurdrivetrain)] The current limit of the drive motors
