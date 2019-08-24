@@ -9,8 +9,8 @@ public class _ArmConstants {
 	public static final double _upTolerance = 1;
 	public static final double _downP = 0.2;
 	public static final double _downTolerance = 1;
-	public static final double _upVLimit = 7;//6;
-	public static final double _downVLimit = 9;//12;
+	public static final double _upVLimit = 3; //7;//6;
+	public static final double _downVLimit = 3; //9;//12;
 	public static final double _calibrateSpeed = 4;//4;
 	
 	//Climb Arm Movement

@@ -20,7 +20,7 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 	}
 	
 	private static void setVoltage(double voltage) {
-		console.log(_Controls.Cargo._manualArm ? "Manual: " : "Auto: " + Encoder.getRawRotation());
+		console.log((_Controls.Cargo._manualArm ? "Manual: " : "Auto: ") + ArmManager.currentState + " " + Encoder.getRawRotation());
 		Devices.Cargo.leftArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.leftArm.getBusVoltage());
 		Devices.Cargo.rightArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.rightArm.getBusVoltage());
 	}
@@ -35,7 +35,7 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 	//Encoder (Vex Integrated Mag Encoder)
 	public static class Encoder {
 		public static int getRawRotation() { 
-			return Devices.Cargo.rightArm.getSelectedSensorPosition() * -1; 
+			return Devices.Cargo.rightArm.getSelectedSensorPosition() * (_RobotConstants._isCompBot ? -1 : -1); 
 		}
 		@tunerOutput
 		public static double getDegrees() { 
@@ -43,7 +43,7 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 		}
 		static void zero() { Devices.Cargo.rightArm.setSelectedSensorPosition(0, 0, 10); }
 		public static boolean disconnected() {
-			return TalonFactory.magEncoderDisconnected(Devices.Cargo.rightArm);
+			return false; //TalonFactory.magEncoderDisconnected(Devices.Cargo.rightArm);
 		}
 	}
 	
