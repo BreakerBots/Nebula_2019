@@ -17,7 +17,7 @@ public class Arm extends BreakerSubsystem.Actions {
 	}
 	
 	public static void intake() {
-		if (ArmManager.currentState != ArmState.calibrating)
+		if (ArmManager.currentState != ArmState.calibrating && !isManual())
 			ArmManager.currentState = ArmState.intakeDown;
 	}
 	

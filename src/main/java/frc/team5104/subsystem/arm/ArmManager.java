@@ -17,7 +17,8 @@ public class ArmManager extends BreakerSubsystem.Manager {
 		idle,
 		intakeDown,
 		intakeHold,
-		climbing
+		climbing, 
+		manual
 	}
 	static ArmState currentState = ArmState.calibrating;
 	
@@ -64,8 +65,10 @@ public class ArmManager extends BreakerSubsystem.Manager {
 			_Controls.Cargo._manualArm = true;
 		}
 		
-		if (Arm.isManual())
+		if (Arm.isManual()) {
+			currentState = ArmState.manual;
 			return;
+		}
 		
 		switch (currentState) {
 			//Idle
@@ -96,6 +99,7 @@ public class ArmManager extends BreakerSubsystem.Manager {
 					_Controls.Cargo._intakeRumble.start();
 				}
 				break;
+				
 			//Intake Hold
 			case intakeHold:
 				double error = _ArmConstants._downPos - ArmSystems.Encoder.getDegrees();
@@ -119,6 +123,12 @@ public class ArmManager extends BreakerSubsystem.Manager {
 				else 
 					ArmSystems.applyForce(0);
 				break;
+				
+			// Manual
+			case manual:
+				break;
+				
+			// Calibrating
 			case calibrating:
 				if (ArmSystems.LimitSwitch.isHit()) {
 					currentState = ArmState.idle;

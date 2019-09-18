@@ -20,7 +20,7 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 	}
 	
 	private static void setVoltage(double voltage) {
-		console.log((_Controls.Cargo._manualArm ? "Manual: " : "Auto: ") + ArmManager.currentState + " " + Encoder.getRawRotation());
+		console.log((_Controls.Cargo._manualArm ? "Manual: " : "Auto: ") + ArmManager.currentState + " " + Encoder.getDegrees());
 		Devices.Cargo.leftArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.leftArm.getBusVoltage());
 		Devices.Cargo.rightArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.rightArm.getBusVoltage());
 	}
