@@ -35,5 +35,5 @@ public class _ArmConstants {
 	//Setpoints
 	public static final double _upPos = _fullyUpDegrees;
 	@tunerInput
-	public static double _downPos = 115; //105
+	public static double _downPos = 100; //105
 }

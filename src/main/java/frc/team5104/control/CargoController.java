@@ -13,10 +13,9 @@ class CargoController extends BreakerController {
 		//Main Controls
 		if (_Controls.Main._idle.getPressed()) 
 			Cargo.idle();
-		if (_Controls.Main._idle.getDoubleClick() == 2) {
+		if (_Controls.Main._idle.getDoubleClick() == 2) 
 			_Controls.Cargo._manualArm = !_Controls.Cargo._manualArm;
-			console.log(c.CARGO, "Set arm to " + (_Controls.Cargo._manualArm ? "manual" : "automatic"));
-		}
+		
 		if (_Controls.Cargo._intake.getPressed()) 
 			Cargo.intake();
 		if (_Controls.Cargo._eject.getPressed()) {
