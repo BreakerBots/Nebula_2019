@@ -3,13 +3,10 @@ package frc.team5104.subsystem.arm;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
-import frc.team5104.control._Controls;
 import frc.team5104.main.Devices;
 import frc.team5104.main._RobotConstants;
 import frc.team5104.subsystem.BreakerSubsystem;
 import frc.team5104.util.BreakerMath;
-import frc.team5104.util.TalonFactory;
-import frc.team5104.util.console;
 import frc.team5104.webapp.Tuner.tunerOutput;
 
 public class ArmSystems extends BreakerSubsystem.Systems {
@@ -20,7 +17,7 @@ public class ArmSystems extends BreakerSubsystem.Systems {
 	}
 	
 	private static void setVoltage(double voltage) {
-		console.log((_Controls.Cargo._manualArm ? "Manual: " : "Auto: ") + ArmManager.currentState + " " + Encoder.getDegrees());
+//		console.log((_Controls.Cargo._manualArm ? "Manual: " : "Auto: ") + ArmManager.currentState + " " + Encoder.getDegrees());
 		Devices.Cargo.leftArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.leftArm.getBusVoltage());
 		Devices.Cargo.rightArm.set(ControlMode.PercentOutput, voltage / Devices.Cargo.rightArm.getBusVoltage());
 	}

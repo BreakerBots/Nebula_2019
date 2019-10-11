@@ -2,17 +2,13 @@
 package frc.team5104.main;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import frc.team5104.auto.AutoSelector;
-import frc.team5104.auto.BreakerPathScheduler;
 import frc.team5104.control.BreakerMainController;
 import frc.team5104.subsystem.BreakerSubsystemManager;
 import frc.team5104.subsystem.arm.ArmManager;
 import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.arm._ArmConstants;
 import frc.team5104.subsystem.climber.ClimberManager;
-import frc.team5104.subsystem.drive.Drive;
 import frc.team5104.subsystem.drive.DriveManager;
-import frc.team5104.subsystem.drive.DriveSystems;
 import frc.team5104.subsystem.drive.Odometry;
 import frc.team5104.subsystem.hatch.HatchManager;
 import frc.team5104.util.console;
@@ -24,7 +20,6 @@ import frc.team5104.vision.VisionManager;
 import frc.team5104.webapp.Tuner;
 import frc.team5104.webapp.Webapp;
 import frc.team5104.superstructure.cargo.CargoManager;
-import frc.team5104.superstructure.cargo._CargoConstants;
 
 /**
  * Fallthrough from <strong>Breaker Robot Controller</strong>
@@ -68,6 +63,7 @@ public class Robot extends RobotController.BreakerRobot {
 	
 	public void mainLoop() {
 //		console.log(VisionMovement.getScaleFactor());
+//		console.log(ArmSystems.Encoder.getDegrees());
 //		console.log(ArmSystems.LimitSwitch.isHit(), ArmSystems.Encoder.getDegrees(), ArmSystems.Encoder.getRawRotation(), ArmSystems.Encoder.disconnected());
 //		console.log(Compressor.getString());
 		if (RobotState.isEnabled()) {

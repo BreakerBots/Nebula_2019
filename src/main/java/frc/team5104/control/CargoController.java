@@ -5,8 +5,6 @@ import frc.team5104.subsystem.arm.Arm;
 import frc.team5104.subsystem.arm.ArmSystems;
 import frc.team5104.subsystem.chute.Chute;
 import frc.team5104.superstructure.cargo.Cargo;
-import frc.team5104.util.console;
-import frc.team5104.util.console.c;
 
 class CargoController extends BreakerController {
 	void update() {
@@ -30,7 +28,7 @@ class CargoController extends BreakerController {
 			ArmSystems.applyForce(force);
 		}
 		else if (Arm.isIntaking()) {
-			double change = _Controls.Cargo._armManual.getAxis() * 1.0;
+			double change = _Controls.Cargo._armManual.getAxis() * 2.0;
 			Arm.changeDownPosition(change);
 		}
 		

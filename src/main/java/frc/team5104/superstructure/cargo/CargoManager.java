@@ -62,11 +62,11 @@ public class CargoManager extends BreakerSubsystem.Manager {
 				Arm.intake();
 
 			beltInterpolator.deltaTime = 0.05;
-			if (ArmSystems.Encoder.getDegrees() > _CargoConstants._intakeStartPos) 
+			// if (ArmSystems.Encoder.getDegrees() > _CargoConstants._intakeStartPos) 
 				beltInterpolator.setSetpoint(_CargoConstants._intakeSpeed);
 
-			else
-				beltInterpolator.setSetpoint(0);
+//			else
+//				beltInterpolator.setSetpoint(0);
 			CargoSystems.Belt.set(beltInterpolator.update());
 
 			if (Chute.BeamAverage.getBooleanOutput()) {

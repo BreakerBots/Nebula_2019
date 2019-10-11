@@ -89,16 +89,16 @@ public class HatchManager extends BreakerSubsystem.Manager {
 
 	public void disabled() { }
 	public void enabled() {
-		if (RobotState.isSandstorm()) {
-			isSandTrapping = true;
-			intakeStartTime = System.currentTimeMillis();
-			currentState = HatchState.intake;
-			sandTrapLoop.startPeriodic(1.0 / 200);
-			console.log(c.HATCH, "Starting Sandstorm/Fast Hatch Intake");
-		}
-		else {
+//		if (RobotState.isSandstorm()) {
+//			isSandTrapping = true;
+//			intakeStartTime = System.currentTimeMillis();
+//			currentState = HatchState.intake;
+//			sandTrapLoop.startPeriodic(1.0 / 200);
+//			console.log(c.HATCH, "Starting Sandstorm/Fast Hatch Intake");
+//		}
+//		else {
 			isSandTrapping = false;
-		}
+//		}
 	}
 	public HatchManager() { }
 }

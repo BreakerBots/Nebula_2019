@@ -8,6 +8,6 @@ public class _CargoConstants {
 	public static int _ejectUpTime = 1700; //1400;
 	
 	@tunerInput
-	public static double _intakeSpeed = 0.8;
+	public static double _intakeSpeed = 0.55;
 	public static final double _intakeStartPos = 60;
 }
