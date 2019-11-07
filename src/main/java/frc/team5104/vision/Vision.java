@@ -22,7 +22,7 @@ public class Vision {
 	
 	/** Changes the state of the leds (on, off...) */
 	public static void changeLEDState(boolean state) { 
-		//VisionSystems.networkTable.setEntry("ledMode", state ? 0 : 1); 
+		VisionSystems.networkTable.setEntry("ledMode", state ? 0 : 1); 
 	}
 
 	public static void init() {

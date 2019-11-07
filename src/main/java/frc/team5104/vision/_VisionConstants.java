@@ -13,15 +13,15 @@ public class _VisionConstants {
 	
 	//Movement Control
 	@tunerInput
-	public static double _turnP =  1;
+	public static double _turnP =  .5;
 	@tunerInput
 	public static double _turnD =  4.0;
 	@tunerInput
-	public static double _leftOffset = 4.0;
+	public static double _leftOffset = 3.0;
 	@tunerInput
-	public static double _rightOffset = 3.5;
+	public static double _rightOffset = 3.7;
 	@tunerInput
-	public static double _forwardP = 1.8;
+	public static double _forwardP = 2.5;
 	@tunerInput
 	public static double _forwardF = -2;
 }

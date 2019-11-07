@@ -7,7 +7,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class VisionSystems {
 	//Limelight Getters
-	static class limelight {
+	public static class limelight {
 		private static double getEntry(String value) { return networkTable.getEntry(value).getDouble(5104); }
 		public static double getX() { return getEntry("tx"); }
 		public static double getY() { return getEntry("ty"); }

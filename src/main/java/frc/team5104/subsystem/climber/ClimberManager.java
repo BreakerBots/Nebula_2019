@@ -25,6 +25,7 @@ public class ClimberManager extends BreakerSubsystem.Manager {
 	static long currentStageStart = System.currentTimeMillis();
 	
 	public void update() {
+//		console.log(currentState);
 		//Handles piston actuation and timing (all movement of the arm is handled in intake)
 		switch (currentState) {
 			case climbing: {
@@ -89,6 +90,9 @@ public class ClimberManager extends BreakerSubsystem.Manager {
 				
 			case idle:
 				ClimberSystems.retractAll();
+//				CargoManager.beltInterpolator.deltaTime = 0.25;
+//				CargoManager.beltInterpolator.setSetpoint(0);
+//				CargoSystems.Belt.set(CargoManager.beltInterpolator.update());
 				break;
 		}
 	}

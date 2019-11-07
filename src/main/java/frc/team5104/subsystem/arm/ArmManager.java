@@ -145,6 +145,7 @@ public class ArmManager extends BreakerSubsystem.Manager {
 		upController.reset();
 		downController.reset();
 		climbInitController.reset();
+		//_Controls.Cargo._manualArm
 		currentState = ArmState.calibrating;
 	}
 	public void disabled() { }

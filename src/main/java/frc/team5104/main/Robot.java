@@ -17,6 +17,8 @@ import frc.team5104.util.CSV;
 import frc.team5104.util.Controller;
 import frc.team5104.vision.Vision;
 import frc.team5104.vision.VisionManager;
+import frc.team5104.vision.VisionMovement;
+import frc.team5104.vision.VisionSystems;
 import frc.team5104.webapp.Tuner;
 import frc.team5104.webapp.Webapp;
 import frc.team5104.superstructure.cargo.CargoManager;
@@ -86,12 +88,17 @@ public class Robot extends RobotController.BreakerRobot {
 	}
 	
 	//Teleop
-	public void teleopStart() { console.log("Teleoperation Started"); }
+	public void teleopStart() { Vision.changeLEDState(false); console.log("Teleoperation Started"); }
 	public void teleopLoop() { }
 	public void teleopStop() { console.log("Teleoperation Stopped"); }
 	
 	//Vision
-	public void visionStart() {  console.log("Vision Started"); VisionManager.start();  }
+	public void visionStart() {  
+		if( VisionSystems.limelight.getY()!=5104) {
+			console.log("Vision Started"); 
+			VisionManager.start();  
+		}
+	}
 	public void visionLoop() { VisionManager.handle(); }
 	public void visionStop() { console.log("Vision Stopped"); VisionManager.stop();  }
 }

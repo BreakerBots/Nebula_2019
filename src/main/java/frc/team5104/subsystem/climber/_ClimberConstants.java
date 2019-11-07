@@ -11,7 +11,7 @@ public class _ClimberConstants {
 			DoubleSolenoid.Value.kForward : DoubleSolenoid.Value.kReverse;
 	
 	@tunerInput
-	public static double _forwardWheelSpeed = 0.3; //percent
+	public static double _forwardWheelSpeed = 0.5; //percent
 	@tunerInput
 	public static long _lift1Length = 2000; //ms
 	@tunerInput

@@ -63,14 +63,16 @@ public class Devices {
 		public static DoubleSolenoid lazyBoy = PneumaticFactory.getDoubleSolenoid(PCM.Red, 4, 5);
 		public static DoubleSolenoid ejector = PneumaticFactory.getDoubleSolenoid(PCM.Red,
 				_RobotConstants._isCompBot ? 3 : 0, _RobotConstants._isCompBot ? 2 : 1);
-		
+
 		public static BannerPhotoelectric limitSwitch = new BannerPhotoelectric(_RobotConstants._isCompBot ? 1 : 2);
 	}
 
 	// Climber
 	public static class Climber {
-		public static DoubleSolenoid stage1 = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 4, 5);
-		public static DoubleSolenoid stage2 = PneumaticFactory.getDoubleSolenoid(PCM.Gold, 6, 7);
+		public static DoubleSolenoid stage1 = PneumaticFactory.getDoubleSolenoid(PCM.Gold,
+				_RobotConstants._isCompBot ? 6 : 4, _RobotConstants._isCompBot ? 7 : 5);
+		public static DoubleSolenoid stage2 = PneumaticFactory.getDoubleSolenoid(PCM.Gold,
+				_RobotConstants._isCompBot ? 4 : 6, _RobotConstants._isCompBot ? 5 : 7);
 	}
 
 	// Other

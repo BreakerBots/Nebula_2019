@@ -25,7 +25,6 @@ public class CargoManager extends BreakerSubsystem.Manager {
 			new BezierCurve(0.4, 0.2, 0.0, 1));
 
 	public void update() {
-		console.log(currentState);
 		if (Climber.isClimbing())
 			currentState = CargoState.idle;
 
