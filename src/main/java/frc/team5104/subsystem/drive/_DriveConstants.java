@@ -13,11 +13,12 @@ public class _DriveConstants extends BreakerSubsystem.Constants {
 	public static final double _ticksPerRevolution = 4096.0 * 3.0 * (54.0/30.0); //(Encoder Tick) [Measure] Encoder Ticks Per Wheel Revolution
 	public static final double _wheelBaseWidth = 24.25 / 12.0;	   //(Feet) [Measure] The Distance from the Left and Right Wheels
 	
-	//Speed Adjustments
+	//Speed Adjustments - change for defense
 	public static final double _rightAccountForward = .75; //1.000; //(TalSpeed) [Measure] Multiple the right motor by (For Driving Straight)
 	public static final double _rightAccountReverse = .75; //1.000; //(TalSpeed) [Measure] Multiple the right motor by (For Driving Straight)
 	public static final double _leftAccountForward  = .75; //1.000; //(TalSpeed) [Measure] Multiple the left  motor by (For Driving Straight)
 	public static final double _leftAccountReverse  = .75; //1.000; //(TalSpeed) [Measure] Multiple the left  motor by (For Driving Straight)
+	 
 	public static final double _minSpeedHighGearForward = 1.75;//0.08;
 	public static final double _minSpeedHighGearTurn = 3.3;//0.12;
 	public static final double _minSpeedLowGearForward = 0;//0.04;

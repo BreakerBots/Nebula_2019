@@ -49,6 +49,7 @@ public class ArmManager extends BreakerSubsystem.Manager {
 //	}
 	
 	public void update() {
+		console.log(currentState);
 		upController._kP = _ArmConstants._upP;
 		downController._kP = _ArmConstants._downP;
 		

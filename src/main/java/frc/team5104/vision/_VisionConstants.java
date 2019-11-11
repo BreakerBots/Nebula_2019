@@ -21,7 +21,7 @@ public class _VisionConstants {
 	@tunerInput
 	public static double _rightOffset = 3.7;
 	@tunerInput
-	public static double _forwardP = 2.5;
+	public static double _forwardP = 1.5; //2.5;
 	@tunerInput
 	public static double _forwardF = -2;
 }
