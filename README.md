@@ -15,9 +15,9 @@ You can also run `gradlew riolog` to connect to the logging from the robot.
 ## Code Style
 Based roughly off of the [Google Style Guide](http://google.github.io/styleguide/javaguide.html).
 
-#### Naming:
+#### Naming
 - **Constants:** _ + name
 
-### Nebula Image
-![Robot Image](Nebula.jpg)
+### Nebula 
+![Nebula Image](https://breakerbots.com/images/robots/Nebula.jpg)
 
